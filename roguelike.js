@@ -2687,7 +2687,7 @@ function generateAdjacentRooms(cx, cy) {
   map[key].element.innerHTML = '<div class="player"></div>';
   centerCamera();
   
-  if (![ ROOM_TYPES.BATTLE, ROOM_TYPES.AMBUSH, ROOM_TYPES.BOSS, ROOM_TYPES.WARRIOR ].includes(map[key].type)) {
+  if ((gameDifficulty === "normal" || gameDifficulty === "hard") && ![ ROOM_TYPES.BATTLE, ROOM_TYPES.AMBUSH, ROOM_TYPES.BOSS, ROOM_TYPES.WARRIOR ].includes(map[key].type)) {
 	player.exp += 1;
 	if (player.exp >= player.expToLevel) {
 		levelUp();
