@@ -1980,6 +1980,7 @@ player.guildMissionKills = getCurrentMissionRequirement();
 document.getElementById("normalBtn").addEventListener("click", () => selectDifficulty("normal"));
 document.getElementById("hardBtn").addEventListener("click", () => selectDifficulty("hard"));
 document.getElementById("extremeBtn").addEventListener("click", () => selectDifficulty("extreme"));
+document.getElementById("insaneBtn").addEventListener("click", () => selectDifficulty("insane"));
 document.getElementById("calamityBtn").addEventListener("click", () => selectDifficulty("calamity"));
 document.getElementById("doomBtn").addEventListener("click", () => selectDifficulty("doom"));
 	   
@@ -2980,11 +2981,17 @@ if (gameDifficulty === "normal") {
         currentEnemy.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
         currentEnemy.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
     ];
-} else {
+} else if (gameDifficulty === "insane") {
 	currentEnemy.hp = currentEnemy.hp + Math.round(20 * floorBonus * (player.level / floorCount));
     currentEnemy.damageRange = [
         currentEnemy.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         currentEnemy.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
+    ];
+} else {
+	currentEnemy.hp = currentEnemy.hp + Math.round(25 * floorBonus * (player.level / floorCount));
+    currentEnemy.damageRange = [
+        currentEnemy.damageRange[0] + Math.round(5 * floorBonus * (player.level / floorCount)),
+        currentEnemy.damageRange[1] + Math.round(5 * floorBonus * (player.level / floorCount))
     ];
 }
         let rewardMultiplier = Math.pow(1.5, floorBonus);
@@ -3146,7 +3153,7 @@ finalizeRoom(key);
     const floorBoost = 1 + floorCount * 0.1;
     const floorBonus = Math.max(Math.floor((floorCount / 10) * floorBoost), 1);
 
-    bossData.hp += Math.round(15 * floorBonus * (player.level / floorCount));
+    bossData.hp += Math.round(20 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
       bossData.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
       bossData.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
@@ -3198,11 +3205,17 @@ finalizeRoom(key);
         bossData.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
         bossData.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
     ];
-} else {
+} else if (gameDifficulty === "insane" ) {
 	bossData.hp = bossData.hp + Math.round(20 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
         bossData.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         bossData.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
+    ];
+} else {
+	bossData.hp = bossData.hp + Math.round(25 * floorBonus * (player.level / floorCount));
+    bossData.damageRange = [
+        bossData.damageRange[0] + Math.round(5 * floorBonus * (player.level / floorCount)),
+        bossData.damageRange[1] + Math.round(5 * floorBonus * (player.level / floorCount))
     ];
 }
 
@@ -3278,11 +3291,17 @@ if (gameDifficulty === "normal") {
         e.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
         e.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
     ];
-} else {
+} else if (gameDifficulty === "insane") {
 	e.hp = e.hp + Math.round(20 * floorBonus * (player.level / floorCount));
     e.damageRange = [
         e.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         e.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
+    ];
+} else {
+	e.hp = e.hp + Math.round(25 * floorBonus * (player.level / floorCount));
+    e.damageRange = [
+        e.damageRange[0] + Math.round(5 * floorBonus * (player.level / floorCount)),
+        e.damageRange[1] + Math.round(5 * floorBonus * (player.level / floorCount))
     ];
 }
 
