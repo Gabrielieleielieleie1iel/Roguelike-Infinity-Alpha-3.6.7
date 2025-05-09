@@ -303,6 +303,7 @@ body.doom-mode #equipmentMenu.modal {
   width: 300px;
   color: white;
 }
+
 body.doom-mode #equipmentMenu .modal-content {
   position: relative;
 }

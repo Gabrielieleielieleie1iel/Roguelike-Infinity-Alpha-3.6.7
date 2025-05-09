@@ -218,6 +218,7 @@ const secTrack = new Audio("Judas.mp3");
 const kocTrack = new Audio("MalevolentShrine.mp3");
 const omniTrack = new Audio("Omni.mp3");
 const bkTrack = new Audio("Black.mp3");
+const dkTrack = new Audio("demon.mp3");
 const semiTrack = new Audio("semifinale.mp3");
 const troTrack = new Audio("Him.mp3");
 const godTrack = new Audio("ultimate.mp3");
@@ -242,6 +243,8 @@ kocTrack.loop = true;
 kocTrack.currentTime = 0;
 bkTrack.loop = true;
 bkTrack.currentTime = 0;
+dkTrack.loop = true;
+dkTrack.currentTime = 0;
 troTrack.loop = true;
 troTrack.currentTime = 0;
 godTrack.loop = true;
@@ -1113,9 +1116,9 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
      { name: "Fallen Angel.",        hp: 2000,  damageRange: [70,100], expReward: [300, 300], moneyReward: [200, 150] },
      { name: "Guardian of Hell, Cerberus.", hp: 3500, damageRange: [80,120], expReward: [750, 750], moneyReward: [500, 500] },
      { name: "Hell Titan.",          hp: 6000, damageRange: [50, 120], expReward: [1000, 1000], moneyReward: [800, 800] },
-     { name: "Demon King.",          hp: 8000, damageRange: [60, 110],expReward: [1500, 1500], moneyReward: [1000, 1000] },
-     { name: "Ancient Hell Titan.",  hp: 10000, damageRange: [50, 100],expReward: [2000, 2000], moneyReward: [1200, 1200] },
-     { name: "Demon God.",           hp: 15000, damageRange: [70, 120],expReward: [2500, 2500], moneyReward: [1500, 1500] }
+     { name: "Demon King.",          hp: 10000, damageRange: [60, 110],expReward: [1500, 1500], moneyReward: [1000, 1000] },
+     { name: "Ancient Hell Titan.",  hp: 15000, damageRange: [50, 100],expReward: [2000, 2000], moneyReward: [1200, 1200] },
+     { name: "Demon God.",           hp: 25000, damageRange: [70, 120],expReward: [2500, 2500], moneyReward: [1500, 1500] }
    ];
    const idx = Math.min(Math.ceil(floor/50)-1, bosses.length-1);
    return bosses[idx];
@@ -3107,6 +3110,12 @@ finalizeRoom(key);
 	} else if (currentEnemy === "The Restricted One, Kyojiro Allista") {
 	  stopWorldMusic();
 	  troTrack.play();
+	} else if (currentEnemy === "Demon God") {
+	  stopWorldMusic();
+	  dkTrack.play();
+	} else if (currentEnemy === "Demon God.") {
+	  stopWorldMusic();
+	  dkTrack.play();
 	} else if (currentEnemy === "Warden of Judgement, Will, And Balance") {
 	  stopWorldMusic();
 	  semiTrack.play();
@@ -3448,6 +3457,22 @@ function getEnemyByName(enemyName) {
     ambushEnemiesQueue = null;
 	ambushTrack.pause();
 	ambushTrack.currentTime = 0;
+	bossTrack.pause();
+	bossTrack.currentTime = 0;
+	secTrack.pause();
+	secTrack.currentTime = 0;
+	omniTrack.pause();
+	omniTrack.currentTime = 0;
+	bkTrack.pause();
+	bkTrack.currentTime = 0;
+	dkTrack.pause();
+	dkTrack.currentTime = 0;
+	kocTrack.pause();
+	kocTrack.currentTime = 0;
+	semiTrack.pause();
+	semiTrack.currentTime = 0;
+	godTrack.pause();
+	godTrack.currentTime = 0;
 	warriorTrack.pause();
 	warriorTrack.currentTime = 0;
 	resumeWorldMusicAfterBattle();
@@ -3457,8 +3482,6 @@ function getEnemyByName(enemyName) {
   
   // otherwise, normal battle cleanup
   currentEnemy = null;
-  warriorTrack.pause();
-  warriorTrack.currentTime = 0;
   ambushTrack.pause();
   ambushTrack.currentTime = 0;
   bossTrack.pause();
@@ -3469,8 +3492,16 @@ function getEnemyByName(enemyName) {
   omniTrack.currentTime = 0;
   bkTrack.pause();
   bkTrack.currentTime = 0;
+  dkTrack.pause();
+  dkTrack.currentTime = 0;
   kocTrack.pause();
   kocTrack.currentTime = 0;
+  semiTrack.pause();
+  semiTrack.currentTime = 0;
+  godTrack.pause();
+  godTrack.currentTime = 0;
+  warriorTrack.pause();
+  warriorTrack.currentTime = 0;
   if (!currentBGM) {
 	  resumeWorldMusicAfterBattle();
   }
