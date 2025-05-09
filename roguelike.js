@@ -2494,6 +2494,7 @@ function generateAdjacentRooms(cx, cy) {
       };
       updateStats();
       updateManaDisplay();
+	  updateInventoryDisplay();
       alert("You found the Excalibur! (LEGENDARY)");
     } else {
       alert("Inventory full...");
@@ -2511,6 +2512,7 @@ function generateAdjacentRooms(cx, cy) {
       };
       updateStats();
       updateManaDisplay();
+	  updateInventoryDisplay();
       alert("You found the Dragon's Fang! (LEGENDARY)");
     } else {
       alert("Inventory full...");
@@ -2527,7 +2529,8 @@ function generateAdjacentRooms(cx, cy) {
         category: "weapon"
       };
       updateStats();
-      updateManaDisplay();
+	  updateManaDisplay();
+	  updateInventoryDisplay();
       alert("You found the Sorceress' Staff! (LEGENDARY)");
     } else {
       alert("Inventory full...");
@@ -2548,6 +2551,7 @@ function generateAdjacentRooms(cx, cy) {
       alert("Inventory full...");
     }
     updateStats();
+	updateInventoryDisplay();
     return;
   }
   
@@ -2564,6 +2568,8 @@ function generateAdjacentRooms(cx, cy) {
       alert("Inventory full...");
     }
     updateStats();
+	updateManaDisplay();
+	updateInventoryDisplay();
     return;
   }
   
@@ -2580,6 +2586,8 @@ function generateAdjacentRooms(cx, cy) {
       alert("Inventory full...");
     }
     updateStats();
+	updateManaDisplay();
+	updateInventoryDisplay();
     return;
   }
 
@@ -2596,6 +2604,7 @@ function generateAdjacentRooms(cx, cy) {
       alert("Inventory full...");
     }
     updateStats();
+	updateInventoryDisplay();
     return;
   }
 
@@ -2609,11 +2618,17 @@ function generateAdjacentRooms(cx, cy) {
         if (droppedItem.type === "equipment") {
           if (droppedItem.name === "Gun" || droppedItem.name === "Ammo Box") {
             alert(`You found a ${droppedItem.name}! (Epic!)`);
+			updateStats();
+			updateInventoryDisplay();
           } else {
             alert(`You found a ${droppedItem.name}! (Rare)`);
+			updateStats();
+			updateInventoryDisplay();
           }
         } else {
           alert(`You found a ${droppedItem.name}! (Common)`);
+		  updateStats();
+		  updateInventoryDisplay();
         }
       } else {
         alert("Inventory full!");
@@ -2628,6 +2643,9 @@ function generateAdjacentRooms(cx, cy) {
     player.money += moneyGained * Math.round(1 + player.fortune * 0.08);
     alert(`You found some treasure! Earned $${moneyGained * Math.round(1 + player.fortune * 0.08)}!`);
   }
+  
+  updateStats();
+  updateInventoryDisplay();
 }
 
       // Returns a valid loot item. If the drop is an equipment and player already has it, re-run the drop.
@@ -2668,6 +2686,16 @@ function generateAdjacentRooms(cx, cy) {
   player.y = y;
   map[key].element.innerHTML = '<div class="player"></div>';
   centerCamera();
+  
+  if (![ ROOM_TYPES.BATTLE, ROOM_TYPES.AMBUSH, ROOM_TYPES.BOSS, ROOM_TYPES.WARRIOR ].includes(map[key].type)) {
+	player.exp += 1;
+	if (player.exp >= player.expToLevel) {
+		levelUp();
+    }
+  }
+  updateStats();
+  updateManaDisplay();
+  updateInventoryDisplay();
 
   // Trigger the room event.
   if (map[key].secretAmbush) {
@@ -4932,6 +4960,7 @@ document.addEventListener("keydown", e => {
           ...item
         };
         updateStats();
+		updateInventoryDisplay();
         alert(`${item.name} purchased!`);
       }
 	  
@@ -4972,6 +5001,7 @@ sellBtn.addEventListener("click", () => {
       player.money         += sellPrice;
       player.inventory[idx] = null;
       updateStats();
+	  updateInventoryDisplay();
       btn.remove();
       alert(`Sold ${item.name} for $${sellPrice}.`);
     });
@@ -5029,6 +5059,7 @@ closeSellBtn.addEventListener("click", () => {
         let currentRoomType = map[player.x + "_" + player.y].type;
         upgradesRemaining = (currentRoomType === ROOM_TYPES.ALTAR ? 3 : 1);
         levelUpMenu.style.display = "block";
+		battleTint.style.display = "block";
 		if (gameDifficulty === "doom") {
 			initiateLevelUp(2);
 		}
@@ -5037,6 +5068,7 @@ closeSellBtn.addEventListener("click", () => {
       function initiateLevelUp(upgradeCount) {
         upgradesRemaining = upgradeCount;
         levelUpMenu.style.display = "block";
+		battleTint.style.display = "block";
       }
 	  
       levelUpMenu.addEventListener("click", function(e) {
@@ -5071,6 +5103,7 @@ closeSellBtn.addEventListener("click", () => {
           logBattle(`Player leveled up! ${stat.toUpperCase()} increased.`);
           if (upgradesRemaining <= 0) {
             levelUpMenu.style.display = "none";
+			battleTint.style.display = "none";
           }
         }
       });
@@ -5755,6 +5788,8 @@ setInterval(() => {
     if (player.hp < player.maxHp) {
       player.hp = Math.min(player.hp + 1, player.maxHp);
       updateStats();
+	  updateManaDisplay();
+	  updateInventoryDisplay();
     }
     lastHealTime = Date.now();
   }
