@@ -1635,22 +1635,22 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 const shopItemsList = [
   // Consumables
   {
-    name: "Healing Potion",
-    cost: 50,
-    type: "healing",
-    category: "consumable",
-    usableInBattle: true,
-    usableOutOfBattle: true,
-    usageScope: "both"
+	name: "Healing Potion",
+	cost: 50,
+	type: "healing",
+	category: "consumable",
+	usableInBattle: true,
+	usableOutOfBattle: true,
+	usageScope: "both"
   },
   {
-    name: "Mana Potion",
-    cost: 50,
-    type: "mana",
-    category: "consumable",
-    usableInBattle: true,
-    usableOutOfBattle: true,
-    usageScope: "both"
+	name: "Mana Potion",
+	cost: 50,
+	type: "mana",
+	category: "consumable",
+	usableInBattle: true,
+	usableOutOfBattle: true,
+	usageScope: "both"
   },
   {
     name: "Rage Potion",
@@ -1874,6 +1874,14 @@ function selectDifficulty(difficulty) {
   gameDifficulty = difficulty;
   document.getElementById("difficultyMenu").style.display = "none";
   if (difficulty === "doom") {
+   document.getElementById("miscStats").style.display = "none";
+   document.getElementById("miscStats2").style.display = "none";
+
+  // Hide the level-up buttons for Potential, Luck, Fortune
+  ["potential", "luck", "fortune"].forEach(stat => {
+    const btn = levelUpMenu.querySelector(`button[data-stat="${stat}"]`);
+    if (btn) btn.style.display = "none";
+  });
    titleMusic.pause();
    document.getElementById("abilityMenu").style.display = "none";
    document.getElementById("hudPlayerPassive").innerText = "Demon Slayer";
@@ -1921,9 +1929,9 @@ player.magic       = 8;
 player.defense     = 1;
 player.agility     = 1;
 player.perception  = 1;
-player.potential   = 1;
-player.luck        = 1;
-player.fortune     = 1;
+player.potential   = 0;
+player.luck        = 0;
+player.fortune     = 0;
 player.mana      = 10;
 player.maxMana     = 10;
 player.expToLevel = 20;
@@ -1936,9 +1944,9 @@ player.baseStats.magic      = 8;
 player.baseStats.defense    = 1;
 player.baseStats.agility    = 1;
 player.baseStats.perception = 1;
-player.baseStats.potential  = 1;
-player.baseStats.luck       = 1;
-player.baseStats.fortune    = 1;
+player.baseStats.potential  = 0;
+player.baseStats.luck       = 0;
+player.baseStats.fortune    = 0;
 player.baseStats.maxMana    = 10;
 
 player.passiveAbility = "Demon Slayer";
@@ -2790,7 +2798,14 @@ function finalizeRoom(key) {
        *******************/
       function healPlayer() {
         const effMaxHp = Math.floor(getEffectiveMaxHp());
-		player.hp   = effMaxHp;
+		if (gameDifficulty === "doom") {
+			player.hp = player.hp + Math.floor(effMaxHp * 0.15);
+			if (player.hp > effMaxHp) {
+				player.hp = effMaxHp;
+			}
+		} else {
+			player.hp = effMaxHp;
+		}
 		player.mana = player.maxMana
         updateStats();
 		updateManaDisplay();
@@ -3984,7 +3999,6 @@ if (player.mercenaries.length > 0) {
     case "Arcane":
 	  player.baseStats.magic += 5;
 	  player.baseStats.maxMana *= 2;
-	  player.baseStats.mana *= 2;
 	  player.mana = player.maxMana;
 	  updateStats();
 	  updateManaDisplay();
@@ -4813,7 +4827,7 @@ document.addEventListener("keydown", e => {
 			  updateStats();
               logBattle("You used Healing Potion and healed 25% HP.");
               break;
-	    case "Mana Potion":
+			case "Mana Potion":
               player.mana = Math.min(player.mana + Math.round(player.maxMana * 0.25), player.maxMana);
 			  updateManaDisplay();
               logBattle("You used Mana Potion and healed 25% mana.");
@@ -4823,7 +4837,6 @@ document.addEventListener("keydown", e => {
 			  player.attack *= 2;
 			  player.magic = Math.ceil(player.magic *= 1.5);
 			  player.perception *= 2;
-			  player.
               logBattle("You used a Rage Potion. Damage doubled this battle!");
               break;
             case "Poison Potion":
@@ -4862,23 +4875,42 @@ document.addEventListener("keydown", e => {
           // Effects when used out-of-battle:
           switch (item.name) {
             case "Healing Potion":
-              player.hp = Math.min(player.hp + (Math.round(player.maxHP * 0.25)), player.maxHp);
-              alert("You used Healing Potion and healed 25% HP.");
+			const effMaxHp = Math.floor(getEffectiveMaxHp());
+			if (gameDifficulty !== "doom") {
+              player.hp = Math.min(player.hp + Math.round(player.maxHp * 0.25), player.maxHp);
+			} else {
+			  player.hp = Math.min(player.hp + Math.round(effMaxHp * 0.05), effMaxHp);
+			}
+			  updateStats();
+			if (gameDifficulty !== "doom") {
+              logBattle("You used Healing Potion and healed 25% HP.");
+			} else {
+			  logBattle("You used a medkit and healed some HP.");
+			}
               break;
 			case "Mana Potion":
-              player.mana = Math.min(player.mana + (Math.round(player.maxMana * 0.25)), player.maxMana);
-              alert("You used Mana Potion and healed 25% mana.");
+			if (gameDifficulty !== "doom") {
+              player.mana = Math.min(player.mana + Math.round(player.maxMana * 0.25), player.maxMana);
+			} else {
+			  player.mana = player.maxMana;
+			}
+			  updateManaDisplay();
+			if (gameDifficulty !== "doom") {
+              logBattle("You used Mana Potion and healed 25% mana.");
+			} else {
+			  logBattle("You used a magazine and reloaded your gun.");
+			}
               break;
-              // Items meant for battle should not be used here.
             case "Rage Potion":
               player.rage = true;
 			  player.attack *= 2;
 			  player.magic = Math.ceil(player.magic *= 1.5);
 			  player.perception *= 2;
-			  player.damage *= 2;
-			  player.critChance *= 2;
-			  player.
+			if (gameDifficulty !== "doom") {
               logBattle("You used a Rage Potion. Damage doubled this battle!");
+			} else {
+			  logBattle("<em>RIP AND TEAR... RIP AND TEAR... RIP AND TEAR!</em>");
+			}
               break;
             case "Poison Potion":
               currentEnemy.poison = true;
