@@ -1892,7 +1892,21 @@ function selectDifficulty(difficulty) {
   });
    titleMusic.pause();
    document.getElementById("abilityMenu").style.display = "none";
-   document.getElementById("hudPlayerPassive").innerText = "Demon Slayer";
+   const doomNames = [
+    "The Doom Slayer",
+    "Hellwalker",
+    "Unchained Predator",
+    "Scourge of Hell",
+    "Demon Slayer"
+  ];
+  // Pick one at random
+  const rand = Math.floor(Math.random() * doomNames.length);
+  // Overwrite the player's chosen ability name
+  player.doomAbilities = doomNames[rand];
+
+  // Update whatever UI shows the ability title:
+  // (Use your existing element—here’s a generic example)
+  document.getElementById("hudPlayerPassive").textContent = player.doomAbilities;
    document.getElementById("hudPlayerActive" ).innerText = "Rip and Tear";
    initGame();
    document.body.classList.add("doom-mode");
@@ -4078,8 +4092,6 @@ if (player.mercenaries.length > 0) {
       break;
     case "Aura Farmer":
       player.upgradesRemaining = 2;
-      break;
-	case "Demon Slayer":
       break;
     case "Six Eyes":
       player.overrideManaCost = 1;
