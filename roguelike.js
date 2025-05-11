@@ -2832,7 +2832,7 @@ function finalizeRoom(key) {
        *******************/
 	  
 	  function showGuildApplicationPrompt() {
-  let input = prompt("You've found the Guild! You must pay $500 to apply. Please enter the amount:");
+  let input = prompt("Welcome to the Guild! Please pay $500 if you wish to apply!");
   // If the player cancels or inputs nothing, assume they’re choosing to leave.
   if (input === null) {
     alert("We hope you reconsider applying!");
