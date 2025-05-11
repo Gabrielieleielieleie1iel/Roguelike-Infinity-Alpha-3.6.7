@@ -4098,8 +4098,8 @@ if (player.mercenaries.length > 0) {
       break;
 	case "Heavenly Restricted":
       // Override the player's base stats.
-	  player.baseStats.maxHp = 3000;
-      player.hp = 3000;
+	  player.baseStats.maxHp = 500;
+      player.hp = 500;
 	  player.baseStats.maxArmor = 100;
       player.armor = 100;
       player.baseStats.attack = 100;
