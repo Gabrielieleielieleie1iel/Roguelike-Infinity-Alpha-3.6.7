@@ -5883,7 +5883,7 @@ setInterval(() => {
     lastHealTime = Date.now();
     return;
   }
-  if (Date.now() - lastHealTime >= 200) {
+  if (Date.now() - lastHealTime >= 50) {
     if (player.armor < player.maxArmor) {
       player.armor = Math.min(player.armor + 1, player.maxArmor);
       updateStats();
@@ -5892,7 +5892,7 @@ setInterval(() => {
     }
     lastHealTime = Date.now();
   }
-}, 1000);
+}, 50);
 
 
 
