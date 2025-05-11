@@ -89,6 +89,7 @@ body.doom-mode .inventorySlot {
 }
 
 body.doom-mode .hpBar,
+body.doom-mode .armorBar,
 body.doom-mode .manaBar,
 body.doom-mode .expBar {
   width: 200px;
@@ -113,8 +114,12 @@ body.doom-mode .expBarInner {
 
 body.doom-mode .manaBarInner {
   height: 100%;
-  background: #3b3b3b;
+  background: gray;
   width: 100%;
+}
+
+body.doom-mode .armorBarInner {
+  background: #303030;
 }
 
 body.doom-mode #battleMenu {
@@ -271,12 +276,12 @@ body.doom-mode #deathMenu button:hover {
 
 body.doom-mode #equipmentBtn {
   position: absolute;
-  top: 465px;      /* adjust to fit your layout */
+  top: 320px;      /* adjust to fit your layout */
   right: 1250px;    /* place near the other HUD elements */
   width: 100px;
   height: 100px;
-  background: transparent;
-  border: 2px solid white;
+  background: #2e0000;
+  border: 2px solid #ff6200;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -286,7 +291,7 @@ body.doom-mode #equipmentBtn {
 }
 
 body.doom-mode #equipmentBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(46, 0, 0, 0.5);
 }
 
 body.doom-mode #equipmentBtn img {
@@ -482,6 +487,7 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
   background: #333;
   padding: 10px;
   box-sizing: border-box;
+  border: 1px solid #111111;
 }
 
 .barContainer {
@@ -492,11 +498,13 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
 
 .hpBar,
 .manaBar,
-.expBar {
+.expBar,
+.armorBar {
   width: 200px;
   height: 20px;
   position: relative;
   display: inline-block;
+  border: 1px solid #111111;
   background: #555;
   margin-top: 5px;
 }
@@ -512,9 +520,16 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
   background: yellow;
   width: 0%;
 }
+
 .manaBarInner {
   height: 100%;
   background: blue;
+  width: 100%;
+}
+
+.armorBarInner {
+  height: 100%;
+  background: gray;
   width: 100%;
 }
 
@@ -934,11 +949,11 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
 /* Equipment Button on HUD */
 #equipmentBtn {
   position: absolute;
-  top: 465px;      /* adjust to fit your layout */
+  top: 320px;      /* adjust to fit your layout */
   right: 1250px;    /* place near the other HUD elements */
   width: 100px;
   height: 100px;
-  background: transparent;
+  background: gray;
   border: 2px solid white;
   display: flex;
   align-items: center;

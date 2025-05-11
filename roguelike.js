@@ -282,6 +282,8 @@ casinoMusic.loop = true;
   magic:     2,
   maxHp:    100,
   hp:       100,
+  maxArmor: 20,
+  armor: 20,
   maxMana:  10,
   mana:     10,
   agility:   1,
@@ -304,7 +306,6 @@ casinoMusic.loop = true;
   guildMissionStage: 0,
   guildMissionKills: 0,
   mercenaries: [],
-  lastEnemyDamage: 0,
   
   // "True" base stats (permanent upgrades are stored here)
   baseStats: {
@@ -312,6 +313,7 @@ casinoMusic.loop = true;
     defense:   2,
     magic:     2,
     maxHp:    100,
+	maxArmor: 20,
     maxMana:  10,
     agility:   1,
     perception:1,
@@ -341,32 +343,34 @@ casinoMusic.loop = true;
 	p.attack = Math.ceil(p.attack * 1.5);
   },
   "Greatsword": p => {
-    p.attack   = p.attack * 2;
-    p.defense  = Math.ceil(p.defense * 1.5);
+    p.attack = p.attack * 2;
+    p.defense = Math.ceil(p.defense * 1.5);
+	p.maxArmor += 10;
     p.agility -= 10;
   },
   "Dagger":     p => {
-    p.attack     = Math.ceil(p.attack * 1.33);
-    p.agility    = Math.ceil(p.agility * 1.5);
+    p.attack = Math.ceil(p.attack * 1.33);
+    p.agility = Math.ceil(p.agility * 1.5);
     p.perception = Math.ceil(p.perception * 1.5);
   },
   "Spear":      p => {
-    p.attack     = p.attack * 2;
+    p.attack = p.attack * 2;
     p.perception = Math.ceil(p.perception * 1.5);
-    p.agility   -= 10;
+    p.agility -= 10;
   },
   "Wand":       p => {
-    p.magic   = Math.ceil(p.magic * 1.5);
+    p.magic = Math.ceil(p.magic * 1.5);
     p.maxMana += 10;
   },
   "Staff":      p => {
-    p.magic   = p.magic * 2;
+    p.magic = p.magic * 2;
     p.maxMana += 20;
     p.agility -= 10;
   },
   "Shield":     p => {
-    p.attack     = Math.ceil(p.attack * 1.25);
-    p.defense    = Math.ceil(p.agility * 1.5);
+    p.attack = Math.ceil(p.attack * 1.25);
+    p.defense = Math.ceil(p.agility * 1.5);
+	p.maxArmor += 30;
   },
   "Gun": p => {
     if (p.equipment.accessory
@@ -399,20 +403,24 @@ casinoMusic.loop = true;
   // Armors
   "Armor":      p => {
 	p.defense = Math.ceil(p.defense * 1.5); 
+	p.maxArmor += 25;
   },
   "Cloak":      p => {
     p.defense = Math.ceil(p.defense * 1.3);
     p.agility = Math.ceil(p.agility * 2);
+	p.maxArmor += 10;
   },
   "Robe":       p => {
     p.defense = Math.ceil(p.defense * 1.25);
     p.magic   = Math.ceil(p.magic * 1.5);
     p.maxMana += 20;
+	p.maxArmor += 10;
   },
   "Grand Knight's Armor":      p => {
     p.defense *= 2;
 	p.attack *= 2;
 	p.agility *= 2;
+	p.maxArmor += 30;
   },
 
   // Accessories
@@ -1922,8 +1930,10 @@ manaBtns.forEach(el => el.innerText = "Ammo");
 const effMaxHp = Math.floor(getEffectiveMaxHp());
 // Core stats
 player.level       = 1;
-player.hp       = 1000;
-player.maxHp       = 666.67;
+player.hp          = 200;
+player.maxHp       = 133.5;
+player.armor       = 150;
+player.maxArmor    = 150;
 player.attack      = 8;
 player.magic       = 8;
 player.defense     = 1;
@@ -1938,7 +1948,8 @@ player.expToLevel = 20;
 player.money = 500;
 
 // True “baseStats” (for future level-up scaling)
-player.baseStats.maxHp      = 666.67;
+player.baseStats.maxHp      = 133.5;
+player.baseStats.maxArmor   = 150;
 player.baseStats.attack     = 8;
 player.baseStats.magic      = 8;
 player.baseStats.defense    = 1;
@@ -2648,7 +2659,7 @@ function generateAdjacentRooms(cx, cy) {
     }
   } else {
     let moneyGained = Math.floor(Math.random() * 51) + 50;
-    player.money += moneyGained * Math.round(1 + player.fortune * 0.08);
+    player.money = Math.round(player.money + moneyGained * Math.round(1 + player.fortune * 0.08));
     alert(`You found some treasure! Earned $${moneyGained * Math.round(1 + player.fortune * 0.08)}!`);
   }
   
@@ -2798,8 +2809,13 @@ function finalizeRoom(key) {
        *******************/
       function healPlayer() {
         const effMaxHp = Math.floor(getEffectiveMaxHp());
-		if (gameDifficulty === "doom") {
-			player.hp = player.hp + Math.floor(effMaxHp * 0.15);
+		if (gameDifficulty === "normal" || gameDifficulty === "hard") {
+			player.hp = player.hp + Math.floor(effMaxHp * 0.5);
+			if (player.hp > effMaxHp) {
+				player.hp = effMaxHp;
+			}
+		} else if (gameDifficulty === "extreme" || gameDifficulty === "insane" || gameDifficulty === "calamity" || gameDifficulty === "doom") {
+			player.hp = player.hp + Math.floor(effMaxHp * 0.25);
 			if (player.hp > effMaxHp) {
 				player.hp = effMaxHp;
 			}
@@ -2922,8 +2938,8 @@ function handleMission() {
     let expReward = req * 2 * (Math.round(1 + player.potential * 0.08));
     let moneyReward = req * 5 * Math.round(1 + player.fortune * 0.08);
     alert(`Mission Completed! You gained ${expReward} EXP and $${moneyReward}.`);
-    player.exp += expReward;
-    player.money += moneyReward;
+    player.exp = Math.round(player.exp + expReward);
+    player.money = Math.round(player.money + moneyReward);
     player.guildMissionStage++;
     player.guildMissionKills = 0;
     setMissionUI();
@@ -3496,7 +3512,7 @@ function getEnemyByName(enemyName) {
       gainedMoney = Math.floor(Math.random() * (maxM - minM + 1)) + minM;
     }
     addExp(gainedExp);
-    player.money += gainedMoney * Math.round(1 + player.fortune * 0.08);
+    player.money = Math.round(player.money + gainedMoney * Math.round(1 + player.fortune * 0.08));
     updateStats();
   }
 
@@ -3789,10 +3805,25 @@ function dealPlayerMagicDamage(mult = 1) {
   return;
   }
   
-  player.lastEnemyDamage = Math.round(enemyDamage);
+  const rawEnemyDamage = Math.round(enemyDamage);
+  player.lastEnemyDamage = rawEnemyDamage;
 
-  // Apply the hit
-  player.hp -= player.lastEnemyDamage;
+  if (player.armor > 0) {
+    if (player.lastEnemyDamage <= player.armor) {
+      player.armor -= player.lastEnemyDamage;
+      player.lastEnemyDamage = 0;
+    } else {
+      player.lastEnemyDamage -= player.armor;
+      player.armor = 0;
+	  logBattle("Your ARMOR has depleted!");
+    }
+  }
+
+  if (player.lastEnemyDamage > 0) {
+    player.hp -= player.lastEnemyDamage;
+    if (player.hp < 0) player.hp = player.immortal ? 1 : 0;
+  }
+
   if (player.hp < 0) {
 	if (player.immortal) {
 		player.hp = 1;
@@ -3808,9 +3839,9 @@ function dealPlayerMagicDamage(mult = 1) {
 
   // Log the attack
   if (enemyCritical) {
-    logBattle(`${currentEnemy.name} attacked and dealt ${player.lastEnemyDamage} critical damage!`);
+    logBattle(`${currentEnemy.name} attacked and dealt ${rawEnemyDamage} critical damage!`);
   } else {
-    logBattle(`${currentEnemy.name} attacked and dealt ${player.lastEnemyDamage} damage.`);
+    logBattle(`${currentEnemy.name} attacked and dealt ${rawEnemyDamage} damage.`);
   }
   updateStats();
   
@@ -3990,7 +4021,8 @@ if (player.mercenaries.length > 0) {
       break;
 	case "Big":
 	  player.baseStats.attack  += 5;
-	  player.baseStats.defense += 10;
+	  player.baseStats.maxArmor += 20;
+	  player.armor += 20;
 	  player.baseStats.maxHp   += 100;
 	  player.hp += 100;
 	  player.baseStats.agility -= 10;
@@ -4017,7 +4049,9 @@ if (player.mercenaries.length > 0) {
 	  updateStats();
       break;
     case "Tough":
-      player.enemyDamageReduction = 0.5;
+      player.enemyDamageReduction = 0.33;
+	  player.armor += 30;
+	  player.baseStats.maxArmor += 30;
       player.immuneToCrits = true;
       break;
     case "Golden":
@@ -4052,13 +4086,15 @@ if (player.mercenaries.length > 0) {
       break;
 	case "Heavenly Restricted":
       // Override the player's base stats.
-	  player.baseStats.maxHp = 300;
-      player.baseStats.hp = 300;
+	  player.baseStats.maxHp = 3000;
+      player.hp = 3000;
+	  player.baseStats.maxArmor = 100;
+      player.armor = 100;
       player.baseStats.attack = 100;
       player.baseStats.defense = 60;
       player.baseStats.magic = 0;
       player.baseStats.maxMana = 0;
-      player.baseStats.mana = 0;
+      player.mana = 0;
       player.baseStats.agility = 60;
       player.baseStats.perception = 60;
       player.baseStats.potential = 0;
@@ -4094,6 +4130,8 @@ if (player.mercenaries.length > 0) {
 	case "Invincible":
 	  player.defense += 99;
 	  player.baseStats.defense += 99;
+	  player.armor += 100;
+	  player.baseStats.maxArmor += 100;
 	  updateStats();
 	  break;
 	  
@@ -4449,7 +4487,7 @@ document.addEventListener("keydown", e => {
   }
 
   // spend flat 5 mana
-  player.mana -= 5;
+  player.mana -= manaCost;
   updateManaDisplay();
 
   // execute the right effect
@@ -4861,6 +4899,8 @@ document.addEventListener("keydown", e => {
 			  break;
             case "Iron Potion":
               player.iron = true;
+			  player.armor += 20;
+			  player.maxArmor += 20;
               logBattle("You used an Iron Potion. Enemy damage halved this battle!");
               break;
               // Dice and others can have custom battle logic if needed.
@@ -4921,8 +4961,11 @@ document.addEventListener("keydown", e => {
               logBattle(`You threw a Weaken potion and weakened ${currentEnemy.name}!`);
               break;
             case "Iron Potion":
-              alert(item.name + " can only be used in battle!");
-              return;
+              player.iron = true;
+			  player.armor += 20;
+			  player.maxArmor += 20;
+              logBattle("You used an Iron Potion. Enemy damage halved this battle!");
+              break;
 			case "Molotov":
               currentEnemy.burned = true;
               logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
@@ -5056,7 +5099,7 @@ closeSellBtn.addEventListener("click", () => {
        *******************/
       function addExp(amount) {
         let multiplier = 1 + (player.potential - 1) * 0.08;
-        player.exp += Math.floor(amount * multiplier);
+        player.exp = Math.round(player.exp + Math.floor(amount * multiplier));
         updateStats();
         if (player.exp >= player.expToLevel) {
           levelUp();
@@ -5122,6 +5165,12 @@ closeSellBtn.addEventListener("click", () => {
 			player.magic += 1;
 			player.baseStats.magic += 1;
 			updateManaDisplay();
+			updateStats();
+		  } else if (stat === "defense") {
+			player.defense += 1;
+			player.baseStats.defense += 1;
+			player.maxArmor += 5;
+			player.baseStats.maxArmor += 5;
 			updateStats();
 		  } else {
             player[stat] += 1;
@@ -5573,6 +5622,13 @@ function updatePlayerStatsUI() {
   // bar % uses effective max
   const hpPercent = (player.hp / effMaxHp) * 100;
   document.getElementById("hpBarInner").style.width = `${hpPercent}%`;
+  
+  // ——— Armor text & bar ———
+  document.querySelectorAll("#armorText").forEach(el => {
+	el.textContent = `${player.armor}/${player.maxArmor}`;
+  });
+  const armorPercent = (player.armor / player.maxArmor) * 100;
+  document.getElementById("armorBarInner").style.width = `${armorPercent}%`;
 
   // ——— EXP text & bar ———
   document.querySelectorAll("#expText").forEach(el => {
@@ -5811,17 +5867,16 @@ document.querySelectorAll(".unequipBtn").forEach(btn => {
 let lastHealTime = Date.now();
 
 setInterval(() => {
-  // If in battle (tint up), reset timer and skip
   if (battleTint.style.display === "block") {
     lastHealTime = Date.now();
     return;
   }
-  if (Date.now() - lastHealTime >= 30000) {
-    if (player.hp < player.maxHp) {
-      player.hp = Math.min(player.hp + 1, player.maxHp);
+  if (Date.now() - lastHealTime >= 200) {
+    if (player.armor < player.maxArmor) {
+      player.armor = Math.min(player.armor + 1, player.maxArmor);
       updateStats();
-	  updateManaDisplay();
-	  updateInventoryDisplay();
+      updateManaDisplay();
+      updateInventoryDisplay();
     }
     lastHealTime = Date.now();
   }
