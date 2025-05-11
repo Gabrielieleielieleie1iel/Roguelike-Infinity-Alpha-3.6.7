@@ -3527,7 +3527,9 @@ function getEnemyByName(enemyName) {
     }
     addExp(gainedExp);
     player.money = Math.round(player.money + gainedMoney * Math.round(1 + player.fortune * 0.08));
-    updateStats();
+    const healAmt = Math.floor(player.maxArmor * 0.15);
+	player.armor = Math.min(player.armor + healAmt, player.maxArmor);
+	updateStats();
   }
 
   // if more ambush enemies remain, queue the next one
@@ -5181,8 +5183,8 @@ closeSellBtn.addEventListener("click", () => {
 		  } else if (stat === "defense") {
 			player.defense += 1;
 			player.baseStats.defense += 1;
-			player.maxArmor += 5;
-			player.baseStats.maxArmor += 5;
+			player.maxArmor += 10;
+			player.baseStats.maxArmor += 10;
 			updateStats();
 		  } else {
             player[stat] += 1;
@@ -5883,7 +5885,7 @@ setInterval(() => {
     lastHealTime = Date.now();
     return;
   }
-  if (Date.now() - lastHealTime >= 50) {
+  if (Date.now() - lastHealTime >= 333) {
     if (player.armor < player.maxArmor) {
       player.armor = Math.min(player.armor + 1, player.maxArmor);
       updateStats();
