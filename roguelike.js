@@ -51,6 +51,9 @@
 	  const tabHistory = document.getElementById("tabHistory");
 	  const tabPlayer = document.getElementById("tabPlayer");
 	  const tabInnates = document.getElementById("tabInnates");
+	  const tabMonsters = document.getElementById("tabMonsters");
+	  const tabLegends = document.getElementById("tabLegends");
+	  const tabCrime = document.getElementById("tabCrime");
 	  const contentGuide = document.getElementById("contentGuide");
 	  const contentGuide2 = document.getElementById("contentGuide2");
 	  const contentHistory = document.getElementById("contentHistory");
@@ -60,9 +63,15 @@
 	  const contentLegends = document.getElementById("contentLegends");
 	  const contentCrime = document.getElementById("contentCrime");
 	  
+	  let hasHistoryUnlocked = false;
+	  let hasCrimeUnlocked   = false;
+	  
 libraryButton.addEventListener("click", () => {
+  tabHistory.style.display = hasHistoryUnlocked ? "inline-block" : "none";
+  tabCrime.style.display = hasCrimeUnlocked ? "inline-block" : "none";
+  
   libraryMenu.style.display = "block";
-  battleTint.style.display = "block";   // reuse your existing tint to dim background
+  battleTint.style.display = "block";
 });
 
 exitLibrary.addEventListener("click", () => {
@@ -1232,20 +1241,22 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
    // Every 50 floors you hit a boss; cycle through these seven
    const bosses = [
      { name: "Behemoth",            hp: 1000,  damageRange: [40, 90],  expReward: [100, 100], moneyReward: [100, 100] },
-     { name: "Fallen Angel",        hp: 2000,  damageRange: [70, 100], expReward: [300, 300], moneyReward: [200, 150] },
-     { name: "Hell Guard", hp: 3500, damageRange: [80, 120], expReward: [750, 750], moneyReward: [500, 500] },
-     { name: "Cyberdemon",          hp: 6000, damageRange: [100, 130], expReward: [1000, 1000], moneyReward: [800, 800] },
-	 { name: "Spider Mastermind",          hp: 8000, damageRange: [90, 140], expReward: [1500, 1500], moneyReward: [800, 800] },
-	 { name: "Hell Titan",          hp: 10000, damageRange: [80, 120], expReward: [2000, 2000], moneyReward: [800, 800] },
-	 { name: "Guardian of Hell, Cerberus.", hp: 10000, damageRange: [120, 150], expReward: [2400, 2400], moneyReward: [1000, 1000] },
-     { name: "Demon King.",          hp: 12000, damageRange: [100, 160],expReward: [2700, 2700], moneyReward: [1500, 1500] },
-	 { name: "Doom Hunter",          hp: 12500, damageRange: [100, 130],expReward: [2800, 2800], moneyReward: [1000, 1000] },
-	 { name: "Death Marauder",          hp: 15000, damageRange: [90, 140],expReward: [3000, 3000], moneyReward: [1000, 1000] },
-	 { name: "The Gladiator",          hp: 18000, damageRange: [100, 150],expReward: [3200, 3200], moneyReward: [1200, 1200] },
-     { name: "Ancient Hell Titan",  hp: 25000, damageRange: [100, 130],expReward: [3500, 3500], moneyReward: [1500, 1500] },
-	 { name: "Khan Maykr",          hp: 15000, damageRange: [130, 170],expReward: [3600, 3600], moneyReward: [1500, 1000] },
-	 { name: "The Icon of Sin",          hp: 30000, damageRange: [120, 140],expReward: [4000, 4000], moneyReward: [1500, 1500] },
-     { name: "The Dark Lord, Davoth",           hp: 25000, damageRange: [120, 160],expReward: [4200, 4200], moneyReward: [2000, 2000] }
+	 { name: "Baron of Hell",            hp: 1800,  damageRange: [60, 100],  expReward: [200, 200], moneyReward: [100, 100] },
+     { name: "Fallen Angel",        hp: 2000,  damageRange: [70, 120], expReward: [300, 300], moneyReward: [200, 150] },
+     { name: "Hell Guard", hp: 3500, damageRange: [80, 110], expReward: [750, 750], moneyReward: [500, 500] },
+     { name: "Cyberdemon",          hp: 6000, damageRange: [100, 120], expReward: [1000, 1000], moneyReward: [800, 800] },
+	 { name: "Spider Mastermind",          hp: 8000, damageRange: [90, 130], expReward: [1500, 1500], moneyReward: [800, 800] },
+	 { name: "Hell Titan",          hp: 10000, damageRange: [80, 110], expReward: [2000, 2000], moneyReward: [800, 800] },
+	 { name: "Guardian of Hell, Cerberus.", hp: 10000, damageRange: [120, 140], expReward: [2400, 2400], moneyReward: [1000, 1000] },
+     { name: "Demon King.",          hp: 12000, damageRange: [100, 150],expReward: [2700, 2700], moneyReward: [1500, 1500] },
+	 { name: "Doom Hunter",          hp: 12500, damageRange: [100, 120],expReward: [2800, 2800], moneyReward: [1000, 1000] },
+	 { name: "Death Marauder",          hp: 15000, damageRange: [90, 130],expReward: [3000, 3000], moneyReward: [1000, 1000] },
+	 { name: "The Gladiator",          hp: 18000, damageRange: [100, 140],expReward: [3200, 3200], moneyReward: [1200, 1200] },
+     { name: "Ancient Hell Titan",  hp: 25000, damageRange: [100, 120],expReward: [3500, 3500], moneyReward: [1500, 1500] },
+	 { name: "Khan Maykr",          hp: 15000, damageRange: [130, 160],expReward: [3600, 3600], moneyReward: [1500, 1000] },
+	 { name: "The Icon of Sin",          hp: 30000, damageRange: [120, 130],expReward: [4000, 4000], moneyReward: [1500, 1500] },
+	 { name: "Viscount Hellbreaker",          hp: 25000, damageRange: [100, 150],expReward: [3800, 3800], moneyReward: [1500, 1500] },
+     { name: "The Dark Lord, Davoth",           hp: 35000, damageRange: [120, 150],expReward: [4200, 4200], moneyReward: [2000, 2000] }
    ];
    const idx = Math.min(Math.ceil(floor/50)-1, bosses.length-1);
    return bosses[idx];
@@ -2825,8 +2836,21 @@ function generateAdjacentRooms(cx, cy) {
   const legendaryChance = Math.min(0.5, 0.001 + (player.luck * 0.001));
   const epicChanceOne = Math.min(0.5, 0.01 + (player.luck * 0.005));
   const epicChanceTwo = Math.min(0.5, 0.02 + (player.luck * 0.005));
+  const rareChance = Math.min(0.5, 0.05 + (player.luck * 0.005));
   
 if (gameDifficulty !== "doom") {
+  if (!hasHistoryUnlocked && Math.random() < rareChance) {
+    hasHistoryUnlocked = true;
+    alert("You found the **World History** book! It now has been added to the Guild library.");
+    return;
+  }
+  
+  if (!hasCrimeUnlocked && Math.random() < epicChanceOne) {
+    hasCrimeUnlocked = true;
+    alert("You found a mysterious file... **Case 001: The Restricted One (UNSOLVED)**, it says. You decide to hand it over to the Guild.");
+    return;
+  }
+  
   if (Math.random() < dragonBallChance) {
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
@@ -2952,23 +2976,6 @@ if (gameDifficulty !== "doom") {
 	updateInventoryDisplay();
     return;
   }
-
-  if (Math.random() < epicChanceTwo) {
-    const freeIdx = player.inventory.findIndex(slot => slot === null);
-    if (freeIdx !== -1) {
-      player.inventory[freeIdx] = {
-        name:     "Ammo Box",
-        type:     "equipment",
-        category: "accessory"
-      };
-      alert("You found a mysterious case with metallic objects...! (Epic)");
-    } else {
-      alert("Inventory full...");
-    }
-    updateStats();
-	updateInventoryDisplay();
-    return;
-  }
 } else {
 	if (Math.random() < dragonBallChance) {
     const freeIdx = player.inventory.findIndex(slot => slot === null);
@@ -3011,7 +3018,7 @@ if (gameDifficulty !== "doom") {
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
-        name:     "Titan's Fange",
+        name:     "Titan's Fang",
         type:     "equipment",
         category: "weapon"
       };
@@ -3666,9 +3673,6 @@ finalizeRoom(key);
 	} else if (currentEnemy === "Demon God") {
 	  stopWorldMusic();
 	  dkTrack.play();
-	} else if (currentEnemy === "Demon God.") {
-	  stopWorldMusic();
-	  dkTrack.play();
 	} else if (currentEnemy === "Warden of Judgement, Will, And Balance") {
 	  stopWorldMusic();
 	  semiTrack.play();
@@ -3682,16 +3686,19 @@ finalizeRoom(key);
   }
   ambushCompleteCallback = onComplete || null;
   
+  // Pull the right boss template for this floor
+    const bossTemplate = getBossForFloor(floorCount);
+  
   if (gameDifficulty === "doom") {
     // lock BGM to Hell
     stopWorldMusic();
-    if (bgmTracks["Hell"]) {
+    if (bossTemplate.name === "The Dark Lord, Davoth") {
+      dkTrack.currentTime = 0;
+      dkTrack.play();
+    } else if (bgmTracks["Hell"]) {
       bgmTracks["Hell"].audio.loop = true;
       bgmTracks["Hell"].audio.play();
     }
-
-    // Pull the right boss template for this floor
-    const bossTemplate = getBossForFloor(floorCount);
     // Clone it so we don’t mangle the template
     const bossData = JSON.parse(JSON.stringify(bossTemplate));
 

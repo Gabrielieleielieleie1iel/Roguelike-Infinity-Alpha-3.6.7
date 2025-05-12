@@ -328,6 +328,7 @@ body.doom-mode #equipmentMenu .close-btn {
   font-size: 18px;
   cursor: pointer;
 }
+
 body.doom-mode #equipmentMenu #equipmentSlots {
   display: flex;
   flex-direction: column;
