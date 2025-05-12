@@ -399,6 +399,66 @@ casinoMusic.loop = true;
     p.magic   = p.magic * 3;
     p.maxMana = Math.ceil(p.maxMana * 2.5);
   },
+  "Chainsaw":      p => {
+	p.attack = Math.ceil(p.attack * 1.5);
+  },
+  "Sentinel Hammer": p => {
+    p.attack = p.attack * 2;
+    p.defense = Math.ceil(p.defense * 1.5);
+	p.maxArmor += 10;
+    p.agility -= 10;
+  },
+  "Doomblade Arm Upgrade":     p => {
+    p.attack = Math.ceil(p.attack * 1.33);
+    p.agility = Math.ceil(p.agility * 1.5);
+    p.perception = Math.ceil(p.perception * 1.5);
+  },
+  "Doomspear":      p => {
+    p.attack = p.attack * 2;
+    p.perception = Math.ceil(p.perception * 1.5);
+    p.agility -= 10;
+  },
+  "Combat Shotgun":       p => {
+    p.magic = Math.ceil(p.magic * 1.5);
+    p.maxMana += 10;
+  },
+  "Unmaykr":      p => {
+    p.magic = p.magic * 2;
+    p.maxMana += 20;
+    p.agility -= 10;
+  },
+  "Chainshield":     p => {
+    p.attack = Math.ceil(p.attack * 1.25);
+    p.defense = Math.ceil(p.agility * 1.5);
+	p.maxArmor += 30;
+  },
+  "BFG9000": p => {
+    if (p.equipment.accessory
+        && p.equipment.accessory.name === "Argent Energy Storage") {
+      p.attack *= 5;
+    }
+  },
+  "Crucible": p => {
+    // triple attack
+    p.attack *= 3;
+    // double agility & perception
+    p.agility  = Math.ceil(p.agility  * 2);
+    p.perception = Math.ceil(p.perception * 2);
+    // increase defense by 1.5×, rounded up
+    p.defense = Math.ceil(p.defense * 1.5);
+    // +25 max mana
+    p.maxMana += 25;
+  },
+  "Titan's Fang": p => {
+    p.attack *= 2;
+    p.agility *= 3;
+    p.perception = Math.ceil(p.perception * 2.5);
+  },
+  "BFG10000":      p => {
+	p.attack = Math.ceil(p.attack * 1.25);
+    p.magic   = p.magic * 3;
+    p.maxMana = Math.ceil(p.maxMana * 2.5);
+  },
 
   // Armors
   "Armor":      p => {
@@ -417,6 +477,27 @@ casinoMusic.loop = true;
 	p.maxArmor += 10;
   },
   "Grand Knight's Armor":      p => {
+    p.defense *= 2;
+	p.attack *= 2;
+	p.agility *= 2;
+	p.maxArmor += 30;
+  },
+  "Armor":      p => {
+	p.defense = Math.ceil(p.defense * 1.5); 
+	p.maxArmor += 25;
+  },
+  "Cloak":      p => {
+    p.defense = Math.ceil(p.defense * 1.3);
+    p.agility = Math.ceil(p.agility * 2);
+	p.maxArmor += 10;
+  },
+  "Mantle":       p => {
+    p.defense = Math.ceil(p.defense * 1.25);
+    p.magic   = Math.ceil(p.magic * 1.5);
+    p.maxMana += 20;
+	p.maxArmor += 10;
+  },
+  "Praetor Suit":      p => {
     p.defense *= 2;
 	p.attack *= 2;
 	p.agility *= 2;
@@ -457,6 +538,28 @@ casinoMusic.loop = true;
 	p.luck = Math.ceil(p.luck * 1.5);
 	p.fortune = Math.ceil(p.fortune * 1.5);
   },
+  "Agility Rune":      p => {
+	p.dodgeChance = 0.1;
+  },
+  "Brutality Rune":    p => {
+	p.neverMiss = true;
+  },
+  "Savagery Rune":  p => {
+	p.critMultiplier = 2;
+  },
+  "Argent Energy Storage":   p => {
+  },
+  "Delta V-Jump Boots": p => {
+	p.canRowMovement = true;
+	p.agility *= 3;
+  },
+  "Dark Ages Mantle": p => {
+	p.attack = Math.ceil(p.attack *= 1.5);
+	p.magic = Math.ceil(p.magic * 1.5);
+	p.defense = Math.ceil(p.defense * 1.5);
+	p.agility = Math.ceil(p.agility * 1.5);
+	p.perception = Math.ceil(p.perception * 1.5);
+  },
 };
 
 const weaponSkillMap = {
@@ -467,6 +570,14 @@ const weaponSkillMap = {
   "Excalibur": "Execution",
   "Sorceress' Staff": "Rewind",
   "Dragon's Fang": "Outrage",
+  
+  "Doomblade Arm Upgrade": "Glory Slash",
+  "Chainshield": "Launch",
+  "Sentinel Hammer": "Sentinel Slam",
+  "Unmaykr": "Demon Evisceration",
+  "Crucible": "Divine Execution",
+  "BFG10000": "Planet Break",
+  "Titan's Fang": "Outrage",
 };
 	  
 	  const passiveAbilities = [
@@ -1640,7 +1751,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 	  }
 
       // ─── Shop Items list ───
-const shopItemsList = [
+let shopItemsList = [
   // Consumables
   {
 	name: "Healing Potion",
@@ -1886,10 +1997,10 @@ function selectDifficulty(difficulty) {
    document.getElementById("miscStats2").style.display = "none";
 
   // Hide the level-up buttons for Potential, Luck, Fortune
-  ["potential", "luck", "fortune"].forEach(stat => {
+   ["potential", "luck", "fortune"].forEach(stat => {
     const btn = levelUpMenu.querySelector(`button[data-stat="${stat}"]`);
     if (btn) btn.style.display = "none";
-  });
+   });
    titleMusic.pause();
    document.getElementById("abilityMenu").style.display = "none";
    const doomNames = [
@@ -1897,23 +2008,24 @@ function selectDifficulty(difficulty) {
     "Hellwalker",
     "Unchained Predator",
     "Scourge of Hell",
-    "Demon Slayer"
-  ];
-  // Pick one at random
-  const rand = Math.floor(Math.random() * doomNames.length);
-  // Overwrite the player's chosen ability name
-  player.doomAbilities = doomNames[rand];
+    "Demon Slayer",
+	"Heavensent Executioner",
+   ];
+   // Pick one at random
+   const rand = Math.floor(Math.random() * doomNames.length);
+   // Overwrite the player's chosen ability name
+   player.doomAbilities = doomNames[rand];
 
-  // Update whatever UI shows the ability title:
-  // (Use your existing element—here’s a generic example)
-  document.getElementById("hudPlayerPassive").textContent = player.doomAbilities;
+   // Update whatever UI shows the ability title:
+   // (Use your existing element—here’s a generic example)
+   document.getElementById("hudPlayerPassive").textContent = player.doomAbilities;
    document.getElementById("hudPlayerActive" ).innerText = "Rip and Tear";
    initGame();
    document.body.classList.add("doom-mode");
    magicBtn.innerText = "Shoot";
    document.querySelectorAll('[data-stat="magic"]').forEach(el => {
   el.innerText = "Arsenal";
-});
+  });
 
 // 2) Replace every “Magic:” and “Mana:” label in your stats panel
 const statsEl = document.getElementById("stats");
@@ -1939,6 +2051,214 @@ if (levelUpEl) {
 // 4) Make sure your mana‑display now reads “Ammo”
 const manaBtns = document.querySelectorAll('[data-stat="mana"]');
 manaBtns.forEach(el => el.innerText = "Ammo");
+
+shopItemsList = [
+	{
+	name: "Medkit",
+	cost: 50,
+	type: "healing",
+	category: "consumable",
+	usableInBattle: true,
+	usableOutOfBattle: true,
+	usageScope: "both"
+  },
+  {
+	name: "Magazine",
+	cost: 50,
+	type: "mana",
+	category: "consumable",
+	usableInBattle: true,
+	usableOutOfBattle: true,
+	usageScope: "both"
+  },
+  {
+    name: "Adrenaline",
+    cost: 100,
+    type: "rage",
+    category: "consumable",
+    usableInBattle: true,
+    usableOutOfBattle: false,
+    usageScope: "battle"
+  },
+  {
+    name: "Gas Bomb",
+    cost: 150,
+    type: "poison",
+    category: "consumable",
+    usableInBattle: true,
+    usableOutOfBattle: false,
+    usageScope: "battle"
+  },
+  {
+  name: "Subzero Bomb",
+  cost: 120,
+  type: "freeze",
+    category: "consumable",
+  usableInBattle: true,
+  usableOutOfBattle: false,
+  usageScope: "battle"
+  },
+  {
+  name: "Molotov",
+  cost: 200,
+  type: "burned",
+    category: "consumable",
+  usableInBattle: true,
+  usableOutOfBattle: false,
+  usageScope: "battle"
+  },
+  {
+    name: "Sleeping Gas",
+    cost: 100,
+    type: "weaken",
+    category: "consumable",
+    usableInBattle: true,
+    usableOutOfBattle: false,
+    usageScope: "battle"
+  },
+  {
+    name: "Armor+",
+    cost: 150,
+    type: "iron",
+    category: "consumable",
+    usableInBattle: true,
+    usableOutOfBattle: false,
+    usageScope: "battle"
+  },
+
+  // Equipment (must be equipped to work)
+  // ─ Accessories ─
+  {
+    name: "Mobility Rune",
+    cost: 300,
+    type: "equipment",
+    category: "accessory",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Brutality Rune",
+    cost: 320,
+    type: "equipment",
+    category: "accessory",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Savagery Rune",
+    cost: 360,
+    type: "equipment",
+    category: "accessory",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+	name: "Delta V-Jump Boots",
+  cost: 3000,
+  type: "equipment",
+  category: "accessory",
+  usableInBattle: false,
+  usableOutOfBattle: false,
+  usageScope: "passive"
+  },
+
+  // ─ Armors ─
+  {
+    name: "Armor",
+    cost: 300,
+    type: "equipment",
+    category: "armor",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Cloak",
+    cost: 280,
+    type: "equipment",
+    category: "armor",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Mantle",
+    cost: 320,
+    type: "equipment",
+    category: "armor",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+
+  // ─ Weapons ─
+  {
+    name: "Chainsaw",
+    cost: 320,
+    type: "equipment",
+    category: "weapon",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Chainshield",
+    cost: 400,
+    type: "equipment",
+    category: "both",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Doomblade Arm Upgrade",
+    cost: 320,
+    type: "equipment",
+    category: "both",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Sentinel Hammer",
+    cost: 360,
+    type: "equipment",
+    category: "weapon",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Doomspear",
+    cost: 360,
+    type: "equipment",
+    category: "weapon",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Combat Shotgun",
+    cost: 320,
+    type: "equipment",
+    category: "weapon",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Unmayker",
+    cost: 360,
+    type: "equipment",
+    category: "weapon",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+];
    
    // ——— Doom starting stats override ———
 const effMaxHp = Math.floor(getEffectiveMaxHp());
@@ -1974,7 +2294,7 @@ player.baseStats.luck       = 0;
 player.baseStats.fortune    = 0;
 player.baseStats.maxMana    = 10;
 
-player.passiveAbility = "Demon Slayer";
+player.passiveAbility = player.doomAbilities;
 player.activeAbility  = "Rip and Tear";
 applyPassiveAbilityEffects();
 
@@ -2498,6 +2818,7 @@ function generateAdjacentRooms(cx, cy) {
   const epicChanceOne = Math.min(0.5, 0.01 + (player.luck * 0.005));
   const epicChanceTwo = Math.min(0.5, 0.02 + (player.luck * 0.005));
   
+if (gameDifficulty !== "doom") {
   if (Math.random() < dragonBallChance) {
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
@@ -2640,6 +2961,150 @@ function generateAdjacentRooms(cx, cy) {
 	updateInventoryDisplay();
     return;
   }
+} else {
+	if (Math.random() < dragonBallChance) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "DragonBall",
+        type:     "misc",
+        category: "dragonball"
+      };
+      updateStats();
+      updateManaDisplay();
+      alert("You found a... mysterious orb? (???)");
+    } else {
+      alert("Inventory full...");
+    }
+	checkDragonBalls();
+	updateInventoryDisplay();
+    return;
+  }
+  
+  if (Math.random() < legendaryChance) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Crucible",
+        type:     "equipment",
+        category: "weapon"
+      };
+      updateStats();
+      updateManaDisplay();
+	  updateInventoryDisplay();
+      alert("You found the Crucible! (LEGENDARY)");
+    } else {
+      alert("Inventory full...");
+    }
+    return;
+  }
+  
+  if (Math.random() < legendaryChance) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Titan's Fange",
+        type:     "equipment",
+        category: "weapon"
+      };
+      updateStats();
+      updateManaDisplay();
+	  updateInventoryDisplay();
+      alert("You found the Titan's Fang! (LEGENDARY)");
+    } else {
+      alert("Inventory full...");
+    }
+    return;
+  }
+  
+  if (Math.random() < legendaryChance) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "BFG10000",
+        type:     "equipment",
+        category: "weapon"
+      };
+      updateStats();
+	  updateManaDisplay();
+	  updateInventoryDisplay();
+      alert("You found a really big fucking gun! (LEGENDARY)");
+    } else {
+      alert("Inventory full...");
+    }
+    return;
+  }
+  
+  if (Math.random() < epicChanceOne) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "BFG9000",
+        type:     "equipment",
+        category: "weapon"
+      };
+      alert("You found a big fucking gun! (Epic)");
+    } else {
+      alert("Inventory full...");
+    }
+    updateStats();
+	updateInventoryDisplay();
+    return;
+  }
+  
+  if (Math.random() < legendaryChance) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Praetor Suit",
+        type:     "equipment",
+        category: "armor"
+      };
+      alert("You found the Praetor Suit! (LEGENDARY)");
+    } else {
+      alert("Inventory full...");
+    }
+    updateStats();
+	updateManaDisplay();
+	updateInventoryDisplay();
+    return;
+  }
+  
+  if (Math.random() < legendaryChance) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Dark Ages Mantle",
+        type:     "equipment",
+        category: "accessory"
+      };
+      alert("You found an epic looking cape...! (LEGENDARY)");
+    } else {
+      alert("Inventory full...");
+    }
+    updateStats();
+	updateManaDisplay();
+	updateInventoryDisplay();
+    return;
+  }
+
+  if (Math.random() < epicChanceTwo) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Argent Energy Storage",
+        type:     "equipment",
+        category: "accessory"
+      };
+      alert("You found a mysterious case with powerful energy surging inside...! (Epic)");
+    } else {
+      alert("Inventory full...");
+    }
+    updateStats();
+	updateInventoryDisplay();
+    return;
+  }
+}
 
   // Otherwise 50/50 item vs. money
   if (Math.random() < itemChance) {
@@ -3527,8 +3992,30 @@ function getEnemyByName(enemyName) {
     }
     addExp(gainedExp);
     player.money = Math.round(player.money + gainedMoney * Math.round(1 + player.fortune * 0.08));
-    const healAmt = Math.floor(player.maxArmor * 0.15);
-	player.armor = Math.min(player.armor + healAmt, player.maxArmor);
+    let armorHealAmt = Math.round(Math.random() * (20 - 10 + 1)) + 10;
+	if (currentEnemy.boss = false) {
+		player.armor = player.maxArmor;
+	} else {
+		if (player.baseStats.maxArmor >= 50) {
+			let armorHealAmt = Math.round(Math.random() * (20 - 10 + 1)) + 10;
+			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
+		} else if (player.baseStats.maxArmor >= 100) {
+			let armorHealAmt = Math.round(Math.random() * (30 - 10 + 1)) + 10;
+			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
+		} else if (player.baseStats.maxArmor >= 200) {
+			let armorHealAmt = Math.round(Math.random() * (50 - 30 + 1)) + 30;
+			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
+		} else if (player.baseStats.maxArmor >= 300) {
+			let armorHealAmt = Math.round(Math.random() * (75 - 35 + 1)) + 35;
+			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
+		} else if (player.baseStats.maxArmor >= 500) {
+			let armorHealAmt = Math.round(Math.random() * (125 - 50 + 1)) + 50;
+			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
+		} else {
+			let armorHealAmt = Math.round(Math.random() * (10 - 2 + 1)) + 5;
+			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
+		}
+	}
 	updateStats();
   }
 
@@ -4069,6 +4556,7 @@ if (player.mercenaries.length > 0) {
 	  player.armor += 30;
 	  player.baseStats.maxArmor += 30;
       player.immuneToCrits = true;
+	  updateStats();
       break;
     case "Golden":
       player.moneyGainMultiplier = 2;
@@ -4149,6 +4637,53 @@ if (player.mercenaries.length > 0) {
 	  updateStats();
 	  break;
 	  
+	case "Demon Slayer":
+	  player.baseStats.attack += 8;
+	  updateStats();
+	  break;
+	
+	case "Scourge of Hell":
+	  player.armor += 50;
+	  player.maxArmor += 50;
+	  player.baseStats.maxArmor += 50;
+	  updateStats();
+	  break;
+	
+	case "The Doom Slayer":
+	  player.baseStats.attack += 4;
+	  player.baseStats.magic += 4;
+	  player.baseStats.durability += 9;
+	  player.mana += 10;
+	  player.maxMana += 10;
+	  player.baseStats.maxMana += 10;
+	  player.armor += 10;
+	  player.maxArmor += 10;
+	  player.baseStats.maxArmor += 10;
+	  player.baseStats.agility += 9;
+	  player.baseStats.perception += 4;
+	  updateManaDisplay();
+	  updateStats();
+	  break;
+	  
+	case "Hellwalker":
+	  player.baseStats.agility += 19;
+	  player.baseStats.perception += 9;
+	  updateStats();
+	  break;
+	
+	case "Unchained Predator":
+	  player.mana += 20;
+	  player.maxMana += 20;
+	  player.baseStats.maxMana += 20;
+	  updateManaDisplay();
+	  updateStats();
+	  break;
+	  
+	case "Heavensent Executioner":
+	  player.baseStats.magic += 8;
+	  updateStats();
+	  break;
+	  
     default:
       break;
   }
@@ -4202,21 +4737,19 @@ function useActiveAbility() {
     case "Rage":
 	  logBattle("<em>Overflow. Break your Limits. Rage!</em>");
       player.rage = true;
-	  player.attack *= 2;
+	  player.attack = player.attack * 2;
 	  player.magic = Math.ceil(player.magic * 1.5);
-	  player.perception *= 2;
-	  player.damage *= 2;
-	  player.critChance *= 2;
+	  player.perception = player.perception * 2;
 	  updateStats();
       break;
 	  
 	case "Sacrifice":
 	  updateManaDisplay();
 	  logBattle("<em>Blood for strength. Pain for flame. Light the torch that leads the way. Sacrifice!</em>");
-	  player.rage          = true;
-	  player.attack       *= 3;
+	  player.rage = true;
+	  player.attack = player.attack * 3;
 	  player.magic = Math.ceil(player.magic * 1.5);
-	  player.perception   *= 3;
+	  player.perception = player.perception * 3;
 	  const sacrificeCost = Math.floor(player.maxHp * 0.10);
 	  if (player.hp <= sacrificeCost) {
 		logBattle("You can't keep going like this...");
@@ -4230,8 +4763,8 @@ function useActiveAbility() {
 	case "Rip and Tear":
 	  updateManaDisplay();
 	  logBattle("<em>RIP AND TEAR... UNTIL IT'S DONE!</em>");
-	  player.attack = Math.ceil(player.attack * 1.5);
-	  player.perception   *= 3;
+	  player.attack = Math.round(player.attack * 1.5);
+	  player.perception = player.perception * 3;
 	  const ripAndTearCost = Math.floor(player.hp * 0.10);
 	  if (player.hp <= ripAndTearCost) {
 		logBattle("You can't keep going like this...");
@@ -4331,7 +4864,7 @@ function useActiveAbility() {
 	
 	case "Dash":
 	  logBattle("<em>Grace. Stealth. Break Space. Dash!</em>");
-      player.agility += 10;
+      player.agility = player.agility + 10;
 	  updateStats();
       break;
 
@@ -4509,7 +5042,7 @@ document.addEventListener("keydown", e => {
     case "Assassinate":
       logBattle("<em>You dashed at the target and attacked them!</em>");
       ignoreEnemyResistances = true;
-      const origPer = player.perception;
+      let origPer = player.perception;
       player.perception = 9999;
       playerAttack("attack");
       player.perception = origPer;
@@ -4554,6 +5087,40 @@ document.addEventListener("keydown", e => {
         updateStats();
       }
       break;
+
+	case "Glory Slash":
+	  ignoreEnemyResistances = true;
+      origPer = player.perception;
+      player.perception = 9999;
+      playerAttack("attack");
+      player.perception = origPer;
+      ignoreEnemyResistances = false;
+	  break;
+	
+	case "Launch":
+	  dealPlayerDamage(2);
+	  currentEnemy.burned = true;
+	  break;
+	
+	case "Sentinel Slam":
+	  dealPlayerDamage(2);
+	  break;
+	
+	case "Divine Execution":
+	  dealPlayerDamage(5);
+	  break;
+	
+	case "Planet Breaker":
+	  ignoreEnemyResistances = true;
+	  dealPlayerMagicDamage(5);
+	  ignoreEnemyResistances = false;
+	  break;
+	
+	case "Demon Evisceration":
+	  ignoreEnemyResistances = true;
+	  dealPlayerMagicDamage(2);
+	  ignoreEnemyResistances = false;
+	  break;
 
     default:
       logBattle("But nothing happened...");
@@ -4904,7 +5471,7 @@ document.addEventListener("keydown", e => {
               logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
               break;
 			case "Freeze Potion":
-			  const turns = Math.floor(Math.random() * 4) + 3;
+			  let turns = Math.floor(Math.random() * 4) + 3;
 			  currentEnemy.frozen = turns;
 			  logBattle(`You used a Freeze Potion and ${currentEnemy.name} was frozen!`);
 			  updateEnemyInfo();
@@ -4917,6 +5484,49 @@ document.addEventListener("keydown", e => {
 			  player.maxArmor += 20;
               logBattle("You used an Iron Potion. Enemy damage halved this battle!");
               break;
+			case "Medkit":
+              player.hp = Math.min(player.hp + Math.round(player.maxHp * 0.1), player.maxHp);
+			  updateStats();
+              logBattle("You used a medkit and healed 10% HP.");
+              break;
+			case "Magazine":
+              player.mana = player.maxMana;
+			  updateManaDisplay();
+              logBattle("You used your magazine reloaded your gun.");
+              break;
+            case "Adrenaline":
+              player.rage = true;
+			  player.attack *= 2;
+			  player.magic = Math.ceil(player.magic *= 1.5);
+			  player.perception *= 2;
+              logBattle("<em>RIP AND TEAR... RIP AND TEAR... RIP AND TEAR!!</em>");
+              break;
+            case "Gas Bomb":
+              currentEnemy.poison = true;
+              logBattle(`You threw a Gas Bomb and poisoned ${currentEnemy.name}!`);
+              break;
+            case "Sleeping Gas":
+              currentEnemy.weaken = true;
+              logBattle(`You used some Sleeping Gas and weakened ${currentEnemy.name}!`);
+              break;
+			case "Molotov":
+              currentEnemy.burned = true;
+              logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
+              break;
+			case "Subzero Bomb":
+			  turns = Math.floor(Math.random() * 4) + 3;
+			  currentEnemy.frozen = turns;
+			  logBattle(`You threw a Subzero Bomb and ${currentEnemy.name} was frozen!`);
+			  updateEnemyInfo();
+			  player.inventory.splice(index, 1);
+			  updateInventoryDisplay();
+			  break;
+            case "Armor+":
+              player.iron = true;
+			  player.armor += 20;
+			  player.maxArmor += 20;
+              logBattle("You activated your Armor+ and boosted your defenses!");
+              break;
               // Dice and others can have custom battle logic if needed.
             default:
               alert(item.name + " has no effect in battle.");
@@ -4925,7 +5535,6 @@ document.addEventListener("keydown", e => {
           // Continue with enemy's turn if applicable.
 		  unlockActions();
 		  setTimeout(enemyTurnWrapper, 250);
-        } else {
           // Effects when used out-of-battle:
           switch (item.name) {
             case "Healing Potion":
@@ -4999,7 +5608,7 @@ document.addEventListener("keydown", e => {
               alert(item.name + " has no effect.");
               return;
           }
-        }
+		}
         player.inventory[index] = null;
         updateInventoryDisplay();
         updateStats();
@@ -5288,6 +5897,7 @@ function hideOverlay() {
 		if (actionsLocked) return;
 		lockActions();
         playerAttack("attack");
+
 		if (Math.random() < player.agility * 0.0005) {
 			playerAttack("attack");
 		}

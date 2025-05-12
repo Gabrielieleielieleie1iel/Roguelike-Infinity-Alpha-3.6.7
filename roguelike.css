@@ -317,6 +317,7 @@ body.doom-mode #equipmentMenu.modal {
 body.doom-mode #equipmentMenu .modal-content {
   position: relative;
 }
+
 body.doom-mode #equipmentMenu .close-btn {
   position: absolute;
   top: 5px;
