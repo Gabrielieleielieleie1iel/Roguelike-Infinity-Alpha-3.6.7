@@ -1231,13 +1231,21 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 		if (gameDifficulty === "doom") {
    // Every 50 floors you hit a boss; cycle through these seven
    const bosses = [
-     { name: "Behemoth.",            hp: 1000,  damageRange: [40,90],  expReward: [100, 100], moneyReward: [100, 100] },
-     { name: "Fallen Angel.",        hp: 2000,  damageRange: [70,100], expReward: [300, 300], moneyReward: [200, 150] },
-     { name: "Guardian of Hell, Cerberus.", hp: 3500, damageRange: [80,120], expReward: [750, 750], moneyReward: [500, 500] },
-     { name: "Hell Titan.",          hp: 6000, damageRange: [50, 120], expReward: [1000, 1000], moneyReward: [800, 800] },
-     { name: "Demon King.",          hp: 10000, damageRange: [60, 110],expReward: [1500, 1500], moneyReward: [1000, 1000] },
-     { name: "Ancient Hell Titan.",  hp: 15000, damageRange: [50, 100],expReward: [2000, 2000], moneyReward: [1200, 1200] },
-     { name: "Demon God.",           hp: 25000, damageRange: [70, 120],expReward: [2500, 2500], moneyReward: [1500, 1500] }
+     { name: "Behemoth",            hp: 1000,  damageRange: [40, 90],  expReward: [100, 100], moneyReward: [100, 100] },
+     { name: "Fallen Angel",        hp: 2000,  damageRange: [70, 100], expReward: [300, 300], moneyReward: [200, 150] },
+     { name: "Hell Guard", hp: 3500, damageRange: [80, 120], expReward: [750, 750], moneyReward: [500, 500] },
+     { name: "Cyberdemon",          hp: 6000, damageRange: [100, 130], expReward: [1000, 1000], moneyReward: [800, 800] },
+	 { name: "Spider Mastermind",          hp: 8000, damageRange: [90, 140], expReward: [1500, 1500], moneyReward: [800, 800] },
+	 { name: "Hell Titan",          hp: 10000, damageRange: [80, 120], expReward: [2000, 2000], moneyReward: [800, 800] },
+	 { name: "Guardian of Hell, Cerberus.", hp: 10000, damageRange: [120, 150], expReward: [2400, 2400], moneyReward: [1000, 1000] },
+     { name: "Demon King.",          hp: 12000, damageRange: [100, 160],expReward: [2700, 2700], moneyReward: [1500, 1500] },
+	 { name: "Doom Hunter",          hp: 12500, damageRange: [100, 130],expReward: [2800, 2800], moneyReward: [1000, 1000] },
+	 { name: "Death Marauder",          hp: 15000, damageRange: [90, 140],expReward: [3000, 3000], moneyReward: [1000, 1000] },
+	 { name: "The Gladiator",          hp: 18000, damageRange: [100, 150],expReward: [3200, 3200], moneyReward: [1200, 1200] },
+     { name: "Ancient Hell Titan",  hp: 25000, damageRange: [100, 130],expReward: [3500, 3500], moneyReward: [1500, 1500] },
+	 { name: "Khan Maykr",          hp: 15000, damageRange: [130, 170],expReward: [3600, 3600], moneyReward: [1500, 1000] },
+	 { name: "The Icon of Sin",          hp: 30000, damageRange: [120, 140],expReward: [4000, 4000], moneyReward: [1500, 1500] },
+     { name: "The Dark Lord, Davoth",           hp: 25000, damageRange: [120, 160],expReward: [4200, 4200], moneyReward: [2000, 2000] }
    ];
    const idx = Math.min(Math.ceil(floor/50)-1, bosses.length-1);
    return bosses[idx];
