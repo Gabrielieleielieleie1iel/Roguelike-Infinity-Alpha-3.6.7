@@ -5617,7 +5617,7 @@ document.addEventListener("keydown", e => {
 			  updateInventoryDisplay();
 			  break;
 			case "Medkit":
-			  let effMaxHp = Math.floor(getEffectiveMaxHp());
+			  effMaxHp = Math.floor(getEffectiveMaxHp());
 			  player.hp = Math.min(player.hp + Math.round(effMaxHp * 0.25), effMaxHp);
 			  updateStats();
 			  logBattle("You used a medkit and healed some HP.");
