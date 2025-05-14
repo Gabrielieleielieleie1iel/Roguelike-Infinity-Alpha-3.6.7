@@ -5553,7 +5553,7 @@ document.addEventListener("keydown", e => {
           // Effects when used out-of-battle:
           switch (item.name) {
             case "Healing Potion":
-			const effMaxHp = Math.floor(getEffectiveMaxHp());
+			let effMaxHp = Math.floor(getEffectiveMaxHp());
 			if (gameDifficulty !== "doom") {
               player.hp = Math.min(player.hp + Math.round(player.maxHp * 0.25), player.maxHp);
 			} else {
@@ -5617,7 +5617,7 @@ document.addEventListener("keydown", e => {
 			  updateInventoryDisplay();
 			  break;
 			case "Medkit":
-			  const effMaxHp = Math.floor(getEffectiveMaxHp());
+			  let effMaxHp = Math.floor(getEffectiveMaxHp());
 			  player.hp = Math.min(player.hp + Math.round(effMaxHp * 0.25), effMaxHp);
 			  updateStats();
 			  logBattle("You used a medkit and healed some HP.");
