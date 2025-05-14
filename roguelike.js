@@ -6124,6 +6124,7 @@ document.getElementById("abilityBtn").addEventListener("click", () => {
   if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear") {
 	if (player.mana < manaCost) {
 		logBattle("Insufficient Mana!");
+		setTimeout(() => unlockActions(), 250);
 		return;
 	}
 	player.mana -= manaCost;
@@ -6133,6 +6134,8 @@ document.getElementById("abilityBtn").addEventListener("click", () => {
   // Spend mana and fire off the active ability
   useActiveAbility();
   skillUsedThisBattle = false;
+  
+  setTimeout(() => unlockActions(), 250);
 });
 
       document.getElementById("itemsBtn").addEventListener("click", () => {
