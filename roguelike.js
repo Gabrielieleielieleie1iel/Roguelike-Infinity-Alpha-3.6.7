@@ -5616,9 +5616,50 @@ document.addEventListener("keydown", e => {
 			  player.inventory.splice(index, 1);
 			  updateInventoryDisplay();
 			  break;
-            case "Dice":
-              alert("Dice have no use here.");
-              return;
+			case "Medkit":
+			  const effMaxHp = Math.floor(getEffectiveMaxHp());
+			  player.hp = Math.min(player.hp + Math.round(effMaxHp * 0.25), effMaxHp);
+			  updateStats();
+			  logBattle("You used a medkit and healed some HP.");
+              break;
+			case "Magazine":
+			  player.mana = player.maxMana;
+			  updateManaDisplay();
+			  logBattle("You used a magazine and reloaded your gun.");
+              break;
+            case "Adrenaline":
+              player.rage = true;
+			  player.attack *= 2;
+			  player.magic = Math.ceil(player.magic *= 1.5);
+			  player.perception *= 2;
+			  logBattle("<em>RIP AND TEAR... RIP AND TEAR... RIP AND TEAR!</em>");
+              break;
+            case "Gas Bomb":
+              currentEnemy.poison = true;
+              logBattle(`You threw a Gas Bomb and poisoned ${currentEnemy.name}!`);
+              break;
+            case "Sleeping Gas":
+              currentEnemy.weaken = true;
+              logBattle(`You used some Sleeping Gas and weakened ${currentEnemy.name}!`);
+              break;
+            case "Armor+":
+              player.iron = true;
+			  player.armor += 20;
+			  player.maxArmor += 20;
+              logBattle("You activated your Armor+ and boosted your defenses!");
+              break;
+			case "Molotov":
+              currentEnemy.burned = true;
+              logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
+              break;
+			case "Subzero Bomb":
+			  const turns = Math.floor(Math.random() * 4) + 3;
+			  currentEnemy.frozen = turns;
+			  logBattle(`You threw a Subzero Bomb and ${currentEnemy.name} was frozen!`);
+			  updateEnemyInfo();
+			  player.inventory.splice(index, 1);
+			  updateInventoryDisplay();
+			  break;
             default:
               alert(item.name + " has no effect.");
               return;
@@ -5630,6 +5671,7 @@ document.addEventListener("keydown", e => {
 		setTimeout(enemyTurnWrapper, 250);
 		unlockActions();
       }
+
       /*******************
        * SHOP SYSTEM
        *******************/
