@@ -47,7 +47,8 @@ body {
 
 #doomBtn {
   background-color: #2e0000;
-  border: 2px solid #ff6200
+  border: 2px solid #ff6200;
+  width: 80px;
 }
 
 /* Hover states to brighten them up */
@@ -56,6 +57,12 @@ body {
 }
 
 /*DOOM MODE*/
+
+#doomModeButton {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 0.0005px;
+}
 
 /* Center box for title + button */
 #doomTitleScreen {
