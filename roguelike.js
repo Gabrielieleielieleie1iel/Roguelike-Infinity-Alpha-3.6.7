@@ -303,7 +303,7 @@ casinoMusic.loop = true;
   dodgeChance: 0.2,
   neverMiss: false,
   critMultiplier: 1,
-  money: 10,
+  money: 1000,
   exp: 0,
   level: 1,
   expToLevel: 5,
@@ -5456,102 +5456,7 @@ document.addEventListener("keydown", e => {
         if (battleMode) {
           // Effects when used in battle:
           switch (item.name) {
-            case "Healing Potion":
-              player.hp = Math.min(player.hp + Math.round(player.maxHp * 0.25), player.maxHp);
-			  updateStats();
-              logBattle("You used Healing Potion and healed 25% HP.");
-              break;
-			case "Mana Potion":
-              player.mana = Math.min(player.mana + Math.round(player.maxMana * 0.25), player.maxMana);
-			  updateManaDisplay();
-              logBattle("You used Mana Potion and healed 25% mana.");
-              break;
-            case "Rage Potion":
-              player.rage = true;
-			  player.attack *= 2;
-			  player.magic = Math.ceil(player.magic *= 1.5);
-			  player.perception *= 2;
-              logBattle("You used a Rage Potion. Damage doubled this battle!");
-              break;
-            case "Poison Potion":
-              currentEnemy.poison = true;
-              logBattle(`You threw a Poison Potion and poisoned ${currentEnemy.name}!`);
-              break;
-            case "Weaken Potion":
-              currentEnemy.weaken = true;
-              logBattle(`You threw a Weaken potion and weakened ${currentEnemy.name}!`);
-              break;
-			case "Molotov":
-              currentEnemy.burned = true;
-              logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
-              break;
-			case "Freeze Potion":
-			  let turns = Math.floor(Math.random() * 4) + 3;
-			  currentEnemy.frozen = turns;
-			  logBattle(`You used a Freeze Potion and ${currentEnemy.name} was frozen!`);
-			  updateEnemyInfo();
-			  player.inventory.splice(index, 1);
-			  updateInventoryDisplay();
-			  break;
-            case "Iron Potion":
-              player.iron = true;
-			  player.armor += 20;
-			  player.maxArmor += 20;
-              logBattle("You used an Iron Potion. Enemy damage halved this battle!");
-              break;
-			case "Medkit":
-              player.hp = Math.min(player.hp + Math.round(player.maxHp * 0.1), player.maxHp);
-			  updateStats();
-              logBattle("You used a medkit and healed 10% HP.");
-              break;
-			case "Magazine":
-              player.mana = player.maxMana;
-			  updateManaDisplay();
-              logBattle("You used your magazine reloaded your gun.");
-              break;
-            case "Adrenaline":
-              player.rage = true;
-			  player.attack *= 2;
-			  player.magic = Math.ceil(player.magic *= 1.5);
-			  player.perception *= 2;
-              logBattle("<em>RIP AND TEAR... RIP AND TEAR... RIP AND TEAR!!</em>");
-              break;
-            case "Gas Bomb":
-              currentEnemy.poison = true;
-              logBattle(`You threw a Gas Bomb and poisoned ${currentEnemy.name}!`);
-              break;
-            case "Sleeping Gas":
-              currentEnemy.weaken = true;
-              logBattle(`You used some Sleeping Gas and weakened ${currentEnemy.name}!`);
-              break;
-			case "Molotov":
-              currentEnemy.burned = true;
-              logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
-              break;
-			case "Subzero Bomb":
-			  turns = Math.floor(Math.random() * 4) + 3;
-			  currentEnemy.frozen = turns;
-			  logBattle(`You threw a Subzero Bomb and ${currentEnemy.name} was frozen!`);
-			  updateEnemyInfo();
-			  player.inventory.splice(index, 1);
-			  updateInventoryDisplay();
-			  break;
-            case "Armor+":
-              player.iron = true;
-			  player.armor += 20;
-			  player.maxArmor += 20;
-              logBattle("You activated your Armor+ and boosted your defenses!");
-              break;
-              // Dice and others can have custom battle logic if needed.
-            default:
-              alert(item.name + " has no effect in battle.");
-              return;
-          }
-          // Continue with enemy's turn if applicable.
-		  unlockActions();
-		  setTimeout(enemyTurnWrapper, 250);
-          // Effects when used out-of-battle:
-          switch (item.name) {
+            case "Medkit":
             case "Healing Potion":
 			let effMaxHp = Math.floor(getEffectiveMaxHp());
 			if (gameDifficulty !== "doom") {
@@ -5566,6 +5471,8 @@ document.addEventListener("keydown", e => {
 			  logBattle("You used a medkit and healed some HP.");
 			}
               break;
+			
+			case "Magazine":
 			case "Mana Potion":
 			if (gameDifficulty !== "doom") {
               player.mana = Math.min(player.mana + Math.round(player.maxMana * 0.25), player.maxMana);
@@ -5579,6 +5486,8 @@ document.addEventListener("keydown", e => {
 			  logBattle("You used a magazine and reloaded your gun.");
 			}
               break;
+
+	    case "Adrenaline":
             case "Rage Potion":
               player.rage = true;
 			  player.attack *= 2;
@@ -5590,76 +5499,158 @@ document.addEventListener("keydown", e => {
 			  logBattle("<em>RIP AND TEAR... RIP AND TEAR... RIP AND TEAR!</em>");
 			}
               break;
+
+	    case "Gas Bomb":
             case "Poison Potion":
               currentEnemy.poison = true;
+	    if (gameDifficulty !== "doom") {
               logBattle(`You threw a Poison Potion and poisoned ${currentEnemy.name}!`);
+	    } else {
+	      logBattle(`You threw a Gas Bomb and poisoned ${currentEnemy.name}!`);
+	    }
               break;
+
+	    case "Sleeping Gas":
             case "Weaken Potion":
               currentEnemy.weaken = true;
+	    if (gameDifficulty !== "doom") {
               logBattle(`You threw a Weaken potion and weakened ${currentEnemy.name}!`);
+	    } else {
+	      logBattle(`You used some Sleeping Gas and weakened ${currentEnemy.name}!`);
+	    }
               break;
+	    
+	    case "Armor+":
             case "Iron Potion":
               player.iron = true;
 			  player.armor += 20;
 			  player.maxArmor += 20;
+	    if (gameDifficulty !== "doom") {
               logBattle("You used an Iron Potion. Enemy damage halved this battle!");
+	    } else {
+ 	      logBattle("You activated your Armor+ and boosted your defenses!");
+	    }
               break;
+
 			case "Molotov":
               currentEnemy.burned = true;
               logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
               break;
+
+			case "Subzero Bomb":
 			case "Freeze Potion":
-			  const turns = Math.floor(Math.random() * 4) + 3;
+			  let turns = Math.floor(Math.random() * 4) + 3;
 			  currentEnemy.frozen = turns;
+			if (gameDifficulty !== "doom") {
 			  logBattle(`You used a Freeze Potion and ${currentEnemy.name} was frozen!`);
+			} else {
+			  logBattle(`You threw a Subzero Bomb and ${currentEnemy.name} was frozen!`);
+			}
 			  updateEnemyInfo();
 			  player.inventory.splice(index, 1);
 			  updateInventoryDisplay();
 			  break;
-			case "Medkit":
-			  effMaxHp = Math.floor(getEffectiveMaxHp());
-			  player.hp = Math.min(player.hp + Math.round(effMaxHp * 0.25), effMaxHp);
+
+          // Continue with enemy's turn if applicable.
+		  unlockActions();
+		  setTimeout(enemyTurnWrapper, 250);
+          // Effects when used out-of-battle:
+          switch (item.name) {
+	    case "Medkit":
+            case "Healing Potion":
+			let effMaxHp = Math.floor(getEffectiveMaxHp());
+			if (gameDifficulty !== "doom") {
+              player.hp = Math.min(player.hp + Math.round(player.maxHp * 0.25), player.maxHp);
+			} else {
+			  player.hp = Math.min(player.hp + Math.round(effMaxHp * 0.05), effMaxHp);
+			}
 			  updateStats();
+			if (gameDifficulty !== "doom") {
+              logBattle("You used Healing Potion and healed 25% HP.");
+			} else {
 			  logBattle("You used a medkit and healed some HP.");
+			}
               break;
+			
 			case "Magazine":
+			case "Mana Potion":
+			if (gameDifficulty !== "doom") {
+              player.mana = Math.min(player.mana + Math.round(player.maxMana * 0.25), player.maxMana);
+			} else {
 			  player.mana = player.maxMana;
+			}
 			  updateManaDisplay();
+			if (gameDifficulty !== "doom") {
+              logBattle("You used Mana Potion and healed 25% mana.");
+			} else {
 			  logBattle("You used a magazine and reloaded your gun.");
+			}
               break;
-            case "Adrenaline":
+
+	    case "Adrenaline":
+            case "Rage Potion":
               player.rage = true;
 			  player.attack *= 2;
 			  player.magic = Math.ceil(player.magic *= 1.5);
 			  player.perception *= 2;
+			if (gameDifficulty !== "doom") {
+              logBattle("You used a Rage Potion. Damage doubled this battle!");
+			} else {
 			  logBattle("<em>RIP AND TEAR... RIP AND TEAR... RIP AND TEAR!</em>");
+			}
               break;
-            case "Gas Bomb":
+
+	    case "Gas Bomb":
+            case "Poison Potion":
               currentEnemy.poison = true;
-              logBattle(`You threw a Gas Bomb and poisoned ${currentEnemy.name}!`);
+	    if (gameDifficulty !== "doom") {
+              logBattle(`You threw a Poison Potion and poisoned ${currentEnemy.name}!`);
+	    } else {
+	      logBattle(`You threw a Gas Bomb and poisoned ${currentEnemy.name}!`);
+	    }
               break;
-            case "Sleeping Gas":
+
+	    case "Sleeping Gas":
+            case "Weaken Potion":
               currentEnemy.weaken = true;
-              logBattle(`You used some Sleeping Gas and weakened ${currentEnemy.name}!`);
+	    if (gameDifficulty !== "doom") {
+              logBattle(`You threw a Weaken potion and weakened ${currentEnemy.name}!`);
+	    } else {
+	      logBattle(`You used some Sleeping Gas and weakened ${currentEnemy.name}!`);
+	    }
               break;
-            case "Armor+":
+	    
+	    case "Armor+":
+            case "Iron Potion":
               player.iron = true;
 			  player.armor += 20;
 			  player.maxArmor += 20;
-              logBattle("You activated your Armor+ and boosted your defenses!");
+	    if (gameDifficulty !== "doom") {
+              logBattle("You used an Iron Potion. Enemy damage halved this battle!");
+	    } else {
+ 	      logBattle("You activated your Armor+ and boosted your defenses!");
+	    }
               break;
+
 			case "Molotov":
               currentEnemy.burned = true;
               logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
               break;
+
 			case "Subzero Bomb":
-			  const turns = Math.floor(Math.random() * 4) + 3;
+			case "Freeze Potion":
+			  let turns = Math.floor(Math.random() * 4) + 3;
 			  currentEnemy.frozen = turns;
+			if (gameDifficulty !== "doom") {
+			  logBattle(`You used a Freeze Potion and ${currentEnemy.name} was frozen!`);
+			} else {
 			  logBattle(`You threw a Subzero Bomb and ${currentEnemy.name} was frozen!`);
+			}
 			  updateEnemyInfo();
 			  player.inventory.splice(index, 1);
 			  updateInventoryDisplay();
 			  break;
+
             default:
               alert(item.name + " has no effect.");
               return;
@@ -5670,6 +5661,7 @@ document.addEventListener("keydown", e => {
         updateStats();
 		setTimeout(enemyTurnWrapper, 250);
 		unlockActions();
+      }
       }
 
       /*******************
@@ -6499,22 +6491,31 @@ document.querySelectorAll(".equipmentSlot").forEach(slotEl => {
     showEquipmentInventory(category);
   });
 });
+
 function showEquipmentInventory(category) {
   inventoryMenu.style.display = "block";
   inventoryMenu.innerHTML = `<h3>Select a ${category} to equip:</h3>`;
   let any = false;
+
   player.inventory.forEach((item, idx) => {
-    if (item && item.type === "equipment" && (item.category === category || item.category === "both")) {
-      any = true;
-      const btn = document.createElement("button");
-      btn.textContent = item.name;
-      btn.addEventListener("click", () => {
-        equipItem(category, idx);
-        inventoryMenu.style.display = "none";
-      });
-      inventoryMenu.appendChild(btn);
+    if (!item || item.type !== "equipment") return;
+
+    if (category === "armor") {
+      if (item.category !== "armor") return;
+    } else {
+      if (item.category !== category && item.category !== "both") return;
     }
+
+    any = true;
+    const btn = document.createElement("button");
+    btn.textContent = item.name;
+    btn.addEventListener("click", () => {
+      equipItem(category, idx);
+      inventoryMenu.style.display = "none";
+    });
+    inventoryMenu.appendChild(btn);
   });
+
   if (!any) {
     inventoryMenu.innerHTML += "<p>No items available.</p>";
   }
