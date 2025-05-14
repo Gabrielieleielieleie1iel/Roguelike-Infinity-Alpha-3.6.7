@@ -303,7 +303,7 @@ casinoMusic.loop = true;
   dodgeChance: 0.2,
   neverMiss: false,
   critMultiplier: 1,
-  money: 1000,
+  money: 10,
   exp: 0,
   level: 1,
   expToLevel: 5,
