@@ -57,6 +57,65 @@ body {
 
 /*DOOM MODE*/
 
+/* Center box for title + button */
+#doomTitleScreen {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: url("doomcover.jpg") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;      /* push content to top */
+  padding-top: 40px;            /* space below top edge */
+  z-index: 2000;
+  font-family: "Copperplate Gothic Bold", "Copperplate Gothic", Copperplate, fantasy;
+  font-weight: bold;
+}
+
+#doomTitleContent {
+  text-align: center;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+#doomTitleContent p {
+	right: 500px;
+	top: 50px;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+#doomTitleImg {
+  max-width: 40%;               /* shrink it */
+  height: auto;
+  margin: 0 auto 30px;          /* centered, with bottom gap */
+}
+
+#beginJourneyBtn {
+  background: none;             /* no bg */
+  color: white;                 /* white text */
+  font-size: 22px;
+  border: none;
+  cursor: pointer;
+  font-family: "Copperplate Gothic Bold", "Copperplate Gothic", Copperplate, fantasy;
+  font-weight: bold;
+}
+
+#beginJourneyBtn:hover {
+  opacity: 0.8;
+}
+
+/* Black overlay for fade effect */
+#doomFadeOverlay {
+  position: fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  background: black;
+  opacity: 0;
+  transition: opacity 3s;
+  z-index: 3000;
+}
+
 body.doom-mode #stats {
   color: #ff6200;
   background-color: #2e0000;

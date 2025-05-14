@@ -2354,7 +2354,13 @@ document.getElementById("hardBtn").addEventListener("click", () => selectDifficu
 document.getElementById("extremeBtn").addEventListener("click", () => selectDifficulty("extreme"));
 document.getElementById("insaneBtn").addEventListener("click", () => selectDifficulty("insane"));
 document.getElementById("calamityBtn").addEventListener("click", () => selectDifficulty("calamity"));
-document.getElementById("doomBtn").addEventListener("click", () => selectDifficulty("doom"));
+document.getElementById("doomBtn").addEventListener("click", () => {
+ titleMusic.pause();
+ titleMusic.currentTime = 0;
+  // hide the normal menus
+  document.getElementById("difficultyMenu").style.display = "none";
+  document.getElementById("abilityMenu").style.display   = "none";
+});
 	   
       function initGame() {
 		player.x = 0;
@@ -2533,6 +2539,99 @@ document.getElementById("playButton").addEventListener("click", function () {
   document.getElementById("titleScreen").style.display = "none";
   document.getElementById("gameContainer").style.display = "block";
 });
+
+function createFadeOverlay() {
+  const ov = document.createElement("div");
+  ov.id = "doomFadeOverlay";
+  ov.style.position = "fixed";
+  ov.style.top = "0";
+  ov.style.left = "0";
+  ov.style.width = "100vw";
+  ov.style.height = "100vh";
+  ov.style.background = "black";
+  ov.style.opacity = "0";
+  ov.style.transition = "opacity 1s ease";
+  ov.style.zIndex = "3000";
+  document.body.appendChild(ov);
+  return ov;
+}
+
+// at top of file, alongside other globals:
+let gateAudio;
+
+// Doom-button handler: immediate fade to black → load title behind the curtain → reveal title + play gate music
+document.getElementById("doomBtn").addEventListener("click", () => {
+  // stop the OG title music
+  titleMusic.pause();
+  titleMusic.currentTime = 0;
+
+  // hide difficulty/ability menus
+  document.getElementById("difficultyMenu").style.display = "none";
+  document.getElementById("abilityMenu").style.display   = "none";
+
+  // 1) Create full-screen black overlay and fade it in
+  const overlay = createFadeOverlay();
+  setTimeout(() => {
+	  overlay.style.opacity = "1";
+  }, 10);
+
+  // 2) Once it’s fully opaque (1s), show title screen behind it & start gate audio
+  setTimeout(() => {
+	document.getElementById("doomTitleScreen").style.display = "flex";
+    setTimeout(() => {
+		gateAudio = new Audio("atdoomsgate.mp3");
+		gateAudio.loop = true;
+		gateAudio.volume = 1;
+		gateAudio.play();
+		overlay.style.opacity = "";
+		// remove overlay when fade completes (1s)
+		setTimeout(() => {
+		overlay.remove();
+	  }, 1000);
+    }, 1000);
+  }, 1000);
+});
+
+// Begin Journey: fade audio out in 1s along with black fade, then boot the game
+document.getElementById("beginJourneyBtn").addEventListener("click", () => {
+  // 1) Fade the gate audio out over 1s
+  if (gateAudio) {
+    const fadeInterval = setInterval(() => {
+      gateAudio.volume = Math.max(0, gateAudio.volume - 0.05);
+      if (gateAudio.volume <= 0) {
+        gateAudio.pause();
+        clearInterval(fadeInterval);
+      }
+    }, 50);
+  }
+
+  // 2) Create a fresh black overlay and fade in to block the title
+  const overlay = createFadeOverlay();
+  setTimeout(() => {
+	  overlay.style.opacity = "1", 20;
+	  selectDifficulty("doom");
+    initGame();
+    document.body.classList.add("doom-mode");
+	
+	magicBtn.innerText = "Shoot";
+
+    const doomBGM = new Audio("doom.mp3");
+    doomBGM.loop = true;
+    doomBGM.play();
+
+  // 4) Hold for 1s, then fade overlay out to show actual gameplay
+  setTimeout(() => {
+	  overlay.style.opacity = "0";
+	  document.getElementById("doomTitleScreen").style.display = "none";
+  }, 2000);
+  
+  // 5) Remove overlay & hide the title screen once fade finishes
+  setTimeout(() => {
+    overlay.remove();
+  }, 3000);
+});
+});
+
 
 // Play the world background music.
 function playWorldMusic(worldName) {
@@ -4111,7 +4210,7 @@ function getEnemyByName(enemyName) {
       function playerAttack(moveType) {
         if (!currentEnemy) return;
         if (!player.neverMiss && Math.random() < enemyDodgeChance) {
-          logBattle(`${currentEnemy.name} dodged the Player's attack!`);
+          logBattle(`${currentEnemy.name} dodged your attack!`);
 		  if (player.passiveAbility === "Relentless") {
     // reset stats to pre-battle values on a miss
     player.attack  = preBattleStats.attack;
@@ -5963,7 +6062,7 @@ function hideOverlay() {
       document.getElementById("attackBtn").addEventListener("click", () => {
 		if (actionsLocked) return;
 		lockActions();
-        playerAttack("attack");
+		playerAttack("attack");
 
 		if (Math.random() < player.agility * 0.0005) {
 			playerAttack("attack");
@@ -6017,7 +6116,7 @@ document.getElementById("abilityBtn").addEventListener("click", () => {
   if (!skillUsedThisBattle) {
     logBattle("You're too exhausted to do that again...");
     // re-unlock so battle can continue
-    setTimeout(() => unlockActions(), 0);
+    setTimeout(() => unlockActions(), 250);
     return;
   }
   
