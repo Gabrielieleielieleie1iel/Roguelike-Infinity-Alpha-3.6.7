@@ -7,7 +7,7 @@
       const battleLog = document.getElementById("battleLog");
       const enemyInfo = document.getElementById("enemyInfo");
       const levelUpMenu = document.getElementById("levelUpMenu");
-      const deathMenu = document.getElementById("deathMenu");
+      const deathMenu = document.getElementById("deathMenu")
       const battleTint = document.getElementById("battleTint");
       const inventoryMenu = document.getElementById("inventoryMenu");
       const shopMenu = document.getElementById("shopMenu");
@@ -431,7 +431,7 @@ casinoMusic.loop = true;
     p.magic = Math.ceil(p.magic * 1.5);
     p.maxMana += 10;
   },
-  "Unmaykr":      p => {
+  "Unmayker":      p => {
     p.magic = p.magic * 2;
     p.maxMana += 20;
     p.agility -= 10;
@@ -5698,6 +5698,24 @@ sellBtn.addEventListener("click", () => {
     } else if (item.name === "Previous Hero's Cape") {
       sellPrice = 0;
     } else if (item.name === "Grand Knight's Armor") {
+      sellPrice = 10000;
+    } else if (item.name === "Crucible") {
+      sellPrice = 10000;
+    } else if (item.name === "BFG9000") {
+      sellPrice = 5000;
+    } else if (item.name === "Argent Energy Storage") {
+      sellPrice = 2500;
+    } else if (item.name === "Dark Ages Mantle") {
+      sellPrice = 1000;
+    } else if (item.name === "Praetor Suit") {
+      sellPrice = 10000;
+    } else if (item.name === "Sorceress' Staff") {
+      sellPrice = 10000;
+    } else if (item.name === "Dragon's Fang") {
+      sellPrice = 10000;
+    } else if (item.name === "BFG10000") {
+      sellPrice = 10000;
+    } else if (item.name === "Titan's Fang") {
       sellPrice = 10000;
     } else {
       const shopDef = shopItemsList.find(si => si.name === item.name);
