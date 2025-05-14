@@ -353,32 +353,32 @@ casinoMusic.loop = true;
   },
   "Greatsword": p => {
     p.attack = p.attack * 2;
-    p.defense = Math.ceil(p.defense * 1.5);
+    p.defense = Math.round(p.defense * 1.5);
 	p.maxArmor += 10;
-    p.agility -= 10;
+    p.agility = p.agility - 10;
   },
   "Dagger":     p => {
-    p.attack = Math.ceil(p.attack * 1.33);
-    p.agility = Math.ceil(p.agility * 1.5);
-    p.perception = Math.ceil(p.perception * 1.5);
+    p.attack = Math.round(p.attack * 1.33);
+    p.agility = Math.round(p.agility * 1.5);
+    p.perception = Math.round(p.perception * 1.5);
   },
   "Spear":      p => {
     p.attack = p.attack * 2;
-    p.perception = Math.ceil(p.perception * 1.5);
-    p.agility -= 10;
+    p.perception = Math.round(p.perception * 1.5);
+    p.agility = p.agility - 10;
   },
   "Wand":       p => {
-    p.magic = Math.ceil(p.magic * 1.5);
+    p.magic = Math.round(p.magic * 1.5);
     p.maxMana += 10;
   },
   "Staff":      p => {
     p.magic = p.magic * 2;
     p.maxMana += 20;
-    p.agility -= 10;
+    p.agility = p.agility - 10;
   },
   "Shield":     p => {
-    p.attack = Math.ceil(p.attack * 1.25);
-    p.defense = Math.ceil(p.agility * 1.5);
+    p.attack = Math.round(p.attack * 1.25);
+    p.defense = Math.round(p.agility * 1.5);
 	p.maxArmor += 30;
   },
   "Gun": p => {
@@ -391,54 +391,54 @@ casinoMusic.loop = true;
     // triple attack
     p.attack *= 3;
     // double agility & perception
-    p.agility  = Math.ceil(p.agility  * 2);
-    p.perception = Math.ceil(p.perception * 2);
+    p.agility  = Math.round(p.agility * 2);
+    p.perception = Math.round(p.perception * 2);
     // increase defense by 1.5×, rounded up
-    p.defense = Math.ceil(p.defense * 1.5);
+    p.defense = Math.round(p.defense * 1.5);
     // +25 max mana
     p.maxMana += 25;
   },
   "Dragon's Fang": p => {
     p.attack *= 2;
     p.agility *= 3;
-    p.perception = Math.ceil(p.perception * 2.5);
+    p.perception = Math.round(p.perception * 2.5);
   },
   "Sorceress' Staff":      p => {
-	p.attack = Math.ceil(p.attack * 1.25);
+	p.attack = Math.round(p.attack * 1.25);
     p.magic   = p.magic * 3;
-    p.maxMana = Math.ceil(p.maxMana * 2.5);
+    p.maxMana = Math.round(p.maxMana * 2.5);
   },
   "Chainsaw":      p => {
-	p.attack = Math.ceil(p.attack * 1.5);
+	p.attack = Math.round(p.attack * 1.5);
   },
   "Sentinel Hammer": p => {
     p.attack = p.attack * 2;
-    p.defense = Math.ceil(p.defense * 1.5);
+    p.defense = Math.round(p.defense * 1.5);
 	p.maxArmor += 10;
-    p.agility -= 10;
+    p.agility = p.agility - 10;
   },
   "Doomblade Arm Upgrade":     p => {
-    p.attack = Math.ceil(p.attack * 1.33);
-    p.agility = Math.ceil(p.agility * 1.5);
-    p.perception = Math.ceil(p.perception * 1.5);
+    p.attack = Math.round(p.attack * 1.33);
+    p.agility = Math.round(p.agility * 1.5);
+    p.perception = Math.round(p.perception * 1.5);
   },
   "Doomspear":      p => {
     p.attack = p.attack * 2;
-    p.perception = Math.ceil(p.perception * 1.5);
-    p.agility -= 10;
+    p.perception = Math.round(p.perception * 1.5);
+    p.agility = p.agility - 10;
   },
   "Combat Shotgun":       p => {
-    p.magic = Math.ceil(p.magic * 1.5);
+    p.magic = Math.round(p.magic * 1.5);
     p.maxMana += 10;
   },
   "Unmayker":      p => {
     p.magic = p.magic * 2;
     p.maxMana += 20;
-    p.agility -= 10;
+    p.agility = p.agility - 10;
   },
   "Chainshield":     p => {
-    p.attack = Math.ceil(p.attack * 1.25);
-    p.defense = Math.ceil(p.agility * 1.5);
+    p.attack = Math.round(p.attack * 1.25);
+    p.defense = Math.round(p.agility * 1.5);
 	p.maxArmor += 30;
   },
   "BFG9000": p => {
@@ -451,37 +451,37 @@ casinoMusic.loop = true;
     // triple attack
     p.attack *= 3;
     // double agility & perception
-    p.agility  = Math.ceil(p.agility  * 2);
-    p.perception = Math.ceil(p.perception * 2);
+    p.agility  = Math.round(p.agility  * 2);
+    p.perception = Math.round(p.perception * 2);
     // increase defense by 1.5×, rounded up
-    p.defense = Math.ceil(p.defense * 1.5);
+    p.defense = Math.round(p.defense * 1.5);
     // +25 max mana
     p.maxMana += 25;
   },
   "Titan's Fang": p => {
     p.attack *= 2;
     p.agility *= 3;
-    p.perception = Math.ceil(p.perception * 2.5);
+    p.perception = Math.round(p.perception * 2.5);
   },
   "BFG10000":      p => {
-	p.attack = Math.ceil(p.attack * 1.25);
+	p.attack = Math.round(p.attack * 1.25);
     p.magic   = p.magic * 3;
-    p.maxMana = Math.ceil(p.maxMana * 2.5);
+    p.maxMana = Math.round(p.maxMana * 2.5);
   },
 
   // Armors
   "Armor":      p => {
-	p.defense = Math.ceil(p.defense * 1.5); 
+	p.defense = Math.round(p.defense * 1.5); 
 	p.maxArmor += 25;
   },
   "Cloak":      p => {
-    p.defense = Math.ceil(p.defense * 1.3);
-    p.agility = Math.ceil(p.agility * 2);
+    p.defense = Math.round(p.defense * 1.3);
+    p.agility = Math.round(p.agility * 2);
 	p.maxArmor += 10;
   },
   "Robe":       p => {
-    p.defense = Math.ceil(p.defense * 1.25);
-    p.magic   = Math.ceil(p.magic * 1.5);
+    p.defense = Math.round(p.defense * 1.25);
+    p.magic   = Math.round(p.magic * 1.5);
     p.maxMana += 20;
 	p.maxArmor += 10;
   },
@@ -492,17 +492,17 @@ casinoMusic.loop = true;
 	p.maxArmor += 30;
   },
   "Armor":      p => {
-	p.defense = Math.ceil(p.defense * 1.5); 
+	p.defense = Math.round(p.defense * 1.5); 
 	p.maxArmor += 25;
   },
   "Cloak":      p => {
-    p.defense = Math.ceil(p.defense * 1.3);
-    p.agility = Math.ceil(p.agility * 2);
+    p.defense = Math.round(p.defense * 1.3);
+    p.agility = Math.round(p.agility * 2);
 	p.maxArmor += 10;
   },
   "Mantle":       p => {
-    p.defense = Math.ceil(p.defense * 1.25);
-    p.magic   = Math.ceil(p.magic * 1.5);
+    p.defense = Math.round(p.defense * 1.25);
+    p.magic   = Math.round(p.magic * 1.5);
     p.maxMana += 20;
 	p.maxArmor += 10;
   },
@@ -535,19 +535,19 @@ casinoMusic.loop = true;
   },
   "Nike Black Air Force": p => {
 	p.canRowMovement = true;
-	p.agility *= 3;
+	p.agility = Math.round(p.agility * 3);
   },
   "Previous Hero's Cape": p => {
-	p.attack = Math.ceil(p.attack *= 1.5);
-	p.magic = Math.ceil(p.magic * 1.5);
-	p.defense = Math.ceil(p.defense * 1.5);
-	p.agility = Math.ceil(p.agility * 1.5);
-	p.perception = Math.ceil(p.perception * 1.5);
-	p.potential = Math.ceil(p.potential * 1.5);
-	p.luck = Math.ceil(p.luck * 1.5);
-	p.fortune = Math.ceil(p.fortune * 1.5);
+	p.attack = Math.round(p.attack * 1.5);
+	p.magic = Math.round(p.magic * 1.5);
+	p.defense = Math.round(p.defense * 1.5);
+	p.agility = Math.round(p.agility * 1.5);
+	p.perception = Math.round(p.perception * 1.5);
+	p.potential = Math.round(p.potential * 1.5);
+	p.luck = Math.round(p.luck * 1.5);
+	p.fortune = Math.round(p.fortune * 1.5);
   },
-  "Agility Rune":      p => {
+  "Mobility Rune":      p => {
 	p.dodgeChance = 0.1;
   },
   "Brutality Rune":    p => {
@@ -556,18 +556,31 @@ casinoMusic.loop = true;
   "Savagery Rune":  p => {
 	p.critMultiplier = 2;
   },
+  "Violence Rune": p => {
+	p.attack = p.attack * 2;
+  },
+  "Armor Rune": p => {
+	p.defense = p.defense * 2;
+  },
+  "Arsenal Rune": p => {
+	p.magic = Math.round(p.magic * 1.5);
+  },
+  "Infinity Rune": p => {
+	p.mana = player.maxMana;
+  },
   "Argent Energy Storage":   p => {
+	  
   },
   "Delta V-Jump Boots": p => {
 	p.canRowMovement = true;
-	p.agility *= 3;
+	p.agility = Math.round(p.agility * 3);
   },
   "Dark Ages Mantle": p => {
-	p.attack = Math.ceil(p.attack *= 1.5);
-	p.magic = Math.ceil(p.magic * 1.5);
-	p.defense = Math.ceil(p.defense * 1.5);
-	p.agility = Math.ceil(p.agility * 1.5);
-	p.perception = Math.ceil(p.perception * 1.5);
+	p.attack = Math.round(p.attack *= 1.5);
+	p.magic = Math.round(p.magic * 1.5);
+	p.defense = Math.round(p.defense * 1.5);
+	p.agility = Math.round(p.agility * 1.5);
+	p.perception = Math.round(p.perception * 1.5);
   },
 };
 
@@ -2092,7 +2105,7 @@ shopItemsList = [
   },
   {
     name: "Adrenaline",
-    cost: 100,
+    cost: 150,
     type: "rage",
     category: "consumable",
     usableInBattle: true,
@@ -2110,7 +2123,7 @@ shopItemsList = [
   },
   {
   name: "Subzero Bomb",
-  cost: 120,
+  cost: 150,
   type: "freeze",
     category: "consumable",
   usableInBattle: true,
@@ -2128,7 +2141,7 @@ shopItemsList = [
   },
   {
     name: "Sleeping Gas",
-    cost: 100,
+    cost: 150,
     type: "weaken",
     category: "consumable",
     usableInBattle: true,
@@ -2137,7 +2150,7 @@ shopItemsList = [
   },
   {
     name: "Armor+",
-    cost: 150,
+    cost: 200,
     type: "iron",
     category: "consumable",
     usableInBattle: true,
@@ -2149,7 +2162,7 @@ shopItemsList = [
   // ─ Accessories ─
   {
     name: "Mobility Rune",
-    cost: 300,
+    cost: 350,
     type: "equipment",
     category: "accessory",
     usableInBattle: false,
@@ -2158,7 +2171,7 @@ shopItemsList = [
   },
   {
     name: "Brutality Rune",
-    cost: 320,
+    cost: 400,
     type: "equipment",
     category: "accessory",
     usableInBattle: false,
@@ -2167,7 +2180,34 @@ shopItemsList = [
   },
   {
     name: "Savagery Rune",
-    cost: 360,
+    cost: 400,
+    type: "equipment",
+    category: "accessory",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Violence Rune",
+    cost: 400,
+    type: "equipment",
+    category: "accessory",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Armor Rune",
+    cost: 400,
+    type: "equipment",
+    category: "accessory",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Arsenal Rune",
+    cost: 400,
     type: "equipment",
     category: "accessory",
     usableInBattle: false,
@@ -2187,7 +2227,7 @@ shopItemsList = [
   // ─ Armors ─
   {
     name: "Armor",
-    cost: 300,
+    cost: 320,
     type: "equipment",
     category: "armor",
     usableInBattle: false,
@@ -2196,7 +2236,7 @@ shopItemsList = [
   },
   {
     name: "Cloak",
-    cost: 280,
+    cost: 300,
     type: "equipment",
     category: "armor",
     usableInBattle: false,
@@ -2205,7 +2245,7 @@ shopItemsList = [
   },
   {
     name: "Mantle",
-    cost: 320,
+    cost: 400,
     type: "equipment",
     category: "armor",
     usableInBattle: false,
@@ -2216,7 +2256,7 @@ shopItemsList = [
   // ─ Weapons ─
   {
     name: "Chainsaw",
-    cost: 320,
+    cost: 360,
     type: "equipment",
     category: "weapon",
     usableInBattle: false,
@@ -2225,7 +2265,7 @@ shopItemsList = [
   },
   {
     name: "Chainshield",
-    cost: 400,
+    cost: 450,
     type: "equipment",
     category: "both",
     usableInBattle: false,
@@ -2234,7 +2274,7 @@ shopItemsList = [
   },
   {
     name: "Doomblade Arm Upgrade",
-    cost: 320,
+    cost: 360,
     type: "equipment",
     category: "both",
     usableInBattle: false,
@@ -2243,7 +2283,7 @@ shopItemsList = [
   },
   {
     name: "Sentinel Hammer",
-    cost: 360,
+    cost: 450,
     type: "equipment",
     category: "weapon",
     usableInBattle: false,
@@ -2252,7 +2292,7 @@ shopItemsList = [
   },
   {
     name: "Doomspear",
-    cost: 360,
+    cost: 420,
     type: "equipment",
     category: "weapon",
     usableInBattle: false,
@@ -2261,7 +2301,7 @@ shopItemsList = [
   },
   {
     name: "Combat Shotgun",
-    cost: 320,
+    cost: 380,
     type: "equipment",
     category: "weapon",
     usableInBattle: false,
@@ -2270,7 +2310,7 @@ shopItemsList = [
   },
   {
     name: "Unmayker",
-    cost: 360,
+    cost: 600,
     type: "equipment",
     category: "weapon",
     usableInBattle: false,
@@ -2614,10 +2654,6 @@ document.getElementById("beginJourneyBtn").addEventListener("click", () => {
     document.body.classList.add("doom-mode");
 	
 	magicBtn.innerText = "Shoot";
-
-    const doomBGM = new Audio("doom.mp3");
-    doomBGM.loop = true;
-    doomBGM.play();
 
   // 4) Hold for 1s, then fade overlay out to show actual gameplay
   setTimeout(() => {
@@ -3198,6 +3234,23 @@ if (gameDifficulty !== "doom") {
     }
     updateStats();
 	updateManaDisplay();
+	updateInventoryDisplay();
+    return;
+  }
+  
+  if (Math.random() < epicChanceOne) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Infinity Rune",
+        type:     "equipment",
+        category: "accessory"
+      };
+      alert("You found a powerful stone-looking object...! (Epic)");
+    } else {
+      alert("Inventory full...");
+    }
+    updateStats();
 	updateInventoryDisplay();
     return;
   }
@@ -4092,45 +4145,76 @@ function getEnemyByName(enemyName) {
   battleTint.style.display = "none";
   inventoryMenu.style.display = "none";
   
-  // reward the player if the enemy died
-  if (currentEnemy && currentEnemy.hp <= 0) {
-    let gainedExp, gainedMoney;
-    if (currentEnemy.boss) {
-      gainedExp  = currentEnemy.expReward;
-      gainedMoney = currentEnemy.moneyReward;
+   // reward the player if the enemy died
+   if (currentEnemy && currentEnemy.hp <= 0) {
+    let gloryKill = false;
+    if (gameDifficulty === "doom" && Math.random() < 0.2) {
+      gloryKill = true;
+      alert(`${currentEnemy.name} defeated! (GLORY KILL)`);
     } else {
-      const [minE, maxE] = currentEnemy.expReward;
-      gainedExp  = Math.floor(Math.random() * (maxE - minE + 1)) + minE;
-      const [minM, maxM] = currentEnemy.moneyReward;
-      gainedMoney = Math.floor(Math.random() * (maxM - minM + 1)) + minM;
+      alert(`${currentEnemy.name} defeated!`);
     }
-    addExp(gainedExp);
-    player.money = Math.round(player.money + gainedMoney * Math.round(1 + player.fortune * 0.08));
+
+    // ——— compute and apply rewards ———
+     let gainedExp, gainedMoney;
+     if (currentEnemy.boss) {
+       gainedExp   = currentEnemy.expReward;
+       gainedMoney = currentEnemy.moneyReward;
+     } else {
+       const [minE, maxE] = currentEnemy.expReward;
+       gainedExp   = Math.floor(Math.random() * (maxE - minE + 1)) + minE;
+       const [minM, maxM] = currentEnemy.moneyReward;
+       gainedMoney = Math.floor(Math.random() * (maxM - minM + 1)) + minM;
+     }
+    // double rewards on glory kill
+    if (gloryKill) {
+      gainedExp   *= 2;
+      gainedMoney *= 2;
+    }
+     addExp(gainedExp);
+     player.money = Math.round(player.money + gainedMoney * Math.round(1 + player.fortune * 0.08));
+ 
+     // armor regeneration
     let armorHealAmt = Math.round(Math.random() * (20 - 10 + 1)) + 10;
-	if (currentEnemy.boss = false) {
-		player.armor = player.maxArmor;
-	} else {
-		if (player.baseStats.maxArmor >= 50) {
-			let armorHealAmt = Math.round(Math.random() * (20 - 10 + 1)) + 10;
-			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
-		} else if (player.baseStats.maxArmor >= 100) {
-			let armorHealAmt = Math.round(Math.random() * (30 - 10 + 1)) + 10;
-			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
-		} else if (player.baseStats.maxArmor >= 200) {
-			let armorHealAmt = Math.round(Math.random() * (50 - 30 + 1)) + 30;
-			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
-		} else if (player.baseStats.maxArmor >= 300) {
-			let armorHealAmt = Math.round(Math.random() * (75 - 35 + 1)) + 35;
-			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
-		} else if (player.baseStats.maxArmor >= 500) {
-			let armorHealAmt = Math.round(Math.random() * (125 - 50 + 1)) + 50;
-			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
-		} else {
-			let armorHealAmt = Math.round(Math.random() * (10 - 2 + 1)) + 5;
-			player.armor = Math.min(player.armor + armorHealAmt, player.maxArmor);
-		}
-	}
-	updateStats();
+    // double armor heal on glory kill
+    if (gloryKill) armorHealAmt *= 2;
+ 
+     if (currentEnemy.boss = false) {
+       player.armor = player.maxArmor;
+
+     } else {
+       if (player.baseStats.maxArmor >= 50) {
+        let armorHealAmt = Math.round(Math.random() * (20 - 10 + 1)) + 10;
+        let heal = armorHealAmt;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else if (player.baseStats.maxArmor >= 100) {
+        let armorHealAmt = Math.round(Math.random() * (30 - 10 + 1)) + 10;
+        let heal = Math.round((armorHealAmt/20)*30);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else if (player.baseStats.maxArmor >= 200) {
+        let armorHealAmt = Math.round(Math.random() * (50 - 30 + 1)) + 30;
+        let heal = Math.round((armorHealAmt/20)*50);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else if (player.baseStats.maxArmor >= 300) {
+        let armorHealAmt = Math.round(Math.random() * (75 - 35 + 1)) + 35;
+        let heal = Math.round((armorHealAmt/20)*75);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else if (player.baseStats.maxArmor >= 500) {
+        let armorHealAmt = Math.round(Math.random() * (125 - 50 + 1)) + 50;
+        let heal = Math.round((armorHealAmt/20)*125);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else {
+        let armorHealAmt = Math.round(Math.random() * (10 - 2 + 1)) + 5;
+        let heal = Math.round((armorHealAmt/20)*10);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       }
+     }
+     updateStats();
   }
 
   // if more ambush enemies remain, queue the next one
@@ -4264,10 +4348,11 @@ function getEnemyByName(enemyName) {
 			}
         }
         let isCritical = false;
-		let critMulValue = Math.round((player.perception / 20) + 2);
+		let critMulValue = (player.perception / 100) + 2;
+		let critDamageMultiplier = Math.min(critMulValue, 5);
         if (moveType === "attack") {
           if (Math.random() < 0.05 + (player.perception - 1) * 0.001) {
-            damage = Math.round(damage * critMulValue);
+            damage = Math.round(damage * critDamageMultiplier);
             isCritical = true;
 			if (player.outgoingDamageMultiplier && player.passiveAbility === "Reckless") {
 				damage *= player.outgoingDamageMultiplier;
@@ -4615,8 +4700,6 @@ if (player.mercenaries.length > 0) {
             endBattle();
         }
     } else {
-        // If Necromancy is not active, do the usual defeat process.
-        alert(`${currentEnemy.name} defeated!`);
         endBattle();
     }
 }
@@ -4716,9 +4799,7 @@ if (player.mercenaries.length > 0) {
       player.baseStats.potential = 0;
       player.baseStats.fortune = 1;
       player.baseStats.luck = 1;
-	  currentEnemy.reductionAll = false;
-	  currentEnemy.reductionAttack = false;
-	  currentEnemy.reductionMagic = false;
+	  ignoreEnemyResistances = true;
 
       // Disable the active ability.
       player.activeAbility = "None";
@@ -4808,20 +4889,18 @@ if (player.mercenaries.length > 0) {
 // Listen for Q:
 document.addEventListener("keydown", e => {
   if (e.key.toLowerCase() === "q") {
+	let manaCost = player.overrideManaCost || 10;
     if (!skillUsedThisBattle) {
       logBattle("You're too exhausted to use that again...");
     } else {
-	  const manaCost = player.overrideManaCost || 10;
-		if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear") {
-			if (player.mana < manaCost) {
-				logBattle("Insufficient Mana!");
-				return;
-			}
-			player.mana -= manaCost;
-			updateManaDisplay();
+      if (player.mana < manaCost) {
+		if (player.activeAbility !== "Sacrifice" || player.activeAbility !== "Rip and Tear" || player.activeAbility !== "None") {
+			logBattle("Insufficient Mana!");
 		}
-		useActiveAbility();
-		skillUsedThisBattle = false;
+      } else {
+        useActiveAbility();
+        skillUsedThisBattle = false;
+      }
     }
   }
 });
@@ -4831,20 +4910,24 @@ function useActiveAbility() {
     logBattle("You're too exhausted to use that again...");
     return;
   }
-  const manaCost = player.overrideManaCost || 10;
-  if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear") {
+  manaCost = player.overrideManaCost || 10;
+  if (player.activeAbility !== "Sacrifice" || player.activeAbility !== "Rip and Tear" || player.activeAbility !== "None") {
 	if (player.mana < manaCost) {
 		logBattle("Insufficient Mana!");
 		return;
 	}
-	player.mana -= manaCost;
-	updateManaDisplay();
   }
+
+  if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear" && player.activeAbility !== "None") {
+	player.mana -= manaCost;
+  } else {
+	player.mana = player.mana;
+  }
+  updateManaDisplay();
 
   switch (player.activeAbility) {
     case "None":
       logBattle("But nothing happened...");
-	  player.mana += manaCost;
 	  updateManaDisplay();
       break;
 
@@ -4854,6 +4937,7 @@ function useActiveAbility() {
 	  player.attack = player.attack * 2;
 	  player.magic = Math.ceil(player.magic * 1.5);
 	  player.perception = player.perception * 2;
+	  updateManaDisplay();
 	  updateStats();
       break;
 	  
@@ -4999,10 +5083,10 @@ function useActiveAbility() {
 	  break;
 	  
 	case "Freeze":
+	  logBattle("<em>Cold. Shiver. Silence. Freeze!</em>");
 	  dealPlayerMagicDamage(1);
 	  const freezeTurns = Math.floor(Math.random() * 4) + 3; // 3 to 6 turns
 	  currentEnemy.frozen = freezeTurns;
-	  logBattle("<em>Cold. Shiver. Silence. Freeze!</em>")
 	  logBattle(`${currentEnemy.name} is frozen for ${freezeTurns} turns!`);
 	  updateEnemyInfo();
 	  break;
@@ -5148,7 +5232,7 @@ document.addEventListener("keydown", e => {
   }
 
   // spend flat 5 mana
-  player.mana -= manaCost;
+  player.mana -= 5;
   updateManaDisplay();
 
   // execute the right effect
