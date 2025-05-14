@@ -437,6 +437,12 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
   box-shadow: 0 0 15px rgba(0,0,0,0.6);
 }
 
+#titleScreen h6 {
+	position: fixed;
+	top: -10px;
+	left: 5px;
+}
+
 #titleBox h6 {
 	margin-top: 100px;
 }
