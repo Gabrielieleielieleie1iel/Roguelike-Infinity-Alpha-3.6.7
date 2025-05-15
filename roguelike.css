@@ -45,6 +45,12 @@ body {
   border: 1px solid red;
 }
 
+#bossRushBtn {
+  background-color: blue;
+  color: white;
+  border: 1px solid red;
+}
+
 #doomBtn {
   background-color: #2e0000;
   border: 2px solid #ff6200;

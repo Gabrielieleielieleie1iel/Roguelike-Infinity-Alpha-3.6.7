@@ -39,6 +39,8 @@
 	  const contentCredits = document.getElementById("contentCredits");
 	  const exitCredits = document.getElementById("exitCredits");
 	  
+	  const BOSS_RUSH_INTERVAL = 3;
+	  
 	  exitCredits.addEventListener("click", () => {
 		creditsCredits.style.display = "none";
 	  });
@@ -1274,6 +1276,368 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
    const idx = Math.min(Math.ceil(floor/50)-1, bosses.length-1);
    return bosses[idx];
  }
+ 
+ if (gameDifficulty === "bossRush") {
+	 const bosses = {
+          3: {
+            name: "Goblin King",
+            hp: 500,
+            damageRange: [10, 15],
+            expReward: [30, 30],
+            moneyReward: [30, 30],
+          },
+          6: {
+            name: "Zombie Mutant",
+            hp: 600,
+            damageRange: [12, 27],
+            expReward: [70, 70],
+            moneyReward: [70, 70],
+			reductionMagic: 0.5,
+          },
+          9: {
+            name: "Giant Lord",
+            hp: 1000,
+            damageRange: [15, 32],
+            expReward: [100, 100],
+            moneyReward: [100, 100],
+            reductionAttack: 0.5,
+          },
+          12: {
+            name: "Skeleton King",
+            hp: 550,
+            damageRange: [20, 40],
+            expReward: [120, 120],
+            moneyReward: [120, 120],
+			reductionAttack: 0.5,
+          },
+          15: {
+            name: "Spider Queen",
+            hp: 700,
+            damageRange: [23, 47],
+            expReward: [150, 150],
+            moneyReward: [150, 150]
+          },
+          18: {
+            name: "The Witch",
+            hp: 600,
+            damageRange: [37, 75],
+            expReward: [180, 180],
+            moneyReward: [180, 180],
+            reductionMagic: 0.5,
+          },
+          21: {
+            name: "Titan Golem",
+            hp: 1500,
+            damageRange: [37, 60],
+            expReward: [210, 210],
+            moneyReward: [210, 210],
+            reductionAll: 0.33,
+          },
+          24: {
+            name: "Wyvern",
+            hp: 1000,
+            damageRange: [37, 70],
+            expReward: [240, 240],
+            moneyReward: [240, 240],
+			reductionAttack: 0.5,
+          },
+          27: {
+            name: "Giant Sandworm",
+            hp: 700,
+            damageRange: [45, 75],
+            expReward: [250, 250],
+            moneyReward: [250, 250]
+          },
+          30: {
+            name: "Titanoboa Lord",
+            hp: 800,
+            damageRange: [45, 75],
+            expReward: [280, 280],
+            moneyReward: [280, 280]
+          },
+          33: {
+            name: "Abominable Snowman",
+            hp: 900,
+            damageRange: [53, 90],
+            expReward: [300, 300],
+            moneyReward: [300, 300]
+          },
+          36: {
+            name: "Omegalodon",
+            hp: 1000,
+            damageRange: [37, 90],
+            expReward: [320, 320],
+            moneyReward: [320, 320],
+            reductionAttack: 0.5,
+          },
+          39: {
+            name: "Leviathan",
+            hp: 1500,
+            damageRange: [45, 105],
+            expReward: [360, 360],
+            moneyReward: [360, 360],
+            reductionAttack: 0.33,
+          },
+          42: {
+            name: "Angel",
+            hp: 1600,
+            damageRange: [45, 113],
+            expReward: [400, 400],
+            moneyReward: [400, 400],
+            reductionMagic: 0.5,
+          },
+          45: {
+            name: "Mega Meta Mecha Annihilator - Model: Ultima",
+            hp: 3000,
+            damageRange: [60, 120],
+            expReward: [420, 420],
+            moneyReward: [500, 500],
+			reductionAttack: 0.5,
+          },
+          48: {
+            name: "Grand Knight",
+            hp: 4000,
+            damageRange: [45, 113],
+            expReward: [480, 480],
+            moneyReward: [480, 480],
+            reductionAll: 0.33,
+          },
+          51: {
+            name: "Six-Eyed Calamity",
+            hp: 2500,
+            damageRange: [68, 135],
+            expReward: [600, 600],
+            moneyReward: [560, 560],
+            reductionAll: 0.33,
+		  },
+          54: {
+            name: "Hydra",
+            hp: 4000,
+            damageRange: [80, 135],
+            expReward: [900, 900],
+            moneyReward: [800, 800],
+			reductionAttack: 0.5,
+          },
+          57: {
+            name: "Guardian of Hell, Cerberus",
+            hp: 3500,
+            damageRange: [45, 75],
+            expReward: [500, 500],
+            moneyReward: [800, 800],
+			reductionMagic: 0.33,
+          },
+          60: {
+            name: "Demon King",
+            hp: 5000,
+            damageRange: [60, 105],
+            expReward: [800, 800],
+            moneyReward: [850, 850],
+			reductionMagic: 0.5,
+          },
+		  63: {
+            name: "Omni",
+            hp: 7500,
+            damageRange: [56, 113],
+            expReward: [1000, 1000],
+            moneyReward: [1000, 1000],
+			reductionAttack: 0.5,
+			reductionMagic: 0.5,
+          },
+		  66: {
+            name: "Goblin Emperor",
+            hp: 1000,
+            damageRange: [45, 70],
+            expReward: [60, 60],
+            moneyReward: [60, 60]
+          },
+          69: {
+            name: "Giant Cyclops, Eater of Men",
+            hp: 3000,
+            damageRange: [60, 113],
+            expReward: [150, 150],
+            moneyReward: [150, 150],
+          },
+          72: {
+            name: "Medusa, Lady of Stone",
+            hp: 2500,
+            damageRange: [90, 113],
+            expReward: [200, 200],
+            moneyReward: [200, 200],
+            reductionAttack: 0.5,
+          },
+          75: {
+            name: "The Minotaur",
+            hp: 4000,
+            damageRange: [60, 120],
+            expReward: [250, 250],
+            moneyReward: [250, 250],
+			reductionMagic: 0.5,
+          },
+          78: {
+            name: "Arachni Empress",
+            hp: 1500,
+            damageRange: [70, 105],
+            expReward: [300, 300],
+            moneyReward: [300, 300],
+			reductionAttack: 0.5,
+          },
+          81: {
+            name: "Grand Sorceress",
+            hp: 1250,
+            damageRange: [75, 120],
+            expReward: [360, 360],
+            moneyReward: [360, 360],
+            reductionMagic: 1,
+          },
+          84: {
+            name: "Primordial Automaton",
+            hp: 5000,
+            damageRange: [60, 105],
+            expReward: [400, 400],
+            moneyReward: [400, 400],
+            reductionAll: 0.5,
+          },
+          87: {
+            name: "Dragon King",
+            hp: 4000,
+            damageRange: [80, 160],
+            expReward: [450, 450],
+            moneyReward: [420, 420],
+			reductionAttack: 0.67,
+			reductionMagic: 0.33,
+          },
+          90: {
+            name: "Devourer of Worlds",
+            hp: 2500,
+            damageRange: [75, 113],
+            expReward: [480, 480],
+            moneyReward: [450, 450],
+			reductionAll: 0.33,
+          },
+          93: {
+            name: "The World Serpent, Jörmungandr",
+            hp: 6000,
+            damageRange: [70, 100],
+            expReward: [500, 500],
+            moneyReward: [500, 500],
+			reductionAll: 0.5,
+          },
+          96: {
+            name: "Frost Queen, Borealis",
+            hp: 2500,
+            damageRange: [100, 150],
+            expReward: [600, 600],
+            moneyReward: [600, 600],
+			reductionMagic: 0.5,
+          },
+          99: {
+            name: "Charybdis",
+            hp: 3750,
+            damageRange: [70, 105],
+            expReward: [640, 640],
+            moneyReward: [640, 640],
+            reductionAttack: 0.5,
+          },
+          102: {
+            name: "Seraphim",
+            hp: 4200,
+            damageRange: [90, 120],
+            expReward: [690, 690],
+            moneyReward: [650, 650],
+            reductionMagic: 1,
+          },
+          105: {
+            name: "Mega Meta Mecha Annihilator - Model: Grande",
+            hp: 5000,
+            damageRange: [75, 135],
+            expReward: [700, 700],
+            moneyReward: [700, 700],
+			reductionAttack: 1,
+          },
+          108: {
+            name: "Grand Knight II",
+            hp: 5-00,
+            damageRange: [90, 143],
+            expReward: [720, 720],
+            moneyReward: [720, 720],
+            reductionAll: 0.4,
+          },
+          111: {
+            name: "The King of Curses",
+            hp: 3000,
+            damageRange: [90, 160],
+            expReward: [690, 690],
+            moneyReward: [420, 420],
+            reductionAll: 0.25,
+		  },
+          114: {
+            name: "The Restricted One, Kyojiro Allista",
+            hp: 10000,
+            damageRange: [75, 150],
+            expReward: [1000, 1000],
+            moneyReward: [0, 0],
+          },
+		  117: {
+            name: "The Brazen Bull, Khalkotauri",
+            hp: 4500,
+            damageRange: [60, 90],
+            expReward: [500, 500],
+            moneyReward: [500, 500],
+			reductionAll: 0.33,
+          },
+          120: {
+            name: "The Behemoth",
+            hp: 7000,
+            damageRange: [45, 75],
+            expReward: [500, 500],
+            moneyReward: [800, 800],
+			reductionMagic: 0.33,
+          },
+          123: {
+            name: "Demon God",
+            hp: 8500,
+            damageRange: [70, 110],
+            expReward: [800, 800],
+            moneyReward: [850, 850],
+			reductionMagic: 0.5,
+          },
+		126: {
+            name: "The Black King",
+            hp: 10000,
+            damageRange: [70, 130],
+            expReward: [1000, 1000],
+            moneyReward: [1000, 1000],
+			reductionMagic: 1,
+          },
+		129: {
+            name: "Warden Of Judgement, Will, And Balance",
+            hp: 12000,
+            damageRange: [75, 150],
+            expReward: [1000, 1000],
+            moneyReward: [1000, 1000],
+			reductionAll: 0.5,
+          },
+		132: {
+            name: "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel",
+            hp: 100000,
+            damageRange: [80, 160],
+            expReward: [10000, 10000],
+            moneyReward: [10000, 10000],
+			reductionAttack: 0.67,
+			reductionMagic: 0.67
+          },
+        };
+		
+         const bossFloors = Object.keys(bosses).map(Number).sort((a, b) => a - b);
+        for (let rush of bossFloors) {
+			if (floor <= rush) {
+				return bosses[rush];
+			}
+		}
+		// If you exceed the highest defined boss, just give the final one
+	return bosses[bossFloors[bossFloors.length - 1]];
+	}
+ 
         const bosses = {
           20: {
             name: "Goblin King",
@@ -1430,7 +1794,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             moneyReward: [850, 850],
 			reductionMagic: 0.5,
           },
-	  420: {
+		  420: {
             name: "Omni",
             hp: 7500,
             damageRange: [56, 113],
@@ -2376,6 +2740,7 @@ document.getElementById("hardBtn").addEventListener("click", () => selectDifficu
 document.getElementById("extremeBtn").addEventListener("click", () => selectDifficulty("extreme"));
 document.getElementById("insaneBtn").addEventListener("click", () => selectDifficulty("insane"));
 document.getElementById("calamityBtn").addEventListener("click", () => selectDifficulty("calamity"));
+document.getElementById("bossRushBtn").addEventListener("click", () => selectDifficulty("bossRush"));
 document.getElementById("doomBtn").addEventListener("click", () => {
  titleMusic.pause();
  titleMusic.currentTime = 0;
@@ -2816,9 +3181,33 @@ function generateAdjacentRooms(cx, cy) {
     { x: cx,     y: cy - 1 },
     { x: cx + 1, y: cy - 1 }
   ];
+  
+  // === Boss Rush mode: only Altars, Shops, Loots & Bosses ===
+  if (gameDifficulty === "bossRush") {
+    const bossInterval = 3;
+    if (floorCount % bossInterval === 0 && !bossRoomGenerated) {
+      // spawn the boss room straight ahead
+      const bossPos = { x: cx, y: cy - 1 };
+      createRoom(bossPos.x, bossPos.y, ROOM_TYPES.BOSS);
+      allowedMoves.push(`${bossPos.x}_${bossPos.y}`);
+      bossRoomGenerated = true;
+      return;
+    }
+    // else generate only altar/shop/loot
+    positions.forEach(pos => {
+      const r = Math.random();
+      let type;
+      if (r < 0.6)      type = ROOM_TYPES.ALTAR;  // 60% altar
+      else if (r < 0.8) type = ROOM_TYPES.SHOP;   // 20% shop
+      else              type = ROOM_TYPES.LOOT;   // 20% loot
+      createRoom(pos.x, pos.y, type);
+      allowedMoves.push(`${pos.x}_${pos.y}`);
+    });
+    return; // skip the default generator
+  }
 
   // Boss every N floors (20 normally, 50 in Doom)
-  const bossInterval = (gameDifficulty === "doom" ? 50 : 20);
+  const bossInterval = (gameDifficulty === "doom" ? 50 : gameDifficulty === "bossrush" ? BOSS_RUSH_INTERVAL : 20);
   if (floorCount % bossInterval === 0 && !bossRoomGenerated) {
     const bossPos = { x: cx, y: cy - 1 };
     createRoom(bossPos.x, bossPos.y, ROOM_TYPES.BOSS);
@@ -3703,7 +4092,7 @@ if (gameDifficulty === "normal") {
         Math.ceil(currentEnemy.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.75),
         Math.ceil(currentEnemy.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.75)
     ];
-} else if (gameDifficulty === "extreme" && gameDifficulty === "doom") {
+} else if (gameDifficulty === "extreme" && gameDifficulty === "doom" && gameDifficulty === "bossRush") {
     currentEnemy.hp = currentEnemy.hp + Math.round(15 * floorBonus * (player.level / floorCount));
     currentEnemy.damageRange = [
         currentEnemy.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
@@ -3811,6 +4200,9 @@ finalizeRoom(key);
 
 
       function startBossBattle(onComplete) {
+  let bossTemplate = getBossForFloor(floorCount);
+  let bossData = JSON.parse(JSON.stringify(bossTemplate));
+  currentEnemy = JSON.parse(JSON.stringify(bossData));;
   if (currentEnemy === "The Restricted One, Kyojiro Allista") {
 	  alert("You have entered a Boss Room... but wait, a Mysterious Man stands in your way.");
   } else if (currentEnemy === "Omni") {
@@ -3862,7 +4254,7 @@ finalizeRoom(key);
   ambushCompleteCallback = onComplete || null;
   
   // Pull the right boss template for this floor
-    const bossTemplate = getBossForFloor(floorCount);
+    bossTemplate = getBossForFloor(floorCount);
   
   if (gameDifficulty === "doom") {
     // lock BGM to Hell
@@ -3875,7 +4267,7 @@ finalizeRoom(key);
       bgmTracks["Hell"].audio.play();
     }
     // Clone it so we don’t mangle the template
-    const bossData = JSON.parse(JSON.stringify(bossTemplate));
+    bossData = JSON.parse(JSON.stringify(bossTemplate));
 
     // Apply your usual floor‐scaling (same as normal)
     const floorBoost = 1 + floorCount * 0.1;
@@ -3892,7 +4284,6 @@ finalizeRoom(key);
     bossData.moneyReward = bossData.moneyReward[0] * rewardMultiplier;
 
     // Finalize currentEnemy
-    currentEnemy       = JSON.parse(JSON.stringify(bossData));;
     currentEnemy.boss  = true;
     currentEnemy.poison = false;
     currentEnemy.burned = false;
@@ -3927,7 +4318,7 @@ finalizeRoom(key);
         Math.ceil(bossData.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.75),
         Math.ceil(bossData.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.75)
     ];
-} else if (gameDifficulty === "extreme" && gameDifficulty === "doom") {
+} else if (gameDifficulty === "extreme" && gameDifficulty === "doom" && gameDifficulty === "bossRush") {
     bossData.hp = bossData.hp + Math.round(15 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
         bossData.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
@@ -4013,7 +4404,7 @@ if (gameDifficulty === "normal") {
         Math.ceil(e.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.75),
         Math.ceil(e.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.75)
     ];
-} else if (gameDifficulty === "extreme" && gameDifficulty === "doom") {
+} else if (gameDifficulty === "extreme" && gameDifficulty === "doom" && gameDifficulty === "bossRush") {
     e.hp = e.hp + Math.round(15 * floorBonus * (player.level / floorCount));
     e.damageRange = [
         e.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
@@ -5373,8 +5764,10 @@ document.addEventListener("keydown", e => {
     }
     return;
   }
-  const nextBossFloor = Math.ceil(floorCount / 20) * 20;
-  const nextBoss = getBossForFloor(nextBossFloor);
+  
+  if (gameDifficulty === "bossRush") {
+	const nextBossFloor = Math.ceil(floorCount / BOSS_RUSH_INTERVAL) * BOSS_RUSH_INTERVAL;
+	const nextBoss = getBossForFloor(nextBossFloor);
   let bgColor = "black";
   let worldNum = 0;
   let worldName = "";
@@ -5614,6 +6007,250 @@ document.addEventListener("keydown", e => {
   // FIX: Trigger playing of the appropriate world music.
   if (worldName) {
     playWorldMusic(worldName);
+  }
+  } else {
+	const nextBossFloor = Math.ceil(floorCount / 20) * 20;
+	const nextBoss = getBossForFloor(nextBossFloor);
+  let bgColor = "black";
+  let worldNum = 0;
+  let worldName = "";
+  switch (nextBoss.name) {
+    case "Goblin King":
+      bgColor = "#113b00";
+      worldNum = 1;
+      worldName = "Deep Forests";
+      break;
+    case "Zombie Mutant":
+      bgColor = "#2a5e31";
+      worldNum = 2;
+      worldName = "Abandoned Graveyard";
+      break;
+    case "Giant Lord":
+      bgColor = "#5c2c00";
+      worldNum = 3;
+      worldName = "Deathly Cliffs";
+      break;
+    case "Skeleton King":
+      bgColor = "#8a8a8a";
+      worldNum = 4;
+      worldName = "Bone Castle";
+      break;
+    case "Spider Queen":
+      bgColor = "#202421";
+      worldNum = 5;
+      worldName = "Silkwoven Caverns";
+      break;
+    case "The Witch":
+      bgColor = "#1e0033";
+      worldNum = 6;
+      worldName = "Arcane Swamps";
+      break;
+    case "Titan Golem":
+      bgColor = "#242424";
+      worldNum = 7;
+      worldName = "Shi Mountains";
+      break;
+    case "Wyvern":
+      bgColor = "#a32c00";
+      worldNum = 8;
+      worldName = "Archaic Caverns";
+      break;
+    case "Giant Sandworm":
+      bgColor = "#ffe863";
+      worldNum = 9;
+      worldName = "Scorching Desert";
+      break;
+    case "Titanoboa Lord":
+      bgColor = "#1c0a00";
+      worldNum = 10;
+      worldName = "Never-Ending Tunnels";
+      break;
+    case "Abominable Snowman":
+      bgColor = "#cedede";
+      worldNum = 11;
+      worldName = "Freezing Tundra";
+      break;
+    case "Omegalodon":
+      bgColor = "#2954a3";
+      worldNum = 12;
+      worldName = "The Black Sea";
+      break;
+    case "Leviathan":
+      bgColor = "#0300a1";
+      worldNum = 13;
+      worldName = "Vast Ocean";
+      break;
+    case "Angel":
+      bgColor = "#ffffff";
+      worldNum = 14;
+      worldName = "Sky Dimension";
+      break;
+    case "Mega Meta Mecha Annihilator - Model: Ultima":
+      bgColor = "#7bb8c7";
+      worldNum = 15;
+      worldName = "Future Megalopolis";
+      break;
+    case "Grand Knight":
+      bgColor = "#260d00";
+      worldNum = 16;
+      worldName = "Ancient Kingdom";
+      break;
+    case "Six-Eyed Calamity":
+      bgColor = "#b700ff";
+      worldNum = 17;
+      worldName = "Shinjuku";
+      break;
+    case "Hydra":
+      bgColor = "#ba0000";
+      worldNum = 18;
+      worldName = "Molten Treasure Trove";
+      break;
+    case "Guardian of Hell, Cerberus":
+      bgColor = "#b30003";
+      worldNum = 19;
+      worldName = "The Underworld";
+      break;
+    case "Demon King":
+      bgColor = "#7d0000";
+      worldNum = 20;
+      worldName = "Hell";
+      break;
+    case "Omni":
+      bgColor = "#fcd928";
+      worldNum = 21;
+      worldName = "The Beyond";
+      break;
+    case "Goblin Emperor":
+      bgColor = "#113b00";
+      worldNum = 22;
+      worldName = "Forest Empire";
+      break;
+    case "Giant Cyclops, Eater of Men":
+      bgColor = "#2a5e31";
+      worldNum = 23;
+      worldName = "Abandoned Graveyard";
+      break;
+    case "Medusa, Lady of Stone":
+      bgColor = "#5c2c00";
+      worldNum = 24;
+      worldName = "Deathly Cliffs";
+      break;
+    case "The Minotaur":
+      bgColor = "#8a8a8a";
+      worldNum = 25;
+      worldName = "Bone Castle";
+      break;
+    case "Arachni Empress":
+      bgColor = "#202421";
+      worldNum = 26;
+      worldName = "Silkwoven Caverns";
+      break;
+    case "Grand Sorceress":
+      bgColor = "#1e0033";
+      worldNum = 27;
+      worldName = "Arcane Temple";
+      break;
+    case "Primordial Automaton":
+      bgColor = "#242424";
+      worldNum = 28;
+      worldName = "The Depths";
+      break;
+    case "Dragon King":
+      bgColor = "#a32c00";
+      worldNum = 29;
+      worldName = "Dragon King's Lair";
+      break;
+    case "Devourer of Worlds":
+      bgColor = "#ffe863";
+      worldNum = 30;
+      worldName = "Scorching Desert";
+      break;
+    case "The World Serpent, Jörmungandr":
+      bgColor = "#1c0a00";
+      worldNum = 31;
+      worldName = "Eternity";
+      break;
+    case "Frost Queen, Borealis":
+      bgColor = "#cedede";
+      worldNum = 32;
+      worldName = "Freezing Tundra";
+      break;
+    case "Charybdis":
+      bgColor = "#2954a3";
+      worldNum = 33;
+      worldName = "Valrr Trench";
+      break;
+    case "Seraphim":
+      bgColor = "#ffffff";
+      worldNum = 34;
+      worldName = "Sky Dimension";
+      break;
+    case "Mega Meta Mecha Annihilator - Model: Grande":
+      bgColor = "#7bb8c7";
+      worldNum = 35;
+      worldName = "Future Megalopolis";
+      break;
+    case "Grand Knight II":
+      bgColor = "#260d00";
+      worldNum = 36;
+      worldName = "Ancient Kingdom";
+      break;
+    case "King of Curses":
+      bgColor = "#b700ff";
+      worldNum = 37;
+      worldName = "Shibuya";
+      break;
+    case "The Restricted One, Kyojiro Allista":
+      bgColor = "#ba0000";
+      worldNum = 38;
+      worldName = "Molten Treasure Trove";
+      break;
+    case "The Brazen Bull, Khalkotauri":
+      bgColor = "#32e800";
+      worldNum = 39;
+      worldName = "Open Fields";
+      break;
+	case "The Behemoth":
+      bgColor = "#b30003";
+      worldNum = 40;
+      worldName = "The Underworld";
+      break;
+    case "Demon God":
+      bgColor = "#7d0000";
+      worldNum = 41;
+      worldName = "7th Layer of Hell";
+      break;
+    case "The Black King":
+      bgColor = "#000000";
+      worldNum = 42;
+      worldName = "Shadow Realm";
+      break;
+    case "Warden Of Judgement, Will, And Balance":
+      bgColor = "#ffffff";
+      worldNum = 43;
+      worldName = "Even Further Beyond";
+      break;
+    case "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel":
+      bgColor = "#fcf3dc";
+      worldNum = 44;
+      worldName = "Realm Of The Gods";
+      break;
+    default:
+      bgColor = "black";
+      worldNum = 0;
+      worldName = "Welcome to Roguelike!";
+  }
+  
+  document.body.style.background = bgColor;
+  const worldCounterEl = document.getElementById("worldCounter");
+  if (worldCounterEl) {
+    worldCounterEl.textContent = worldName + " " + worldNum + "-" + Math.floor(roomMoves);
+  }
+  
+  // FIX: Trigger playing of the appropriate world music.
+  if (worldName) {
+    playWorldMusic(worldName);
+  }
   }
 }
 
@@ -6004,7 +6641,7 @@ closeSellBtn.addEventListener("click", () => {
         let multiplier = 1 + (player.potential - 1) * 0.08;
         player.exp = Math.round(player.exp + Math.floor(amount * multiplier));
         updateStats();
-        if (player.exp >= player.expToLevel) {
+        while (player.exp >= player.expToLevel) {
           levelUp();
         }
       }
