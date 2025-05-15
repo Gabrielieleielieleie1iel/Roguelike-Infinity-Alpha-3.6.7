@@ -1905,15 +1905,6 @@ let shopItemsList = [
     usableOutOfBattle: false,
     usageScope: "passive"
   },
-  {
-	name: "Nike Black Air Force",
-  cost: 3000,
-  type: "equipment",
-  category: "accessory",
-  usableInBattle: false,
-  usableOutOfBattle: false,
-  usageScope: "passive"
-  },
 
   // ─ Armors ─
   {
@@ -2213,15 +2204,6 @@ shopItemsList = [
     usableInBattle: false,
     usableOutOfBattle: false,
     usageScope: "passive"
-  },
-  {
-	name: "Delta V-Jump Boots",
-  cost: 3000,
-  type: "equipment",
-  category: "accessory",
-  usableInBattle: false,
-  usableOutOfBattle: false,
-  usageScope: "passive"
   },
 
   // ─ Armors ─
@@ -2618,11 +2600,15 @@ document.getElementById("doomBtn").addEventListener("click", () => {
   // 2) Once it’s fully opaque (1s), show title screen behind it & start gate audio
   setTimeout(() => {
 	document.getElementById("doomTitleScreen").style.display = "flex";
+	gateAudio = new Audio("atdoomsgate.mp3");
+	gateAudio.loop = true;
+	gateAudio.volume = 0;
+	gateAudio.play();
+	const fadeInterval = setInterval(() => {
+		gateAudio.volume = Math.min(1, gateAudio.volume + 0.025);
+		if (gateAudio.volume >= 1) clearInterval(fadeInterval);
+	}, 250);
     setTimeout(() => {
-		gateAudio = new Audio("atdoomsgate.mp3");
-		gateAudio.loop = true;
-		gateAudio.volume = 1;
-		gateAudio.play();
 		overlay.style.opacity = "";
 		// remove overlay when fade completes (1s)
 		setTimeout(() => {
@@ -2925,7 +2911,7 @@ function generateAdjacentRooms(cx, cy) {
         && [ROOM_TYPES.CASINO, ROOM_TYPES.GUILD, ROOM_TYPES.WARRIOR]
             .includes(type)) {
       type = ROOM_TYPES.EMPTY;
-      disguised = false;
+	  disguised = false;
     }
 
     // Finally, create it
@@ -3080,6 +3066,23 @@ if (gameDifficulty !== "doom") {
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
+        name:     "Nike Black Air Force",
+        type:     "equipment",
+        category: "accessory"
+      };
+      alert("You found a pair of Nike Black Air Force shoes! (LEGENDARY)");
+    } else {
+      alert("Inventory full...");
+    }
+    updateStats();
+	updateInventoryDisplay();
+    return;
+  }
+  
+  if (Math.random() < legendaryChance) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
         name:     "Grand Knight's Armor",
         type:     "equipment",
         category: "armor"
@@ -3194,6 +3197,23 @@ if (gameDifficulty !== "doom") {
         category: "weapon"
       };
       alert("You found a big fucking gun! (Epic)");
+    } else {
+      alert("Inventory full...");
+    }
+    updateStats();
+	updateInventoryDisplay();
+    return;
+  }
+  
+  if (Math.random() < legendaryChance) {
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Delta V-Jump Boots",
+        type:     "equipment",
+        category: "accessory"
+      };
+      alert("You found a pair of Delta V-Jump Boots! (LEGENDARY)");
     } else {
       alert("Inventory full...");
     }
@@ -3344,6 +3364,7 @@ if (gameDifficulty !== "doom") {
       img.alt = map[oldKey].type;
       img.style.width = "80%";
       map[oldKey].element.appendChild(img);
+	  map[oldKey].type = ROOM_TYPES.EMPTY;
     }
   }
   // Update player's position.
@@ -3365,22 +3386,23 @@ if (gameDifficulty !== "doom") {
   // Trigger the room event.
   if (map[key].secretAmbush) {
     map[key].secretAmbush = false;
-    // Show ambush icon (if needed) then start ambush battle.
     const img = document.createElement("img");
     img.src = roomIcons[ROOM_TYPES.AMBUSH];
     img.alt = ROOM_TYPES.AMBUSH;
     img.style.width = "80%";
     map[key].element.appendChild(img);
-    // Start ambush battle and then finalize the room when done.
-    startAmbushBattle(() => finalizeRoom(key));
+    generateAdjacentRooms(player.x, player.y);
     return;
   }
+  
   if (map[key].type === ROOM_TYPES.BATTLE) {
     startBattle();
   } else if (map[key].type === ROOM_TYPES.WARRIOR) {
-	generateAdjacentRooms(player.x, player.y);
-	handleWarriorRoom(key);
-	return;
+	  if (gameDifficulty !== "doom") {
+		generateAdjacentRooms(player.x, player.y);
+		handleWarriorRoom(key);
+		return;
+	  }
   } else if (map[key].type === ROOM_TYPES.GUILD) {
     if (!player.guildUnlocked) {
       showGuildApplicationPrompt();
@@ -3408,9 +3430,9 @@ if (gameDifficulty !== "doom") {
     openCasino(() => finalizeRoom(key));
     return;
   } else if (map[key].type === ROOM_TYPES.AMBUSH) {
-	generateAdjacentRooms(player.x, player.y);
-    startAmbushBattle(() => finalizeRoom(key));
-    return;
+		generateAdjacentRooms(player.x, player.y);
+		startAmbushBattle(() => finalizeRoom(key));
+		return;
   } else if (map[key].type === ROOM_TYPES.LOOT) {
     handleLootRoom();
   } else if (map[key].type === ROOM_TYPES.TRAP) {
@@ -3422,22 +3444,23 @@ if (gameDifficulty !== "doom") {
 }
 
 function finalizeRoom(key) {
-  const cell = map[key];
-  cell.type = ROOM_TYPES.EMPTY;
-  cell.type = ROOM_TYPES.AMBUSH;
-  cell.type = ROOM_TYPES.WARRIOR;
-  cell.element.innerHTML = "";
+  map[key].type = ROOM_TYPES.EMPTY;
+  map[key].type = ROOM_TYPES.AMBUSH;
+  map[key].type = ROOM_TYPES.WARRIOR;
+  map[key].element.innerHTML = "";
 
   player.x = parseInt(key.split("_")[0], 10);
   player.y = parseInt(key.split("_")[1], 10);
-  cell.element.innerHTML = '<div class="player"></div>';
+  map[key].element.innerHTML = '<div class="player"></div>';
   centerCamera();
-  roomMoves++;
-  roomsThisFloor++;
-  if (roomsThisFloor >= 3) {
-    floorCount++;
-    roomsThisFloor = 0;
-    bossRoomGenerated = false;
+  if (allowedMoves.includes(key)) {
+    roomMoves++;
+    roomsThisFloor++;
+    if (roomsThisFloor >= 3) {
+      floorCount++;
+      roomsThisFloor = 0;
+      bossRoomGenerated = false;
+    }
   }
   generateAdjacentRooms(player.x, player.y);
   updateBackgroundColor();
@@ -4894,8 +4917,11 @@ document.addEventListener("keydown", e => {
       logBattle("You're too exhausted to use that again...");
     } else {
       if (player.mana < manaCost) {
-		if (player.activeAbility !== "Sacrifice" || player.activeAbility !== "Rip and Tear" || player.activeAbility !== "None") {
+		if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear" && player.activeAbility !== "None") {
 			logBattle("Insufficient Mana!");
+		} else {
+			useActiveAbility();
+			skillUsedThisBattle = false;
 		}
       } else {
         useActiveAbility();
@@ -4911,7 +4937,7 @@ function useActiveAbility() {
     return;
   }
   manaCost = player.overrideManaCost || 10;
-  if (player.activeAbility !== "Sacrifice" || player.activeAbility !== "Rip and Tear" || player.activeAbility !== "None") {
+  if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear" && player.activeAbility !== "None") {
 	if (player.mana < manaCost) {
 		logBattle("Insufficient Mana!");
 		return;
@@ -5934,6 +5960,10 @@ sellBtn.addEventListener("click", () => {
       sellPrice = 10000;
     } else if (item.name === "Titan's Fang") {
       sellPrice = 10000;
+    } else if (item.name === "Nike Black Air Force") {
+      sellPrice = 3000;
+    } else if (item.name === "Delta V-Jump Boots") {
+      sellPrice = 5000;
     } else {
       const shopDef = shopItemsList.find(si => si.name === item.name);
       sellPrice = shopDef ? Math.floor(shopDef.cost / 2) : 0;
@@ -6057,7 +6087,9 @@ closeSellBtn.addEventListener("click", () => {
           logBattle(`Player leveled up! ${stat.toUpperCase()} increased.`);
           if (upgradesRemaining <= 0) {
             levelUpMenu.style.display = "none";
-			battleTint.style.display = "none";
+			if (battleMenu.style.display !== "block") {
+				battleTint.style.display = "none";
+			}
           }
         }
       });
