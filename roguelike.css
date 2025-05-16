@@ -419,6 +419,7 @@ body.doom-mode #equipmentMenu #equipmentSlots {
   gap: 10px;
   margin-top: 20px;
 }
+
 body.doom-mode .equipmentSlot {
   border: 2px solid black;
   padding: 8px;
