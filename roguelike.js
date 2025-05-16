@@ -353,6 +353,9 @@ casinoMusic.loop = true;
   "Sword":      p => {
 	p.attack = Math.ceil(p.attack * 1.5);
   },
+  "Gauntlets":      p => {
+	p.attack = Math.ceil(p.attack * 1.3);
+  },
   "Greatsword": p => {
     p.attack = p.attack * 2;
     p.defense = Math.ceil(p.defense * 1.5);
@@ -594,6 +597,7 @@ const weaponSkillMap = {
   "Excalibur": "Execution",
   "Sorceress' Staff": "Rewind",
   "Dragon's Fang": "Outrage",
+  "Gauntlets": "Pummel",
   
   "Doomblade Arm Upgrade": "Glory Slash",
   "Chainshield": "Launch",
@@ -2334,6 +2338,15 @@ let shopItemsList = [
   // ─ Weapons ─
   {
     name: "Sword",
+    cost: 320,
+    type: "equipment",
+    category: "weapon",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
+    name: "Gauntlets",
     cost: 320,
     type: "equipment",
     category: "weapon",
@@ -5337,26 +5350,27 @@ document.addEventListener("keydown", e => {
   if (e.key.toLowerCase() === "q") {
 	let manaCost = player.overrideManaCost || 10;
     if (!skillUsedThisBattle) {
-      logBattle("You're too exhausted to use that again...");
+      logBattle("You're too exhausted to do that again...");
+    // re-unlock so battle can continue
+    setTimeout(() => unlockActions(), 250);
+    return;
     } else {
       if (player.mana < manaCost) {
 		if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear" && player.activeAbility !== "None") {
 			logBattle("Insufficient Mana!");
-		} else {
-			useActiveAbility();
-			skillUsedThisBattle = false;
 		}
-      } else {
-        useActiveAbility();
-        skillUsedThisBattle = false;
+      }
+      useActiveAbility();
+      skillUsedThisBattle = false;
       }
     }
-  }
-});
+  });
 
 function useActiveAbility() { 
   if (skillUsedThisBattle = false) {
-    logBattle("You're too exhausted to use that again...");
+    logBattle("You're too exhausted to do that again...");
+    // re-unlock so battle can continue
+    setTimeout(() => unlockActions(), 250);
     return;
   }
   manaCost = player.overrideManaCost || 10;
@@ -5667,9 +5681,21 @@ document.addEventListener("keydown", e => {
   }
 
   const ws = player.weaponSkill;
+  
   if (ws.name === "None") {
-    alert("But nothing happened...");
-    return;
+	if (gameDifficulty !== "doom") {
+		logBattle("But nothing happened...");
+		return;
+	} else {
+		if (ws.usedThisBattle) {
+			logBattle("You're too exhausted to use that again...");
+			return;
+		} else {
+			logBattle("<em>DEMONS EVERYWHERE... MUST KILL THEM ALL!</em>");
+			dealPlayerDamage(1);
+			ws.usedThisBattle = true;
+		}
+	}
   }
   if (ws.usedThisBattle) {
     logBattle("You're too exhausted to use that again...");
@@ -5715,6 +5741,15 @@ document.addEventListener("keydown", e => {
       logBattle("<em>Single Point. Focus. Blast!</em>");
       dealPlayerMagicDamage(2);
       break;
+
+	case "Pummel":
+	  logBattle("<em>Fueled by rage, you charge at your opponent and begin barraging them with attacks</em>")
+	  dealPlayerDamage(1);
+	  dealPlayerDamage(1);
+	  dealPlayerDamage(1);
+	  dealPlayerDamage(1);
+	  dealPlayerDamage(1);
+	  break;
 
     case "Rewind":
       logBattle("<em>Return. Revert. Undo. Regenerate. Maximum Output. Rewind!</em>");
@@ -6850,7 +6885,7 @@ function hideOverlay() {
 		playerAttack("attack");
 
 		if (Math.random() < player.agility * 0.0005) {
-			playerAttack("attack");
+			dealPlayerDamage(1);
 		}
       });
 	  
@@ -6900,29 +6935,22 @@ document.getElementById("abilityBtn").addEventListener("click", () => {
   // Prevent spamming during animations/battles
   if (actionsLocked) return;
   lockActions();
-
-  // Exactly the same checks you do on “keydown Q”
-  if (!skillUsedThisBattle) {
-    logBattle("You're too exhausted to do that again...");
+  
+  let manaCost = player.overrideManaCost || 10;
+    if (!skillUsedThisBattle) {
+      logBattle("You're too exhausted to do that again...");
     // re-unlock so battle can continue
     setTimeout(() => unlockActions(), 250);
     return;
-  }
-  
-  const manaCost = player.overrideManaCost || 10;
-  if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear") {
-	if (player.mana < manaCost) {
-		logBattle("Insufficient Mana!");
-		setTimeout(() => unlockActions(), 250);
-		return;
-	}
-	player.mana -= manaCost;
-	updateManaDisplay();
-  }
-
-  // Spend mana and fire off the active ability
-  useActiveAbility();
-  skillUsedThisBattle = false;
+    } else {
+      if (player.mana < manaCost) {
+		if (player.activeAbility !== "Sacrifice" && player.activeAbility !== "Rip and Tear" && player.activeAbility !== "None") {
+			logBattle("Insufficient Mana!");
+		}
+      }
+      useActiveAbility();
+      skillUsedThisBattle = false;
+      }
   
   setTimeout(() => unlockActions(), 250);
 });
