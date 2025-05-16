@@ -88,6 +88,9 @@ body {
   top: 0; left: 0;
   width: 100vw; height: 100vh;
   background: url("doomcover.jpg") center/cover no-repeat;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: flex-start;      /* push content to top */
@@ -108,6 +111,13 @@ body {
 	right: 500px;
 	top: 50px;
 	background: rgba(0, 0, 0, 0.5);
+}
+
+#doomTitleImage {
+  max-width: 40%;               /* shrink it */
+  height: auto;
+  margin: 0 auto 30px;          /* centered, with bottom gap */
+  animation: levitate 3s ease-in-out infinite;
 }
 
 #doomTitleImg {
@@ -1173,7 +1183,7 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
 }
 
 .jump-zoom-titan {
-  animation: zoomBeat 0.45s infinite;
+  animation: zoomBeat 0.43s infinite;
   transform-origin: center center;
 }
 

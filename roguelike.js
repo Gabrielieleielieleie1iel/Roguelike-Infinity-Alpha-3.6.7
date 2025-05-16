@@ -21,6 +21,20 @@
       const standBtn = document.getElementById("standBtn");
       const hitButtons = document.querySelectorAll(".hitBtn");
 	  
+	  const doomCoverImage = [
+		"doomcover1.jpg",
+		"doomcover2.jpg",
+		"doomcover3.png",
+		"doomcover4.jpg",
+		"doomcover5.jpg"
+	  ];
+	  
+	  const doomTitleImage = [
+		"doomtitle1.png",
+		"doomtitle2.png",
+		"doomtitle3.webp"
+	  ];
+	  
 	  const sellBtn      = document.getElementById("sellBtn");
 	  const sellMenu     = document.getElementById("sellMenu");
 	  const sellItemsDiv = document.getElementById("sellItems");
@@ -317,6 +331,7 @@ casinoMusic.loop = true;
   guildMissionStage: 0,
   guildMissionKills: 0,
   mercenaries: [],
+  canRowMovement: false,
   
   // "True" base stats (permanent upgrades are stored here)
   baseStats: {
@@ -333,6 +348,7 @@ casinoMusic.loop = true;
 	fortune: 1,
     dodgeChance: 0.2,
     neverMiss:   false,
+	canRowMovement: false,
   },
 
   // Equipped gear slots
@@ -2646,6 +2662,15 @@ shopItemsList = [
     usageScope: "passive"
   },
   {
+    name: "Gauntlets",
+    cost: 450,
+    type: "equipment",
+    category: "weapon",
+    usableInBattle: false,
+    usableOutOfBattle: false,
+    usageScope: "passive"
+  },
+  {
     name: "Chainshield",
     cost: 500,
     type: "equipment",
@@ -3009,7 +3034,17 @@ document.getElementById("doomBtn").addEventListener("click", () => {
 
   // 2) Once it’s fully opaque (1s), show title screen behind it & start gate audio
   setTimeout(() => {
+	const cover = doomCoverImage[Math.floor(Math.random() * doomCoverImage.length)];
+	const title  = doomTitleImage[Math.floor(Math.random() * doomTitleImage.length)];
+	
+	document.getElementById("doomTitleScreen").style.backgroundImage   = `url(${cover})`;
+
+	// …and swap out the logo img
+	document.getElementById("doomTitleImg").src = title;
+
+	// Finally, show it
 	document.getElementById("doomTitleScreen").style.display = "flex";
+	
 	gateAudio = new Audio("atdoomsgate.mp3");
 	gateAudio.loop = true;
 	gateAudio.volume = 0;
@@ -3387,7 +3422,7 @@ function generateAdjacentRooms(cx, cy) {
 	  const itemChance = Math.min(0.9, baseItemChance + player.luck * 0.001);
 
       function handleLootRoom() {
-  const dragonBallChance = Math.min(0.5, 0.000001 + (player.luck * 0.000001));
+  const mythicalChance = Math.min(0.5, 0.000001 + (player.luck * 0.000001));
   const legendaryChance = Math.min(0.5, 0.001 + (player.luck * 0.001));
   const epicChanceOne = Math.min(0.5, 0.01 + (player.luck * 0.005));
   const epicChanceTwo = Math.min(0.5, 0.02 + (player.luck * 0.005));
@@ -3406,7 +3441,7 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < dragonBallChance) {
+  if (Math.random() < mythicalChance) {
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3549,7 +3584,7 @@ if (gameDifficulty !== "doom") {
     return;
   }
 } else {
-	if (Math.random() < dragonBallChance) {
+	if (Math.random() < mythicalChance) {
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3784,7 +3819,7 @@ if (gameDifficulty !== "doom") {
        *******************/
       function moveToRoom(x, y) {
   const key = x + "_" + y;
-  if (!allowedMoves.includes(key) && !player.canRowMovement && y === player.y && map[key]) {
+  if (!allowedMoves.includes(key) && !player.canRowMovement && y !== player.y - 1 && map[key]) {
     console.log("Invalid move. Please choose one of the newly generated rooms.");
     return;
   }
@@ -6729,6 +6764,7 @@ closeSellBtn.addEventListener("click", () => {
 			player.baseStats.maxHp += 20;
 			player.baseStats.attack += 1;
 			player.baseStats.magic += 1;
+			player.baseStats.maxArmor += 10;
 			player.baseStats.maxMana += 5;
 			player.baseStats.defense += 1;
 			player.baseStats.agility += 1;
