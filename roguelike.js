@@ -7592,4 +7592,38 @@ function closeWishMenu() {
       /*******************
        * START THE GAME
        *******************/
+	   
+	   (function() {
+  const titleScreen   = document.getElementById("titleScreen");
+  const playButton    = document.getElementById("playButton");
+  const dotsEl        = document.getElementById("dots");
+
+  // Prevent any title‐screen audio/UI until loading completes
+  titleScreen.style.display = "none";
+
+  // Random delay between 5 and 15 seconds
+  const delay = 10000 + Math.random() * 10000;
+
+  setTimeout(() => {
+    // 1) change text to "Completed!"
+    const textDiv = loadingScreen.querySelector(".loading-text");
+    textDiv.textContent = "Loading Completed!";
+
+    // 2) after a short moment, fade out
+    setTimeout(() => {
+      loadingScreen.style.opacity = "0";
+
+      // 3) once fade completes, remove overlay & show title screen
+      loadingScreen.addEventListener("transitionend", () => {
+        loadingScreen.remove();
+        titleScreen.style.display = "flex";
+        // also reveal playButton if your logic shows it then:
+        playButton.style.display = "";
+      }, { once: true });
+
+    }, 500); // hold “Completed!” for 0.5s
+
+  }, delay);
+})();
+	   
 initGame();

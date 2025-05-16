@@ -9,6 +9,34 @@ body {
   overflow: auto;
 }
 
+#loadingScreen {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+.loading-text {
+  color: white;
+  font-size: 2em;
+  font-family: sans-serif;
+}
+/* keyframes for looping dots */
+@keyframes dotPulse {
+  0%   { content: "."; }
+  33%  { content: ".."; }
+  66%  { content: "..."; }
+  100% { content: ""; }
+}
+#dots::after {
+  content: "";
+  animation: dotPulse 1s infinite steps(1, end);
+}
+
 #difficultyMenu button {
   color: white;
   font-weight: bold;
@@ -1163,7 +1191,7 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
 }
 
 .jump-zoom-special {
-  animation: zoomBeat 0.507s infinite;
+  animation: zoomBeat 0.51s infinite;
   transform-origin: center center;
 }
 
