@@ -22,17 +22,11 @@
       const hitButtons = document.querySelectorAll(".hitBtn");
 	  
 	  const doomCoverImage = [
-		"doomcover1.jpg",
-		"doomcover2.jpg",
-		"doomcover3.png",
-		"doomcover4.jpg",
-		"doomcover5.jpg"
+		"doomcover.jpg"
 	  ];
 	  
 	  const doomTitleImage = [
-		"doomtitle1.png",
-		"doomtitle2.png",
-		"doomtitle3.webp"
+		"doomtitle.png"
 	  ];
 	  
 	  const sellBtn      = document.getElementById("sellBtn");
@@ -3034,15 +3028,6 @@ document.getElementById("doomBtn").addEventListener("click", () => {
 
   // 2) Once it’s fully opaque (1s), show title screen behind it & start gate audio
   setTimeout(() => {
-	const cover = doomCoverImage[Math.floor(Math.random() * doomCoverImage.length)];
-	const title  = doomTitleImage[Math.floor(Math.random() * doomTitleImage.length)];
-	
-	document.getElementById("doomTitleScreen").style.backgroundImage   = `url(${cover})`;
-
-	// …and swap out the logo img
-	document.getElementById("doomTitleImg").src = title;
-
-	// Finally, show it
 	document.getElementById("doomTitleScreen").style.display = "flex";
 	
 	gateAudio = new Audio("atdoomsgate.mp3");
@@ -3055,7 +3040,6 @@ document.getElementById("doomBtn").addEventListener("click", () => {
 	}, 250);
     setTimeout(() => {
 		overlay.style.opacity = "";
-		// remove overlay when fade completes (1s)
 		setTimeout(() => {
 		overlay.remove();
 	  }, 1000);
