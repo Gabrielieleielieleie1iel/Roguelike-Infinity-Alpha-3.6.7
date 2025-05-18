@@ -869,6 +869,8 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
   border: none;
   color: white;
   cursor: pointer;
+  height: 15px;
+  width: 50px;
 }
 
 #shopMenu button:hover {
@@ -886,6 +888,10 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
   display: none;
   z-index: 300;
   text-align: center;
+}
+
+#deathMenu h2 {
+	font-family: 'Copperplate Gothic Light', 'Copperplate', fantasy;
 }
 
 #deathMenu button {

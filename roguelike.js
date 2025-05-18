@@ -21,6 +21,37 @@
       const standBtn = document.getElementById("standBtn");
       const hitButtons = document.querySelectorAll(".hitBtn");
 	  
+	  let timerStart = 0;
+	  let timerInterval = null;
+	  let timerRunning = false;
+	  let elapsedTime = 0;
+	  
+	  function startTimer() {
+		timerStart = Date.now();
+		timerInterval = setInterval(updateTimer, 31);  // ~32fps is enough
+		timerRunning = true;
+	  }
+
+	  function updateTimer() {
+		elapsedTime = Date.now() - timerStart;
+		const msTotal   = elapsedTime % 1000;
+		const ms        = Math.floor(msTotal / 10);
+		const totalSec  = Math.floor(elapsedTime / 1000);
+		const sec       = totalSec % 60;
+		const min       = Math.floor(totalSec / 60) % 60;
+		const hr        = Math.floor(totalSec / 3600);
+
+		const pad2 = n => n.toString().padStart(2, '0');
+		const str  = `${pad2(hr)}:${pad2(min)}:${pad2(sec)}.${pad2(ms)}`;
+
+		document.getElementById('timerDisplay').textContent = str;
+	  }
+
+	  function stopTimer() {
+		clearInterval(timerInterval);
+		timerRunning = false;
+	  }
+	  
 	  const doomCoverImage = [
 		"doomcover.jpg"
 	  ];
@@ -283,6 +314,7 @@ casinoMusic.loop = true;
       let lastAltarFloor = 0;
 	  let secretAmbush = false;
 	  let turnNumber = 1;
+	  let killCount = 0;
 	  let actionsLocked = false;
 	  let currentWorld = "";
 	  let currentBGM = null;
@@ -1301,23 +1333,24 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 		if (gameDifficulty === "doom") {
    // Every 50 floors you hit a boss; cycle through these seven
    const bosses = [
-     { name: "Behemoth",            hp: 1000,  damageRange: [40, 90],  expReward: [100, 100], moneyReward: [100, 100] },
-	 { name: "Baron of Hell",            hp: 1800,  damageRange: [60, 100],  expReward: [200, 200], moneyReward: [100, 100] },
-     { name: "Fallen Angel",        hp: 2000,  damageRange: [70, 120], expReward: [300, 300], moneyReward: [200, 150] },
-     { name: "Hell Guard", hp: 3500, damageRange: [80, 110], expReward: [750, 750], moneyReward: [500, 500] },
-     { name: "Cyberdemon",          hp: 6000, damageRange: [100, 120], expReward: [1000, 1000], moneyReward: [800, 800] },
-	 { name: "Spider Mastermind",          hp: 8000, damageRange: [90, 130], expReward: [1500, 1500], moneyReward: [800, 800] },
-	 { name: "Hell Titan",          hp: 10000, damageRange: [80, 110], expReward: [2000, 2000], moneyReward: [800, 800] },
-	 { name: "Guardian of Hell, Cerberus.", hp: 10000, damageRange: [120, 140], expReward: [2400, 2400], moneyReward: [1000, 1000] },
-     { name: "Demon King.",          hp: 12000, damageRange: [100, 150],expReward: [2700, 2700], moneyReward: [1500, 1500] },
-	 { name: "Doom Hunter",          hp: 12500, damageRange: [100, 120],expReward: [2800, 2800], moneyReward: [1000, 1000] },
-	 { name: "Death Marauder",          hp: 15000, damageRange: [90, 130],expReward: [3000, 3000], moneyReward: [1000, 1000] },
-	 { name: "The Gladiator",          hp: 18000, damageRange: [100, 140],expReward: [3200, 3200], moneyReward: [1200, 1200] },
-     { name: "Ancient Hell Titan",  hp: 25000, damageRange: [100, 120],expReward: [3500, 3500], moneyReward: [1500, 1500] },
-	 { name: "Khan Maykr",          hp: 15000, damageRange: [130, 160],expReward: [3600, 3600], moneyReward: [1500, 1000] },
-	 { name: "The Icon of Sin",          hp: 30000, damageRange: [120, 130],expReward: [4000, 4000], moneyReward: [1500, 1500] },
-	 { name: "Viscount Hellbreaker",          hp: 25000, damageRange: [100, 150],expReward: [3800, 3800], moneyReward: [1500, 1500] },
-     { name: "The Dark Lord, Davoth",           hp: 35000, damageRange: [120, 150],expReward: [4200, 4200], moneyReward: [2000, 2000] }
+     { name: "Behemoth",            hp: 10000,  damageRange: [40, 90],  expReward: [100, 100], moneyReward: [100, 100], },
+	 { name: "Baron of Hell",            hp: 18000,  damageRange: [60, 100],  expReward: [200, 200], moneyReward: [100, 100], },
+     { name: "Fallen Angel",        hp: 20000,  damageRange: [70, 120], expReward: [300, 300], moneyReward: [200, 150], },
+     { name: "Hell Guard", hp: 35000, damageRange: [80, 110], expReward: [750, 750], moneyReward: [500, 500], },
+     { name: "Cyberdemon",          hp: 60000, damageRange: [100, 120], expReward: [1000, 1000], moneyReward: [800, 800], },
+	 { name: "Spider Mastermind",          hp: 80000, damageRange: [90, 130], expReward: [1500, 1500], moneyReward: [800, 800], },
+	 { name: "Hell Titan",          hp: 100000, damageRange: [80, 110], expReward: [2000, 2000], moneyReward: [800, 800], },
+	 { name: "Guardian of Hell, Cerberus.", hp: 100000, damageRange: [120, 140], expReward: [2400, 2400], moneyReward: [1000, 1000], },
+     { name: "Demon King.",          hp: 120000, damageRange: [100, 150],expReward: [2700, 2700], moneyReward: [1500, 1500], },
+	 { name: "Doom Hunter",          hp: 125000, damageRange: [90, 120],expReward: [2500, 2500], moneyReward: [1000, 1000], },
+	 { name: "Death Marauder",          hp: 150000, damageRange: [100, 130],expReward: [2700, 2700], moneyReward: [1000, 1000], },
+	 { name: "The Gladiator",          hp: 180000, damageRange: [110, 140],expReward: [2800, 2800], moneyReward: [1200, 1200], },
+     { name: "Dreadnought, the Ancient Hell Titan",  hp: 250000, damageRange: [90, 130],expReward: [3000, 3000], moneyReward: [1500, 1500], },
+	 { name: "Khan Maykr",          hp: 150000, damageRange: [130, 160],expReward: [3200, 3200], moneyReward: [1500, 1000], },
+	 { name: "The Icon of Sin",          hp: 300000, damageRange: [120, 130],expReward: [3500, 3500], moneyReward: [1500, 1500], },
+	 { name: "Viscount Hellbreaker",          hp: 250000, damageRange: [100, 150],expReward: [3600, 3600], moneyReward: [1500, 1500], },
+	 { name: "Maligog, Protector of the Gods",  hp: 500000, damageRange: [100, 120],expReward: [3800, 3800], moneyReward: [1500, 1500], },
+     { name: "The Dark Lord, Davoth",           hp: 350000, damageRange: [120, 160],expReward: [4000, 4000], moneyReward: [2000, 2000], },
    ];
    const idx = Math.min(Math.ceil(floor/50)-1, bosses.length-1);
    return bosses[idx];
@@ -3807,6 +3840,10 @@ if (gameDifficulty !== "doom") {
     console.log("Invalid move. Please choose one of the newly generated rooms.");
     return;
   }
+  
+  if (!timerRunning) {
+	startTimer();
+  }
   // Remove player from old room.
   const oldKey = player.x + "_" + player.y;
   if (map[oldKey]) {
@@ -4156,13 +4193,13 @@ if (gameDifficulty === "normal") {
         Math.ceil(currentEnemy.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.75),
         Math.ceil(currentEnemy.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.75)
     ];
-} else if (gameDifficulty === "extreme" && gameDifficulty === "doom") {
+} else if (gameDifficulty === "extreme") {
     currentEnemy.hp = currentEnemy.hp + Math.round(15 * floorBonus * (player.level / floorCount));
     currentEnemy.damageRange = [
         currentEnemy.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
         currentEnemy.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
     ];
-} else if (gameDifficulty === "insane") {
+} else if (gameDifficulty === "insane" && gameDifficulty === "doom") {
 	currentEnemy.hp = currentEnemy.hp + Math.round(20 * floorBonus * (player.level / floorCount));
     currentEnemy.damageRange = [
         currentEnemy.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
@@ -4344,8 +4381,14 @@ finalizeRoom(key);
     ];
 
     const rewardMultiplier = Math.pow(1.5, floorBonus);
-    bossData.expReward   = bossData.expReward[0] * rewardMultiplier;
-    bossData.moneyReward = bossData.moneyReward[0] * rewardMultiplier;
+    bossData.expReward   = [
+		bossData.expReward[0] * rewardMultiplier,
+		bossData.expReward[1] * rewardMultiplier
+	];
+	bossData.moneyReward = [
+		bossData.moneyReward[0] * rewardMultiplier,
+		bossData.moneyReward[1] * rewardMultiplier
+	];
 
     // Finalize currentEnemy
     currentEnemy.boss  = true;
@@ -4403,8 +4446,14 @@ finalizeRoom(key);
 }
 
   let rewardMultiplier = Math.pow(1.5, floorBonus);
-  bossData.expReward = bossData.expReward[0] * rewardMultiplier;
-  bossData.moneyReward = bossData.moneyReward[0] * rewardMultiplier;
+	bossData.expReward   = [
+		bossData.expReward[0] * rewardMultiplier,
+		bossData.expReward[1] * rewardMultiplier
+	];
+	bossData.moneyReward = [
+		bossData.moneyReward[0] * rewardMultiplier,
+		bossData.moneyReward[1] * rewardMultiplier
+	];
   currentEnemy = JSON.parse(JSON.stringify(bossData));
   currentEnemy.boss = true;
   currentEnemy.poison = false;
@@ -4522,6 +4571,8 @@ function getEnemyByName(enemyName) {
 
       function endBattle() {
 		  const defeatedBoss = currentEnemy && currentEnemy.boss && currentEnemy.hp <= 0 ? currentEnemy.name : null;
+		  
+		  killCount++;
 		  
   if (preBattleStats.attack !== undefined) {
     player.attack        = preBattleStats.attack;
@@ -4656,11 +4707,7 @@ function getEnemyByName(enemyName) {
     let armorHealAmt = Math.round(Math.random() * (20 - 10 + 1)) + 10;
     // double armor heal on glory kill
     if (gloryKill) armorHealAmt *= 2;
- 
-     if (currentEnemy.boss = false) {
-       player.armor = player.maxArmor;
-
-     } else {
+	if (gameDifficulty === "doom") {
        if (player.baseStats.maxArmor >= 50) {
         let armorHealAmt = Math.round(Math.random() * (20 - 10 + 1)) + 10;
         let heal = armorHealAmt;
@@ -4691,9 +4738,40 @@ function getEnemyByName(enemyName) {
         if (gloryKill) heal *= 2;
          player.armor = Math.min(player.armor + heal, player.maxArmor);
        }
-     }
+     } else {
+		if (player.baseStats.maxArmor >= 100) {
+        let armorHealAmt = Math.round(Math.random() * (20 - 10 + 1)) + 10;
+        let heal = armorHealAmt;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else if (player.baseStats.maxArmor >= 200) {
+        let armorHealAmt = Math.round(Math.random() * (30 - 10 + 1)) + 10;
+        let heal = Math.round((armorHealAmt/20)*30);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else if (player.baseStats.maxArmor >= 300) {
+        let armorHealAmt = Math.round(Math.random() * (50 - 30 + 1)) + 30;
+        let heal = Math.round((armorHealAmt/20)*50);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else if (player.baseStats.maxArmor >= 500) {
+        let armorHealAmt = Math.round(Math.random() * (75 - 35 + 1)) + 35;
+        let heal = Math.round((armorHealAmt/20)*75);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else if (player.baseStats.maxArmor >= 700) {
+        let armorHealAmt = Math.round(Math.random() * (125 - 50 + 1)) + 50;
+        let heal = Math.round((armorHealAmt/20)*125);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       } else {
+        let armorHealAmt = Math.round(Math.random() * (10 - 2 + 1)) + 5;
+        let heal = Math.round((armorHealAmt/20)*10);
+        if (gloryKill) heal *= 2;
+         player.armor = Math.min(player.armor + heal, player.maxArmor);
+       }
+	 }
      updateStats();
-  }
+   }
 
   // if more ambush enemies remain, queue the next one
   if (ambushEnemiesQueue && ambushEnemiesQueue.length > 0) {
@@ -6831,11 +6909,31 @@ closeSellBtn.addEventListener("click", () => {
        * DEATH HANDLING
        *******************/
       function showDeathMenu() {
-  battleMenu.style.display = "none";
-  battleLog.style.display   = "none";
-  battleTint.style.display  = "block";
-  inventoryMenu.style.display = "none";
-  deathMenu.style.display = "block";
+  battleMenu.style.display     = "none";
+  battleLog.style.display      = "none";
+  battleTint.style.display     = "block";
+  inventoryMenu.style.display  = "none";
+  deathMenu.style.display      = "block";
+  
+  stopTimer();
+  const finalTime = document.getElementById("timerDisplay").textContent;
+  const worldText = document.getElementById("worldCounter").textContent;
+  const statsDiv = document.createElement("div");
+  statsDiv.innerHTML = `
+    <p>
+	  <br>
+      Final Level: ${player.level}<br><br>
+      World Reached: ${worldText}<br><br>
+      Time Survived: ${finalTime}<br><br>
+      Monsters Killed: ${killCount}
+	  <br>
+    </p>
+  `;
+  
+  // Find the first button in the deathMenu (either retry or resurrection)
+  const firstBtn = deathMenu.querySelector("button");
+  // Insert our stats *before* that button
+  deathMenu.insertBefore(statsDiv, firstBtn);
 
   const btn = document.getElementById("resurrectBtn");
   if (player.activeAbility === "Resurrection") {
