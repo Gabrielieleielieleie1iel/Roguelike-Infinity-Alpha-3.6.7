@@ -1337,7 +1337,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 	 { name: "Baron of Hell",            hp: 18000,  damageRange: [60, 100],  expReward: [200, 200], moneyReward: [100, 100], },
      { name: "Fallen Angel",        hp: 20000,  damageRange: [70, 120], expReward: [300, 300], moneyReward: [200, 150], },
      { name: "Hell Guard", hp: 35000, damageRange: [80, 110], expReward: [750, 750], moneyReward: [500, 500], },
-     { name: "Cyberdemon",          hp: 60000, damageRange: [100, 120], expReward: [1000, 1000], moneyReward: [800, 800], },
+     { name: "Tyrant Cyberdemon",          hp: 60000, damageRange: [100, 120], expReward: [1000, 1000], moneyReward: [800, 800], },
 	 { name: "Spider Mastermind",          hp: 80000, damageRange: [90, 130], expReward: [1500, 1500], moneyReward: [800, 800], },
 	 { name: "Hell Titan",          hp: 100000, damageRange: [80, 110], expReward: [2000, 2000], moneyReward: [800, 800], },
 	 { name: "Guardian of Hell, Cerberus.", hp: 100000, damageRange: [120, 140], expReward: [2400, 2400], moneyReward: [1000, 1000], },
@@ -2471,11 +2471,25 @@ function selectDifficulty(difficulty) {
    document.getElementById("miscStats").style.display = "none";
    document.getElementById("miscStats2").style.display = "none";
 
-  // Hide the level-up buttons for Potential, Luck, Fortune
-   ["potential", "luck", "fortune"].forEach(stat => {
-    const btn = levelUpMenu.querySelector(`button[data-stat="${stat}"]`);
-    if (btn) btn.style.display = "none";
-   });
+	["hp", "potential", "luck", "fortune"].forEach(stat => {
+		const btn     = levelUpMenu.querySelector(`button[data-stat="${stat}"]`);
+		const span  = levelUpMenu.querySelector(stat === "hp" ? "#hpText" : `#${stat}Stat`);
+		const label   = levelUpMenu.querySelector(`#${stat === "hp" ? "hpText" : stat + "Stat"}`);
+		if (btn) {
+			btn.style.display = "none";
+			if (stat === "hp") {
+				// also remove the literal "HP: " text node that lives right after the button
+				const txtNode = btn.nextSibling;
+				if (txtNode && txtNode.nodeType === Node.TEXT_NODE) {
+				txtNode.textContent = "";
+				}
+			}
+		}
+		if (span) {
+			span.style.display = "none";
+		}
+		if (label) label.style.display = "none";
+	});
    titleMusic.pause();
    document.getElementById("abilityMenu").style.display = "none";
    const doomNames = [
@@ -4381,14 +4395,8 @@ finalizeRoom(key);
     ];
 
     const rewardMultiplier = Math.pow(1.5, floorBonus);
-    bossData.expReward   = [
-		bossData.expReward[0] * rewardMultiplier,
-		bossData.expReward[1] * rewardMultiplier
-	];
-	bossData.moneyReward = [
-		bossData.moneyReward[0] * rewardMultiplier,
-		bossData.moneyReward[1] * rewardMultiplier
-	];
+    bossData.expReward = [bossData.expReward[0] * rewardMultiplier, bossData.expReward[1] * rewardMultiplier];
+    bossData.moneyReward = [bossData.moneyReward[0] * rewardMultiplier, bossData.moneyReward[1] * rewardMultiplier];
 
     // Finalize currentEnemy
     currentEnemy.boss  = true;
@@ -4685,14 +4693,18 @@ function getEnemyByName(enemyName) {
     }
 
     // ——— compute and apply rewards ———
+	 let bossTemplate = getBossForFloor(floorCount);
+	 let bossData = JSON.parse(JSON.stringify(bossTemplate));
      let gainedExp, gainedMoney;
      if (currentEnemy.boss) {
-       gainedExp   = currentEnemy.expReward;
-       gainedMoney = currentEnemy.moneyReward;
-     } else {
-       const [minE, maxE] = currentEnemy.expReward;
+       let [minE, maxE] = bossData.expReward;
        gainedExp   = Math.floor(Math.random() * (maxE - minE + 1)) + minE;
-       const [minM, maxM] = currentEnemy.moneyReward;
+       let [minM, maxM] = bossData.moneyReward;
+       gainedMoney = Math.floor(Math.random() * (maxM - minM + 1)) + minM;
+     } else {
+       let [minE, maxE] = currentEnemy.expReward;
+       gainedExp   = Math.floor(Math.random() * (maxE - minE + 1)) + minE;
+       let [minM, maxM] = currentEnemy.moneyReward;
        gainedMoney = Math.floor(Math.random() * (maxM - minM + 1)) + minM;
      }
     // double rewards on glory kill
@@ -6837,16 +6849,16 @@ closeSellBtn.addEventListener("click", () => {
 		}
         updateStats();
         let currentRoomType = map[player.x + "_" + player.y].type;
-        upgradesRemaining = (currentRoomType === ROOM_TYPES.ALTAR ? 3 : 1);
+        upgradesRemaining += (currentRoomType === ROOM_TYPES.ALTAR ? 3 : 1);
         levelUpMenu.style.display = "block";
 		battleTint.style.display = "block";
 		if (gameDifficulty === "doom") {
-			initiateLevelUp(2);
+			initiateLevelUp(1);
 		}
       }
 
       function initiateLevelUp(upgradeCount) {
-        upgradesRemaining = upgradeCount;
+        upgradesRemaining += upgradeCount;
         levelUpMenu.style.display = "block";
 		battleTint.style.display = "block";
       }
@@ -6874,8 +6886,10 @@ closeSellBtn.addEventListener("click", () => {
 		  } else if (stat === "defense") {
 			player.defense += 1;
 			player.baseStats.defense += 1;
-			player.maxArmor += 10;
-			player.baseStats.maxArmor += 10;
+			if (gameDifficulty !== "doom") {
+				player.maxArmor += 10;
+				player.baseStats.maxArmor += 10;
+			}
 			updateStats();
 		  } else {
             player[stat] += 1;
