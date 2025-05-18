@@ -869,8 +869,6 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
   border: none;
   color: white;
   cursor: pointer;
-  height: 15px;
-  width: 50px;
 }
 
 #shopMenu button:hover {
@@ -901,6 +899,8 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
   border: none;
   color: white;
   cursor: pointer;
+  height: 30px;
+  width: 100px;
 }
 
 #deathMenu button:hover {
