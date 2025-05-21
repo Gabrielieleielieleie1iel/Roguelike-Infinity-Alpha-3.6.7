@@ -1371,7 +1371,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           6: {
             name: "Zombie Mutant",
-            hp: 800,
+            hp: 1000,
             damageRange: [12, 27],
             expReward: [70, 70],
             moneyReward: [70, 70],
@@ -1379,7 +1379,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           9: {
             name: "Giant Lord",
-            hp: 1500,
+            hp: 3600,
             damageRange: [15, 32],
             expReward: [100, 100],
             moneyReward: [100, 100],
@@ -1387,7 +1387,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           12: {
             name: "Skeleton King",
-            hp: 700,
+            hp: 1600,
             damageRange: [20, 40],
             expReward: [120, 120],
             moneyReward: [120, 120],
@@ -1395,14 +1395,14 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           15: {
             name: "Spider Queen",
-            hp: 1000,
+            hp: 2100,
             damageRange: [23, 47],
             expReward: [150, 150],
             moneyReward: [150, 150]
           },
           18: {
             name: "The Witch",
-            hp: 800,
+            hp: 2000,
             damageRange: [37, 75],
             expReward: [180, 180],
             moneyReward: [180, 180],
@@ -1410,7 +1410,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           21: {
             name: "Titan Golem",
-            hp: 2500,
+            hp: 8000,
             damageRange: [37, 60],
             expReward: [210, 210],
             moneyReward: [210, 210],
@@ -1418,7 +1418,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           24: {
             name: "Wyvern",
-            hp: 3200,
+            hp: 9000,
             damageRange: [37, 70],
             expReward: [240, 240],
             moneyReward: [240, 240],
@@ -1426,28 +1426,28 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           27: {
             name: "Giant Sandworm",
-            hp: 2800,
+            hp: 6500,
             damageRange: [45, 75],
             expReward: [250, 250],
             moneyReward: [250, 250]
           },
           30: {
             name: "Titanoboa Lord",
-            hp: 3000,
+            hp: 7000,
             damageRange: [45, 75],
             expReward: [280, 280],
             moneyReward: [280, 280]
           },
           33: {
             name: "Abominable Snowman",
-            hp: 3400,
+            hp: 7500,
             damageRange: [53, 90],
             expReward: [300, 300],
             moneyReward: [300, 300]
           },
           36: {
             name: "Omegalodon",
-            hp: 3500,
+            hp: 8500,
             damageRange: [37, 90],
             expReward: [320, 320],
             moneyReward: [320, 320],
@@ -1455,7 +1455,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           39: {
             name: "Leviathan",
-            hp: 5000,
+            hp: 11000,
             damageRange: [45, 105],
             expReward: [360, 360],
             moneyReward: [360, 360],
@@ -1463,7 +1463,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           42: {
             name: "Angel",
-            hp: 3800,
+            hp: 8900,
             damageRange: [45, 113],
             expReward: [400, 400],
             moneyReward: [400, 400],
@@ -1471,7 +1471,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           45: {
             name: "Mega Meta Mecha Annihilator - Model: Ultima",
-            hp: 4200,
+            hp: 12000,
             damageRange: [60, 120],
             expReward: [420, 420],
             moneyReward: [500, 500],
@@ -1479,7 +1479,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           48: {
             name: "Grand Knight",
-            hp: 4800,
+            hp: 11500,
             damageRange: [45, 113],
             expReward: [480, 480],
             moneyReward: [480, 480],
@@ -1487,7 +1487,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           51: {
             name: "Six-Eyed Calamity",
-            hp: 5000,
+            hp: 10000,
             damageRange: [68, 135],
             expReward: [600, 600],
             moneyReward: [560, 560],
@@ -1495,7 +1495,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 		  },
           54: {
             name: "Hydra",
-            hp: 5600,
+            hp: 12000,
             damageRange: [80, 135],
             expReward: [900, 900],
             moneyReward: [800, 800],
@@ -1503,7 +1503,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           57: {
             name: "Guardian of Hell, Cerberus",
-            hp: 5000,
+            hp: 12500,
             damageRange: [45, 75],
             expReward: [500, 500],
             moneyReward: [800, 800],
@@ -1511,7 +1511,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           60: {
             name: "Demon King",
-            hp: 8000,
+            hp: 16000,
             damageRange: [60, 105],
             expReward: [800, 800],
             moneyReward: [850, 850],
@@ -1519,7 +1519,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
 		  63: {
             name: "Omni",
-            hp: 12500,
+            hp: 20000,
             damageRange: [56, 113],
             expReward: [1000, 1000],
             moneyReward: [1000, 1000],
@@ -1528,21 +1528,21 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
 		  66: {
             name: "Goblin Emperor",
-            hp: 7500,
+            hp: 15000,
             damageRange: [45, 70],
             expReward: [60, 60],
             moneyReward: [60, 60]
           },
           69: {
             name: "Giant Cyclops, Eater of Men",
-            hp: 9000,
+            hp: 16500,
             damageRange: [60, 113],
             expReward: [150, 150],
             moneyReward: [150, 150],
           },
           72: {
             name: "Medusa, Lady of Stone",
-            hp: 9500,
+            hp: 16000,
             damageRange: [90, 113],
             expReward: [200, 200],
             moneyReward: [200, 200],
@@ -1550,7 +1550,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           75: {
             name: "The Minotaur",
-            hp: 10500,
+            hp: 18000,
             damageRange: [60, 120],
             expReward: [250, 250],
             moneyReward: [250, 250],
@@ -1558,7 +1558,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           78: {
             name: "Arachni Empress",
-            hp: 11000,
+            hp: 19500,
             damageRange: [70, 105],
             expReward: [300, 300],
             moneyReward: [300, 300],
@@ -1566,7 +1566,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           81: {
             name: "Grand Sorceress",
-            hp: 9500,
+            hp: 18000,
             damageRange: [75, 120],
             expReward: [360, 360],
             moneyReward: [360, 360],
@@ -1574,7 +1574,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           84: {
             name: "Primordial Automaton",
-            hp: 15000,
+            hp: 32000,
             damageRange: [60, 105],
             expReward: [400, 400],
             moneyReward: [400, 400],
@@ -1582,7 +1582,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           87: {
             name: "Dragon King",
-            hp: 16000,
+            hp: 36000,
             damageRange: [80, 160],
             expReward: [450, 450],
             moneyReward: [420, 420],
@@ -1591,7 +1591,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           90: {
             name: "Devourer of Worlds",
-            hp: 12000,
+            hp: 34000,
             damageRange: [75, 113],
             expReward: [480, 480],
             moneyReward: [450, 450],
@@ -1599,7 +1599,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           93: {
             name: "The World Serpent, Jörmungandr",
-            hp: 20000,
+            hp: 37000,
             damageRange: [70, 100],
             expReward: [500, 500],
             moneyReward: [500, 500],
@@ -1607,7 +1607,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           96: {
             name: "Frost Queen, Borealis",
-            hp: 14500,
+            hp: 35500,
             damageRange: [100, 150],
             expReward: [600, 600],
             moneyReward: [600, 600],
@@ -1615,7 +1615,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           99: {
             name: "Charybdis",
-            hp: 15000,
+            hp: 38000,
             damageRange: [70, 105],
             expReward: [640, 640],
             moneyReward: [640, 640],
@@ -1623,7 +1623,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           102: {
             name: "Seraphim",
-            hp: 14200,
+            hp: 38500,
             damageRange: [90, 120],
             expReward: [690, 690],
             moneyReward: [650, 650],
@@ -1631,7 +1631,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           105: {
             name: "Mega Meta Mecha Annihilator - Model: Grande",
-            hp: 25000,
+            hp: 45000,
             damageRange: [75, 135],
             expReward: [700, 700],
             moneyReward: [700, 700],
@@ -1639,7 +1639,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           108: {
             name: "Grand Knight II",
-            hp: 28000,
+            hp: 52000,
             damageRange: [90, 143],
             expReward: [720, 720],
             moneyReward: [720, 720],
@@ -1647,7 +1647,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           111: {
             name: "The King of Curses",
-            hp: 30000,
+            hp: 50000,
             damageRange: [90, 160],
             expReward: [690, 690],
             moneyReward: [420, 420],
@@ -1655,14 +1655,14 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 		  },
           114: {
             name: "The Restricted One, Kyojiro Allista",
-            hp: 69420,
+            hp: 75000,
             damageRange: [75, 150],
             expReward: [1000, 1000],
             moneyReward: [0, 0],
           },
 		  117: {
             name: "The Brazen Bull, Khalkotauri",
-            hp: 25000,
+            hp: 60000,
             damageRange: [60, 90],
             expReward: [500, 500],
             moneyReward: [500, 500],
@@ -1670,7 +1670,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           120: {
             name: "The Behemoth",
-            hp: 32000,
+            hp: 65500,
             damageRange: [45, 75],
             expReward: [500, 500],
             moneyReward: [800, 800],
@@ -1678,31 +1678,31 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           123: {
             name: "Demon God",
-            hp: 50000,
+            hp: 80000,
             damageRange: [70, 110],
             expReward: [800, 800],
             moneyReward: [850, 850],
 			reductionMagic: 0.5,
           },
-		126: {
+		  126: {
             name: "The Black King",
-            hp: 60000,
+            hp: 90000,
             damageRange: [70, 130],
             expReward: [1000, 1000],
             moneyReward: [1000, 1000],
 			reductionMagic: 1,
           },
-		129: {
+		  129: {
             name: "Warden Of Judgement, Will, And Balance",
-            hp: 70000,
+            hp: 120000,
             damageRange: [75, 150],
             expReward: [1000, 1000],
             moneyReward: [1000, 1000],
 			reductionAll: 0.5,
           },
-		132: {
+		  132: {
             name: "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel",
-            hp: 150000,
+            hp: 180000,
             damageRange: [80, 160],
             expReward: [10000, 10000],
             moneyReward: [10000, 10000],
@@ -1731,7 +1731,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           40: {
             name: "Zombie Mutant",
-            hp: 800,
+            hp: 1000,
             damageRange: [12, 27],
             expReward: [70, 70],
             moneyReward: [70, 70],
@@ -1739,7 +1739,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           60: {
             name: "Giant Lord",
-            hp: 1500,
+            hp: 3600,
             damageRange: [15, 32],
             expReward: [100, 100],
             moneyReward: [100, 100],
@@ -1747,7 +1747,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           80: {
             name: "Skeleton King",
-            hp: 700,
+            hp: 1800,
             damageRange: [20, 40],
             expReward: [120, 120],
             moneyReward: [120, 120],
@@ -1755,14 +1755,14 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           100: {
             name: "Spider Queen",
-            hp: 1000,
+            hp: 2300,
             damageRange: [23, 47],
             expReward: [150, 150],
             moneyReward: [150, 150]
           },
           120: {
             name: "The Witch",
-            hp: 800,
+            hp: 2000,
             damageRange: [37, 75],
             expReward: [180, 180],
             moneyReward: [180, 180],
@@ -1770,7 +1770,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           140: {
             name: "Titan Golem",
-            hp: 2500,
+            hp: 8000,
             damageRange: [37, 60],
             expReward: [210, 210],
             moneyReward: [210, 210],
@@ -1778,7 +1778,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           160: {
             name: "Wyvern",
-            hp: 3200,
+            hp: 9000,
             damageRange: [37, 70],
             expReward: [240, 240],
             moneyReward: [240, 240],
@@ -1786,28 +1786,28 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           180: {
             name: "Giant Sandworm",
-            hp: 2800,
+            hp: 6900,
             damageRange: [45, 75],
             expReward: [250, 250],
             moneyReward: [250, 250]
           },
           200: {
             name: "Titanoboa Lord",
-            hp: 3000,
+            hp: 7500,
             damageRange: [45, 75],
             expReward: [280, 280],
             moneyReward: [280, 280]
           },
           220: {
             name: "Abominable Snowman",
-            hp: 3400,
+            hp: 8200,
             damageRange: [53, 90],
             expReward: [300, 300],
             moneyReward: [300, 300]
           },
           240: {
             name: "Omegalodon",
-            hp: 3500,
+            hp: 8900,
             damageRange: [37, 90],
             expReward: [320, 320],
             moneyReward: [320, 320],
@@ -1815,7 +1815,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           260: {
             name: "Leviathan",
-            hp: 5000,
+            hp: 12000,
             damageRange: [45, 105],
             expReward: [360, 360],
             moneyReward: [360, 360],
@@ -1823,7 +1823,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           280: {
             name: "Angel",
-            hp: 3800,
+            hp: 9200,
             damageRange: [45, 113],
             expReward: [400, 400],
             moneyReward: [400, 400],
@@ -1831,7 +1831,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           300: {
             name: "Mega Meta Mecha Annihilator - Model: Ultima",
-            hp: 4200,
+            hp: 12500,
             damageRange: [60, 120],
             expReward: [420, 420],
             moneyReward: [500, 500],
@@ -1839,7 +1839,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           320: {
             name: "Grand Knight",
-            hp: 4800,
+            hp: 13000,
             damageRange: [45, 113],
             expReward: [480, 480],
             moneyReward: [480, 480],
@@ -1847,7 +1847,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           340: {
             name: "Six-Eyed Calamity",
-            hp: 5000,
+            hp: 11500,
             damageRange: [68, 135],
             expReward: [600, 600],
             moneyReward: [560, 560],
@@ -1855,7 +1855,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 		  },
           360: {
             name: "Hydra",
-            hp: 5600,
+            hp: 14500,
             damageRange: [80, 135],
             expReward: [900, 900],
             moneyReward: [800, 800],
@@ -1863,7 +1863,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           380: {
             name: "Guardian of Hell, Cerberus",
-            hp: 5000,
+            hp: 13300,
             damageRange: [45, 75],
             expReward: [500, 500],
             moneyReward: [800, 800],
@@ -1871,7 +1871,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           400: {
             name: "Demon King",
-            hp: 8000,
+            hp: 18000,
             damageRange: [60, 105],
             expReward: [800, 800],
             moneyReward: [850, 850],
@@ -1879,7 +1879,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
 		  420: {
             name: "Omni",
-            hp: 12500,
+            hp: 25000,
             damageRange: [56, 113],
             expReward: [1000, 1000],
             moneyReward: [1000, 1000],
@@ -1888,21 +1888,21 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
 		  440: {
             name: "Goblin Emperor",
-            hp: 7500,
+            hp: 18000,
             damageRange: [45, 70],
             expReward: [60, 60],
             moneyReward: [60, 60]
           },
           460: {
             name: "Giant Cyclops, Eater of Men",
-            hp: 10500,
+            hp: 20000,
             damageRange: [60, 113],
             expReward: [150, 150],
             moneyReward: [150, 150],
           },
           480: {
             name: "Medusa, Lady of Stone",
-            hp: 9000,
+            hp: 19000,
             damageRange: [90, 113],
             expReward: [200, 200],
             moneyReward: [200, 200],
@@ -1910,7 +1910,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           500: {
             name: "The Minotaur",
-            hp: 10000,
+            hp: 20500,
             damageRange: [60, 120],
             expReward: [250, 250],
             moneyReward: [250, 250],
@@ -1918,7 +1918,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           520: {
             name: "Arachni Empress",
-            hp: 11000,
+            hp: 21000,
             damageRange: [70, 105],
             expReward: [300, 300],
             moneyReward: [300, 300],
@@ -1926,7 +1926,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           540: {
             name: "Grand Sorceress",
-            hp: 9500,
+            hp: 19500,
             damageRange: [75, 120],
             expReward: [360, 360],
             moneyReward: [360, 360],
@@ -1934,7 +1934,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           560: {
             name: "Primordial Automaton",
-            hp: 15000,
+            hp: 35000,
             damageRange: [60, 105],
             expReward: [400, 400],
             moneyReward: [400, 400],
@@ -1942,7 +1942,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           580: {
             name: "Dragon King",
-            hp: 16000,
+            hp: 36000,
             damageRange: [80, 160],
             expReward: [450, 450],
             moneyReward: [420, 420],
@@ -1951,7 +1951,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           600: {
             name: "Devourer of Worlds",
-            hp: 12000,
+            hp: 34000,
             damageRange: [75, 113],
             expReward: [480, 480],
             moneyReward: [450, 450],
@@ -1959,7 +1959,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           620: {
             name: "The World Serpent, Jörmungandr",
-            hp: 20000,
+            hp: 38000,
             damageRange: [70, 100],
             expReward: [500, 500],
             moneyReward: [500, 500],
@@ -1967,7 +1967,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           640: {
             name: "Frost Queen, Borealis",
-            hp: 14500,
+            hp: 36000,
             damageRange: [100, 150],
             expReward: [600, 600],
             moneyReward: [600, 600],
@@ -1975,7 +1975,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           660: {
             name: "Charybdis",
-            hp: 15000,
+            hp: 40000,
             damageRange: [70, 105],
             expReward: [640, 640],
             moneyReward: [640, 640],
@@ -1983,7 +1983,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           680: {
             name: "Seraphim",
-            hp: 14200,
+            hp: 39000,
             damageRange: [90, 120],
             expReward: [690, 690],
             moneyReward: [650, 650],
@@ -1991,7 +1991,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           700: {
             name: "Mega Meta Mecha Annihilator - Model: Grande",
-            hp: 25000,
+            hp: 45000,
             damageRange: [75, 135],
             expReward: [700, 700],
             moneyReward: [700, 700],
@@ -1999,7 +1999,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           720: {
             name: "Grand Knight II",
-            hp: 28000,
+            hp: 52000,
             damageRange: [90, 143],
             expReward: [720, 720],
             moneyReward: [720, 720],
@@ -2007,7 +2007,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           740: {
             name: "The King of Curses",
-            hp: 30000,
+            hp: 50000,
             damageRange: [90, 160],
             expReward: [690, 690],
             moneyReward: [420, 420],
@@ -2015,14 +2015,14 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 		  },
           760: {
             name: "The Restricted One, Kyojiro Allista",
-            hp: 69420,
+            hp: 75000,
             damageRange: [75, 150],
             expReward: [1000, 1000],
             moneyReward: [0, 0],
           },
 		  780: {
             name: "The Brazen Bull, Khalkotauri",
-            hp: 25000,
+            hp: 64000,
             damageRange: [60, 90],
             expReward: [500, 500],
             moneyReward: [500, 500],
@@ -2030,7 +2030,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           800: {
             name: "The Behemoth",
-            hp: 32000,
+            hp: 69000,
             damageRange: [45, 75],
             expReward: [500, 500],
             moneyReward: [800, 800],
@@ -2038,7 +2038,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
           820: {
             name: "Demon God",
-            hp: 50000,
+            hp: 84000,
             damageRange: [70, 110],
             expReward: [800, 800],
             moneyReward: [850, 850],
@@ -2046,7 +2046,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
 		  840: {
             name: "The Black King",
-            hp: 60000,
+            hp: 96000,
             damageRange: [70, 130],
             expReward: [1000, 1000],
             moneyReward: [1000, 1000],
@@ -2054,7 +2054,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
 		  860: {
             name: "Warden Of Judgement, Will, And Balance",
-            hp: 70000,
+            hp: 125000,
             damageRange: [75, 150],
             expReward: [1000, 1000],
             moneyReward: [1000, 1000],
@@ -2062,7 +2062,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
           },
 		  880: {
             name: "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel",
-            hp: 150000,
+            hp: 200000,
             damageRange: [80, 160],
             expReward: [10000, 10000],
             moneyReward: [10000, 10000],
