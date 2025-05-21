@@ -415,10 +415,12 @@ casinoMusic.loop = true;
     p.agility = p.agility - 10;
   },
   "Wand":       p => {
+	p.attack = Math.ceil(p.attack * 1.1);
     p.magic = Math.ceil(p.magic * 1.5);
     p.maxMana += 10;
   },
   "Staff":      p => {
+	p.attack = Math.ceil(p.attack * 1.2);
     p.magic = p.magic * 2;
     p.maxMana += 20;
     p.agility = p.agility - 10;
@@ -475,10 +477,12 @@ casinoMusic.loop = true;
     p.agility = p.agility - 10;
   },
   "Combat Shotgun":       p => {
+	p.attack = Math.ceil(p.attack * 1.2);
     p.magic = Math.ceil(p.magic * 1.5);
     p.maxMana += 10;
   },
   "Unmayker":      p => {
+	p.attack = Math.ceil(p.attack * 1.1);
     p.magic = p.magic * 2;
     p.maxMana += 20;
     p.agility = p.agility - 10;
@@ -489,18 +493,18 @@ casinoMusic.loop = true;
 	p.maxArmor += 30;
   },
   "BFG9000": p => {
-    if (p.equipment.accessory
-        && p.equipment.accessory.name === "Argent Energy Storage") {
-      p.attack *= 5;
+    if (p.equipment.accessory && p.equipment.accessory.name === "Argent Energy Storage") {
+		if (player.magic > player.attack) {
+			p.magic *= 3;
+		} else {
+			p.attack *= 5;
+		}
     }
   },
   "Crucible": p => {
-    // triple attack
     p.attack = p.attack * 3;
-    // double agility & perception
     p.agility  = Math.ceil(p.agility  * 2);
     p.perception = Math.ceil(p.perception * 2);
-    // increase defense by 1.5×, rounded up
     p.defense = Math.ceil(p.defense * 1.5);
     // +25 max mana
     p.maxMana += 25;
@@ -7747,8 +7751,6 @@ function closeWishMenu() {
 
   // Prevent any title‐screen audio/UI until loading completes
   titleScreen.style.display = "none";
-
-  // Random delay between 5 and 15 seconds
   const delay = 10000 + Math.random() * 10000;
 
   setTimeout(() => {
