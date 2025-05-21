@@ -534,6 +534,14 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
   border-radius: 4px;
 }
 
+#creditsCredits h1 {
+	font-family: 'Edwardian Script ITC', cursive;
+}
+
+#creditsCredits h2 {
+	font-family: 'Edwardian Script ITC', cursive;
+}
+
 #creditsCredits .tabs {
   text-align: center;
   margin-bottom: 10px;
@@ -1187,7 +1195,7 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
 }
 
 .jump-zoom-tokyo {
-  animation: zoomBeat 0.48s infinite;
+  animation: zoomBeat 0.475s infinite;
   transform-origin: center center;
 }
 
