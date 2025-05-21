@@ -6906,14 +6906,14 @@ closeSellBtn.addEventListener("click", () => {
           if (stat === "hp") {
             player.maxHp += 20 + Math.round((player.level / player.maxHp) + (player.attack / player.maxHp) + (player.defense / player.maxHp));
 			player.baseStats.maxHp += 20 + Math.round((player.level / player.maxHp) + (player.attack / player.maxHp) + (player.defense / player.maxHp));
-			if (gameDifficulty !== "extreme" && gameDifficulty !== "insane" && dameDifficulty !== "calamity" && gameDifficulty !== "doom") {
+			if (gameDifficulty !== "extreme" && gameDifficulty !== "insane" && gameDifficulty !== "calamity" && gameDifficulty !== "doom") {
 				player.hp = player.maxHp;
 			}
 			updateStats();
 		  } else if (stat === "magic") {
 			player.maxMana += 5;
 			player.baseStats.maxMana += 5;
-			if (gameDifficulty !== "extreme" && gameDifficulty !== "insane" && dameDifficulty !== "calamity" && gameDifficulty !== "doom") {
+			if (gameDifficulty !== "extreme" && gameDifficulty !== "insane" && gameDifficulty !== "calamity" && gameDifficulty !== "doom") {
 				player.mana = player.maxMana;
 			}
 			player.magic += 1;
