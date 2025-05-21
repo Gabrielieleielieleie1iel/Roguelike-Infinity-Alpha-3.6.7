@@ -2994,8 +2994,8 @@ document.getElementById("closeShopBtn").addEventListener("click", () => {
 
 function handleTitleScreenClick() {
   // 1) play the music under a user gesture
-  titleMusic.play().catch(e => {
-	  console.log("Title music playback prevented:", e)
+  titleMusic.play().catch((e) => {
+	console.log("Title music playback prevented:", e);
   });
   const src = titleMusic.src;  
   if (src.includes("fire.mp3")) titleBox.classList.add("jump-zoom-fire");
