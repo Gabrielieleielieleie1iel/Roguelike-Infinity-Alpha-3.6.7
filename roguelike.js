@@ -7115,8 +7115,13 @@ magicBtn.addEventListener("click", () => {
 		magicBtn.disabled = false;
 	}
 	
-	if (p.equipment.weapon && p.equipment.weapon.name === "Flame Belch") {
+	if (player.equipment.weapon && player.equipment.weapon.name === "Flame Belch" && currentEnemy.burned === false) {
       currentEnemy.burned = true;
+	  logBattle(`You used the Flame Belch and incinerated ${currentEnemy.name}!`);
+	  logBattle(`${currentEnemy.name} was burned!`);
+	  updateStats();
+	  updateManaDisplay();
+	  updateEnemyInfo();
     }
 });
 
