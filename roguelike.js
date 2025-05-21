@@ -2992,19 +2992,11 @@ document.getElementById("closeShopBtn").addEventListener("click", () => {
   if (currentBGM) currentBGM.play();
 });
 
-titleMusic.play().catch((e) => {
-   console.log("Title music playback prevented:", e);
-});
-
-titleMusic.addEventListener("playing", function() {
-   playButton.style.display = "block";
-});
-
 function handleTitleScreenClick() {
   // 1) play the music under a user gesture
-  titleMusic.play().catch(e => console.log("Title music playback prevented:", e));  
-
-  // 2) pick the correct zoom-beat class based on which track was chosen
+  titleMusic.play().catch(e => {
+	  console.log("Title music playback prevented:", e)
+  });
   const src = titleMusic.src;  
   if (src.includes("fire.mp3")) titleBox.classList.add("jump-zoom-fire");
   if (src.includes("tokyo.mp3")) titleBox.classList.add("jump-zoom-tokyo");
@@ -3014,28 +3006,12 @@ function handleTitleScreenClick() {
   if (src.includes("level.mp3")) titleBox.classList.add("jump-zoom-level");
   if (src.includes("titan.mp3")) titleBox.classList.add("jump-zoom-titan");
   if (src.includes("rumbling.mp3")) titleBox.classList.add("jump-zoom-rumbling");
-
-  // 3) reveal the Start Game button
   playButton.style.display = "block";
-
-  // hide the “(Press the screen to play!)” hint
-  const hint = titleBox.querySelector("h6");
-  if (hint) hint.style.display = "none";
-
-  // we only want this to run once
   titleScreen.removeEventListener("click", handleTitleScreenClick);
 }
 
 // listen for the very first screen-click
 titleScreen.addEventListener("click", handleTitleScreenClick);
-
-titleMusic.play().catch(function(error) {
-    console.error("Error starting the music:", error);
-  });
-
-  titleMusic.addEventListener("playing", function() {
-    playButton.style.display = "block";
-  });
 
 document.getElementById("playButton").addEventListener("click", function () {
   document.getElementById("titleScreen").style.display = "none";
@@ -6930,14 +6906,14 @@ closeSellBtn.addEventListener("click", () => {
           if (stat === "hp") {
             player.maxHp += 20 + Math.round((player.level / player.maxHp) + (player.attack / player.maxHp) + (player.defense / player.maxHp));
 			player.baseStats.maxHp += 20 + Math.round((player.level / player.maxHp) + (player.attack / player.maxHp) + (player.defense / player.maxHp));
-			if (gameDifficulty !== "extreme" && gameDifficulty !== "doom") {
+			if (gameDifficulty !== "extreme" && gameDifficulty !== "insane" && dameDifficulty !== "calamity" && gameDifficulty !== "doom") {
 				player.hp = player.maxHp;
 			}
 			updateStats();
 		  } else if (stat === "magic") {
 			player.maxMana += 5;
 			player.baseStats.maxMana += 5;
-			if (gameDifficulty !== "extreme" && gameDifficulty !== "doom") {
+			if (gameDifficulty !== "extreme" && gameDifficulty !== "insane" && dameDifficulty !== "calamity" && gameDifficulty !== "doom") {
 				player.mana = player.maxMana;
 			}
 			player.magic += 1;
@@ -7691,6 +7667,15 @@ setInterval(() => {
   if (Date.now() - lastHealTime >= 333) {
     if (player.armor < player.maxArmor) {
       player.armor = Math.min(player.armor + 1, player.maxArmor);
+      updateStats();
+      updateManaDisplay();
+      updateInventoryDisplay();
+    }
+    lastHealTime = Date.now();
+  }
+  if (Date.now() - lastHealTime >= 10000) {
+    if (player.hp < player.maxHp) {
+      player.hp = Math.min(player.hp + 1, player.maxHp);
       updateStats();
       updateManaDisplay();
       updateInventoryDisplay();
