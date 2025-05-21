@@ -2993,7 +2993,11 @@ document.getElementById("closeShopBtn").addEventListener("click", () => {
 });
 
 titleMusic.play().catch((e) => {
-  console.log("Title music playback prevented:", e);
+   console.log("Title music playback prevented:", e);
+});
+
+titleMusic.addEventListener("playing", function() {
+   playButton.style.display = "block";
 });
 
 function handleTitleScreenClick() {

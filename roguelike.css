@@ -506,7 +506,7 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
 }
 
 #playButton {
-  display: block;
+  display: none;
   margin: 20px auto;
   margin-top: 50px;
 }
