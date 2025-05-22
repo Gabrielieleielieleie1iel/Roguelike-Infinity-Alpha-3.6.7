@@ -4270,7 +4270,6 @@ if (gameDifficulty === "normal") {
         const scale = 1 + 0.05 * levelDiff;
         const newHp = Math.max(1, Math.round(currentEnemy.baseMaxHp * scale));
         currentEnemy.hp = currentEnemy.maxHp = newHp;
-        // ───────────────────────────────────────────────────────────────
         updateEnemyInfo();
         battleMenu.style.display = "block";
       }
@@ -4415,9 +4414,7 @@ finalizeRoom(key);
 	}
   }
   ambushCompleteCallback = onComplete || null;
-  
-  // Pull the right boss template for this floor
-    bossTemplate = getBossForFloor(floorCount);
+  bossTemplate = getBossForFloor(floorCount);
   
   if (gameDifficulty === "doom") {
     // lock BGM to Hell
@@ -4870,6 +4867,17 @@ function getEnemyByName(enemyName) {
   if (ambushEnemiesQueue && ambushEnemiesQueue.length > 0) {
     currentEnemy = ambushEnemiesQueue.shift();
     logBattle("Next enemy appears!");
+    const minLv = Math.max(player.level - 3, 1);
+    const maxLv = player.level + 5;
+    const enemyLevel = Math.floor(Math.random() * (maxLv - minLv + 1)) + minLv;
+    currentEnemy.level = enemyLevel;
+    if (currentEnemy.baseMaxHp === undefined) {
+        currentEnemy.baseMaxHp = currentEnemy.hp;
+    }
+    const levelDiff = enemyLevel - player.level;
+    const scale = 1 + 0.05 * levelDiff;
+    const newHp = Math.max(1, Math.round(currentEnemy.baseMaxHp * scale));
+    currentEnemy.hp = currentEnemy.maxHp = newHp;
     updateEnemyInfo();
     battleMenu.style.display = "block";
     battleLog.style.display = "block";
