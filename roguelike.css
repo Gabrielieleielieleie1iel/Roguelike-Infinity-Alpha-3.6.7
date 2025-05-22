@@ -1230,7 +1230,7 @@ body.doom-mode .equipmentSlot:hover .unequipBtn {
 }
 
 .jump-zoom-rumbling {
-  animation: zoomBeat 0.84s infinite;
+  animation: zoomBeat 0.835s infinite;
   transform-origin: center center;
 }
 

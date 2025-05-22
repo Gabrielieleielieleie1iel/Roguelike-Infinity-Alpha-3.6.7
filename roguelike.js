@@ -954,12 +954,20 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
         expReward: [6, 8],
         moneyReward: [5, 6],
       }, {
-	name: "Giant Robot",
+		name: "Giant Robot",
         hp: 80,
         damageRange: [16, 17],
         expReward: [9, 10],
         moneyReward: [8, 9],
 		reductionAttack: 0.33,
+      }, {
+		name: "Jeager",
+        hp: 250,
+        damageRange: [20, 25],
+        expReward: [12, 15],
+        moneyReward: [10, 12],
+		reductionAttack: 0.5,
+		reductionMagic: 0.33,
       }, {
 		name: "Drone",
         hp: 50,
@@ -994,6 +1002,13 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
         expReward: [7, 8],
         moneyReward: [6, 9],
 		reductionAttack: 0.5,
+      }, {
+		name: "Sinner",
+        hp: 70,
+        damageRange: [9, 12],
+        expReward: [5, 7],
+        moneyReward: [6, 9],
+		reductionAll: 0.33,
       }, {
 		name: "Archdemon",
         hp: 120,
@@ -1659,6 +1674,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             damageRange: [75, 150],
             expReward: [1000, 1000],
             moneyReward: [0, 0],
+			reductionAll: 0.2,
           },
 		  117: {
             name: "The Brazen Bull, Khalkotauri",
@@ -1682,6 +1698,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             damageRange: [70, 110],
             expReward: [800, 800],
             moneyReward: [850, 850],
+			reductionAttack: 0.33,
 			reductionMagic: 0.5,
           },
 		  126: {
@@ -1690,9 +1707,18 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             damageRange: [70, 130],
             expReward: [1000, 1000],
             moneyReward: [1000, 1000],
+			reductionAttack: 0.25,
 			reductionMagic: 1,
           },
 		  129: {
+            name: "Supreme Witch, Calamitas",
+            hp: 85000,
+            damageRange: [120, 180],
+            expReward: [1000, 1000],
+            moneyReward: [1000, 1000],
+			reductionMagic: 1,
+          },
+		  132: {
             name: "Warden Of Judgement, Will, And Balance",
             hp: 120000,
             damageRange: [75, 150],
@@ -1700,9 +1726,9 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             moneyReward: [1000, 1000],
 			reductionAll: 0.5,
           },
-		  132: {
+		  135: {
             name: "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel",
-            hp: 180000,
+            hp: 200000,
             damageRange: [80, 160],
             expReward: [10000, 10000],
             moneyReward: [10000, 10000],
@@ -2019,6 +2045,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             damageRange: [75, 150],
             expReward: [1000, 1000],
             moneyReward: [0, 0],
+			reductionAll: 0.2,
           },
 		  780: {
             name: "The Brazen Bull, Khalkotauri",
@@ -2042,6 +2069,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             damageRange: [70, 110],
             expReward: [800, 800],
             moneyReward: [850, 850],
+			reductionAttack: 0.33,
 			reductionMagic: 0.5,
           },
 		  840: {
@@ -2050,9 +2078,18 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             damageRange: [70, 130],
             expReward: [1000, 1000],
             moneyReward: [1000, 1000],
+			reductionAttack: 0.25,
 			reductionMagic: 1,
           },
 		  860: {
+            name: "Supreme Witch, Calamitas",
+            hp: 85000,
+            damageRange: [120, 180],
+            expReward: [1000, 1000],
+            moneyReward: [1000, 1000],
+			reductionMagic: 1,
+          },
+		  880: {
             name: "Warden Of Judgement, Will, And Balance",
             hp: 125000,
             damageRange: [75, 150],
@@ -2060,7 +2097,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             moneyReward: [1000, 1000],
 			reductionAll: 0.5,
           },
-		  880: {
+		  900: {
             name: "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel",
             hp: 200000,
             damageRange: [80, 160],
@@ -2084,7 +2121,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
       function getAllowedEnemies() {
 		if (gameDifficulty === "doom") {
 			// Only these in Hell:
-			const hellOnly = ["Demon", "Imp", "Archdem﻿on", "Ghoul", "Skeleton", "Possessed Armor", "Mancubus", "Cacodemon", "Gargoyle", "Cyberdemon", "Baron"];
+			const hellOnly = ["Demon", "Imp", "Archdem﻿on", "Sinner", "Ghoul", "Skeleton", "Possessed Armor", "Mancubus", "Cacodemon", "Gargoyle", "Cyberdemon", "Baron"];
 			return enemies.filter(e => hellOnly.includes(e.name));
 		}
         const nextBossFloor = Math.ceil(floorCount / 20) * 20;
@@ -2173,7 +2210,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             allowed = ["Cyborg Guard", "Giant Robot", "Drone"];
             break;
 		  case "Mega Meta Mecha Annihilator - Model: Grande":
-            allowed = ["Cyborg Guard", "Giant Robot", "Drone"];
+            allowed = ["Cyborg Guard", "Giant Robot", "Drone", "Jeager"];
             break;
           case "Grand Knight":
             allowed = ["Skeleton", "Wolf", "Bear", "Possessed Armor", "Golem"];
@@ -2190,14 +2227,14 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 		  case "Guardian of Hell, Cerberus":
             allowed = ["Demon", "Imp", "Archdemon"];
             break;
-		  case "Cerberus Jr.":
-            allowed = ["Demon", "Imp", "Archdemon"];
+		  case "The Behemoth":
+            allowed = ["Demon", "Imp", "Archdemon", "Sinner"];
             break;
 		  case "Demon King":
-            allowed = ["Demon", "Imp", "Archdemon"];
+            allowed = ["Demon", "Imp", "Archdemon", "Sinner"];
             break;
 		  case "Demon God":
-            allowed = ["Demon", "Imp", "Archdemon"];
+            allowed = ["Demon", "Imp", "Archdemon", "Sinner", "Mancubus", "Cyberdemon", "Cacodemon", "Gargoyle"];
             break;
           case "Hydra":
             allowed = ["Goblin", "Gorgon", "Zombie", "Skeleton", "Golem", "Monster Crow", "Wolf", "Ghoul", "Giant Spider", "Demon Bat"];
@@ -2217,11 +2254,14 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
 		  case "The Black King":
             allowed = ["Ghoul"];
             break;
+		  case "Supreme Witch, Calamitas":
+		    allowed = ["Ghoul"];
+            break;
 		  case "Warden Of Judgement, Will, And Balance":
             allowed = ["Angel", "Archdemon", "Possessed Armor", "Ghoul", "Seraphim"];
             break;
 		  case "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel":
-            allowed = ["Goblin King", "Medusa, Lady of Stone", "Giant Cyclops, Eater of Men", "The Minotaur", "Seraphim", "Devourer of Worlds", "Goblin Emperor", "Frost Queen, Borealis", "The World Serpent, Jörmungandr", "Charybdis", "Primordial Automaton", "Grand Sorceress", "Arachni Empress", "The Brazen Bull, Khalkotauri", "Seraphim", "Grand Knight II", "Mega Meta Mecha Annihilator - Model: Grande", "Mutant Zombie", "Giant Lord", "Skeleton King", "Spider Queen", "The Witch", "Titan Golem", "Wyvern", "Giant Sandworm", "Titanoboa Lord", "Abominable Snowman", "Omegalodon", "Leviathan", "Angel", "Mega Meta Mecha Annihilator - Model: Ultima", "Grand Knight", "Six-Eyed Calamity", "The King of Curses", "Dragon King", "Guardian of Hell, Cerberus", "The Behemoth", "Demon King", "The Black King", "Omni"];
+            allowed = ["Goblin King", "Medusa, Lady of Stone", "Giant Cyclops, Eater of Men", "The Minotaur", "Seraphim", "Devourer of Worlds", "Goblin Emperor", "Frost Queen, Borealis", "The World Serpent, Jörmungandr", "Charybdis", "Primordial Automaton", "Grand Sorceress", "Arachni Empress", "The Brazen Bull, Khalkotauri", "Seraphim", "Grand Knight II", "Mega Meta Mecha Annihilator - Model: Grande", "Mutant Zombie", "Giant Lord", "Skeleton King", "Spider Queen", "The Witch", "Titan Golem", "Wyvern", "Giant Sandworm", "Titanoboa Lord", "Abominable Snowman", "Omegalodon", "Leviathan", "Angel", "Mega Meta Mecha Annihilator - Model: Ultima", "Grand Knight", "Six-Eyed Calamity", "The King of Curses", "Dragon King", "Guardian of Hell, Cerberus", "The Behemoth", "Demon King", "The Black King", "Supreme Witch, Calamitas", "Omni"];
             break;
           default:
             allowed = ["Goblin", "Zombie", "Skeleton", "Golem", "Monster Crow", "Wolf", "Ghoul", "Giant Spider", "Demon Bat", "Giant Scorpion", "Ice Golem", "Ice Spirit", "Piranha", "Shark", "Giant Albatross", "Vulture", "Sandworm", "Possessed Armor", "Bear", "Drone", "Cyborg Guard", "Giant Robot", "Shikigami", "Sorcerer", "Cursed Spirit"];
@@ -4180,31 +4220,31 @@ function createMercenary() {
 	    let floorBonus = Math.max( Math.floor((floorCount / 10) * floorBoost), 1 );
 
 if (gameDifficulty === "normal") {
-    currentEnemy.hp = currentEnemy.hp + Math.ceil(10 * floorBonus * (player.level / floorCount) * 0.5);
+    currentEnemy.hp = currentEnemy.hp + Math.ceil(15 * floorBonus * (player.level / floorCount) * 0.5);
     currentEnemy.damageRange = [
-        Math.ceil(currentEnemy.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.5),
-        Math.ceil(currentEnemy.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.5)
+        Math.ceil(currentEnemy.damageRange[0] + 3 * floorBonus * (player.level / floorCount) * 0.5),
+        Math.ceil(currentEnemy.damageRange[1] + 3 * floorBonus * (player.level / floorCount) * 0.5)
     ];
 } else if (gameDifficulty === "hard") {
-    currentEnemy.hp = currentEnemy.hp + Math.ceil(15 * floorBonus * (player.level / floorCount) * 0.75);
+    currentEnemy.hp = currentEnemy.hp + Math.ceil(20 * floorBonus * (player.level / floorCount) * 0.75);
     currentEnemy.damageRange = [
-        Math.ceil(currentEnemy.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.75),
-        Math.ceil(currentEnemy.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.75)
+        Math.ceil(currentEnemy.damageRange[0] + 3 * floorBonus * (player.level / floorCount) * 0.75),
+        Math.ceil(currentEnemy.damageRange[1] + 3 * floorBonus * (player.level / floorCount) * 0.75)
     ];
 } else if (gameDifficulty === "extreme") {
-    currentEnemy.hp = currentEnemy.hp + Math.round(15 * floorBonus * (player.level / floorCount));
+    currentEnemy.hp = currentEnemy.hp + Math.round(20 * floorBonus * (player.level / floorCount));
     currentEnemy.damageRange = [
-        currentEnemy.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
-        currentEnemy.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
+        currentEnemy.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
+        currentEnemy.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
 } else if (gameDifficulty === "insane" && gameDifficulty === "doom") {
-	currentEnemy.hp = currentEnemy.hp + Math.round(20 * floorBonus * (player.level / floorCount));
+	currentEnemy.hp = currentEnemy.hp + Math.round(25 * floorBonus * (player.level / floorCount));
     currentEnemy.damageRange = [
         currentEnemy.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         currentEnemy.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
 } else {
-	currentEnemy.hp = currentEnemy.hp + Math.round(25 * floorBonus * (player.level / floorCount));
+	currentEnemy.hp = currentEnemy.hp + Math.round(30 * floorBonus * (player.level / floorCount));
     currentEnemy.damageRange = [
         currentEnemy.damageRange[0] + Math.round(5 * floorBonus * (player.level / floorCount)),
         currentEnemy.damageRange[1] + Math.round(5 * floorBonus * (player.level / floorCount))
@@ -4396,10 +4436,10 @@ finalizeRoom(key);
     const floorBoost = 1 + floorCount * 0.1;
     const floorBonus = Math.max(Math.floor((floorCount / 10) * floorBoost), 1);
 
-    bossData.hp += Math.round(20 * floorBonus * (player.level / floorCount));
+    bossData.hp += Math.round(25 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
-      bossData.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
-      bossData.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
+      bossData.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
+      bossData.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
 
     const rewardMultiplier = Math.pow(1.5, floorBonus);
@@ -4440,31 +4480,31 @@ finalizeRoom(key);
   let bossData = getBossForFloor(floorCount);
   
   if (gameDifficulty === "normal") {
-    bossData.hp = bossData.hp + Math.ceil(10 * floorBonus * (player.level / floorCount) * 0.5);
+    bossData.hp = bossData.hp + Math.ceil(15 * floorBonus * (player.level / floorCount) * 0.5);
     bossData.damageRange = [
-        Math.ceil(bossData.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.5),
-        Math.ceil(bossData.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.5)
+        Math.ceil(bossData.damageRange[0] + 3 * floorBonus * (player.level / floorCount) * 0.5),
+        Math.ceil(bossData.damageRange[1] + 3 * floorBonus * (player.level / floorCount) * 0.5)
     ];
 } else if (gameDifficulty === "hard") {
-    bossData.hp = bossData.hp + Math.ceil(15 * floorBonus * (player.level / floorCount) * 0.75);
+    bossData.hp = bossData.hp + Math.ceil(20 * floorBonus * (player.level / floorCount) * 0.75);
     bossData.damageRange = [
-        Math.ceil(bossData.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.75),
-        Math.ceil(bossData.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.75)
+        Math.ceil(bossData.damageRange[0] + 3 * floorBonus * (player.level / floorCount) * 0.75),
+        Math.ceil(bossData.damageRange[1] + 3 * floorBonus * (player.level / floorCount) * 0.75)
     ];
-} else if (gameDifficulty === "extreme" && gameDifficulty === "doom") {
-    bossData.hp = bossData.hp + Math.round(15 * floorBonus * (player.level / floorCount));
+} else if (gameDifficulty === "extreme") {
+    bossData.hp = bossData.hp + Math.round(20 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
-        bossData.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
-        bossData.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
+        bossData.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
+        bossData.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
 } else if (gameDifficulty === "insane" ) {
-	bossData.hp = bossData.hp + Math.round(20 * floorBonus * (player.level / floorCount));
+	bossData.hp = bossData.hp + Math.round(25 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
         bossData.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         bossData.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
 } else {
-	bossData.hp = bossData.hp + Math.round(25 * floorBonus * (player.level / floorCount));
+	bossData.hp = bossData.hp + Math.round(30 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
         bossData.damageRange[0] + Math.round(5 * floorBonus * (player.level / floorCount)),
         bossData.damageRange[1] + Math.round(5 * floorBonus * (player.level / floorCount))
@@ -4542,31 +4582,31 @@ finalizeRoom(key);
 	let floorBonus = Math.max( Math.floor((floorCount / 10) * floorBoost), 1 );
 
 if (gameDifficulty === "normal") {
-    e.hp = e.hp + Math.ceil(10 * floorBonus * (player.level / floorCount) * 0.5);
+    e.hp = e.hp + Math.ceil(15 * floorBonus * (player.level / floorCount) * 0.5);
     e.damageRange = [
-        Math.ceil(e.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.5),
-        Math.ceil(e.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.5)
+        Math.ceil(e.damageRange[0] + 3 * floorBonus * (player.level / floorCount) * 0.5),
+        Math.ceil(e.damageRange[1] + 3 * floorBonus * (player.level / floorCount) * 0.5)
     ];
 } else if (gameDifficulty === "hard") {
-    e.hp = e.hp + Math.ceil(15 * floorBonus * (player.level / floorCount) * 0.75);
+    e.hp = e.hp + Math.ceil(20 * floorBonus * (player.level / floorCount) * 0.75);
     e.damageRange = [
-        Math.ceil(e.damageRange[0] + 2 * floorBonus * (player.level / floorCount) * 0.75),
-        Math.ceil(e.damageRange[1] + 2 * floorBonus * (player.level / floorCount) * 0.75)
+        Math.ceil(e.damageRange[0] + 3 * floorBonus * (player.level / floorCount) * 0.75),
+        Math.ceil(e.damageRange[1] + 3 * floorBonus * (player.level / floorCount) * 0.75)
     ];
 } else if (gameDifficulty === "extreme" && gameDifficulty === "doom") {
-    e.hp = e.hp + Math.round(15 * floorBonus * (player.level / floorCount));
+    e.hp = e.hp + Math.round(20 * floorBonus * (player.level / floorCount));
     e.damageRange = [
-        e.damageRange[0] + Math.round(3 * floorBonus * (player.level / floorCount)),
-        e.damageRange[1] + Math.round(3 * floorBonus * (player.level / floorCount))
+        e.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
+        e.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
 } else if (gameDifficulty === "insane") {
-	e.hp = e.hp + Math.round(20 * floorBonus * (player.level / floorCount));
+	e.hp = e.hp + Math.round(25 * floorBonus * (player.level / floorCount));
     e.damageRange = [
         e.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         e.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
 } else {
-	e.hp = e.hp + Math.round(25 * floorBonus * (player.level / floorCount));
+	e.hp = e.hp + Math.round(30 * floorBonus * (player.level / floorCount));
     e.damageRange = [
         e.damageRange[0] + Math.round(5 * floorBonus * (player.level / floorCount)),
         e.damageRange[1] + Math.round(5 * floorBonus * (player.level / floorCount))
@@ -6442,14 +6482,19 @@ document.addEventListener("keydown", e => {
       worldNum = 42;
       worldName = "Shadow Realm";
       break;
+	case "Supreme Witch, Calamitas":
+      bgColor = "#bd0000";
+      worldNum = 43;
+      worldName = "Realm of Calamity";
+      break;
     case "Warden Of Judgement, Will, And Balance":
       bgColor = "#ffffff";
-      worldNum = 43;
+      worldNum = 44;
       worldName = "Even Further Beyond";
       break;
     case "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel":
       bgColor = "#fcf3dc";
-      worldNum = 44;
+      worldNum = 45;
       worldName = "Realm Of The Gods";
       break;
     default:
