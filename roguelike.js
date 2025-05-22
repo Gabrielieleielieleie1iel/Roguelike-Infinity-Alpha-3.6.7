@@ -6586,6 +6586,8 @@ document.addEventListener("keydown", e => {
 			} else {
 			  logBattle("You used a medkit and healed some HP.");
 			}
+			  updateStats();
+			  updateEnemyInfo();
               break;
 			
 			case "Magazine":
@@ -6601,6 +6603,8 @@ document.addEventListener("keydown", e => {
 			} else {
 			  logBattle("You used a magazine and reloaded your gun.");
 			}
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 	    case "Adrenaline":
@@ -6614,6 +6618,8 @@ document.addEventListener("keydown", e => {
 			} else {
 			  logBattle("<em>RIP AND TEAR... RIP AND TEAR... RIP AND TEAR!</em>");
 			}
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 	    case "Gas Bomb":
@@ -6624,6 +6630,8 @@ document.addEventListener("keydown", e => {
 	    } else {
 	      logBattle(`You threw a Gas Bomb and poisoned ${currentEnemy.name}!`);
 	    }
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 	    case "Sleeping Gas":
@@ -6634,6 +6642,8 @@ document.addEventListener("keydown", e => {
 	    } else {
 	      logBattle(`You used some Sleeping Gas and weakened ${currentEnemy.name}!`);
 	    }
+              updateStats();
+			  updateEnemyInfo();
               break;
 	    
 	    case "Armor+":
@@ -6646,11 +6656,15 @@ document.addEventListener("keydown", e => {
 	    } else {
  	      logBattle("You activated your Armor+ and boosted your defenses!");
 	    }
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 			case "Molotov":
               currentEnemy.burned = true;
               logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 			case "Subzero Bomb":
@@ -6665,7 +6679,9 @@ document.addEventListener("keydown", e => {
 			  updateEnemyInfo();
 			  player.inventory.splice(index, 1);
 			  updateInventoryDisplay();
-			  break;
+			  updateStats();
+			  updateEnemyInfo();
+              break;
 
           // Continue with enemy's turn if applicable.
 		  unlockActions();
@@ -6686,6 +6702,8 @@ document.addEventListener("keydown", e => {
 			} else {
 			  logBattle("You used a medkit and healed some HP.");
 			}
+              updateStats();
+			  updateEnemyInfo();
               break;
 			
 			case "Magazine":
@@ -6701,6 +6719,8 @@ document.addEventListener("keydown", e => {
 			} else {
 			  logBattle("You used a magazine and reloaded your gun.");
 			}
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 	    case "Adrenaline":
@@ -6714,6 +6734,8 @@ document.addEventListener("keydown", e => {
 			} else {
 			  logBattle("<em>RIP AND TEAR... RIP AND TEAR... RIP AND TEAR!</em>");
 			}
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 	    case "Gas Bomb":
@@ -6724,6 +6746,8 @@ document.addEventListener("keydown", e => {
 	    } else {
 	      logBattle(`You threw a Gas Bomb and poisoned ${currentEnemy.name}!`);
 	    }
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 	    case "Sleeping Gas":
@@ -6734,6 +6758,8 @@ document.addEventListener("keydown", e => {
 	    } else {
 	      logBattle(`You used some Sleeping Gas and weakened ${currentEnemy.name}!`);
 	    }
+              updateStats();
+			  updateEnemyInfo();
               break;
 	    
 	    case "Armor+":
@@ -6746,11 +6772,15 @@ document.addEventListener("keydown", e => {
 	    } else {
  	      logBattle("You activated your Armor+ and boosted your defenses!");
 	    }
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 			case "Molotov":
               currentEnemy.burned = true;
               logBattle(`You threw the Molotov and burned ${currentEnemy.name}!`);
+              updateStats();
+			  updateEnemyInfo();
               break;
 
 			case "Subzero Bomb":
@@ -6762,10 +6792,9 @@ document.addEventListener("keydown", e => {
 			} else {
 			  logBattle(`You threw a Subzero Bomb and ${currentEnemy.name} was frozen!`);
 			}
+			  updateStats();
 			  updateEnemyInfo();
-			  player.inventory.splice(index, 1);
-			  updateInventoryDisplay();
-			  break;
+              break;
 
             default:
               alert(item.name + " has no effect.");
@@ -6774,10 +6803,11 @@ document.addEventListener("keydown", e => {
 		}
         player.inventory[index] = null;
         updateInventoryDisplay();
+		updateEnemyInfo();
         updateStats();
 		setTimeout(enemyTurnWrapper, 250);
 		unlockActions();
-      }
+		}
       }
 
       /*******************
