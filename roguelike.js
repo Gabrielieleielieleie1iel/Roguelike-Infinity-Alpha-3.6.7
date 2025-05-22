@@ -6668,17 +6668,14 @@ document.addEventListener("keydown", e => {
               break;
 
 			case "Subzero Bomb":
-			case "Freeze Potion":
+			case "Frost Potion":
 			  let turns = Math.floor(Math.random() * 4) + 3;
 			  currentEnemy.frozen = turns;
 			if (gameDifficulty !== "doom") {
-			  logBattle(`You used a Freeze Potion and ${currentEnemy.name} was frozen!`);
+			  logBattle(`You used a Frost Potion and ${currentEnemy.name} was frozen!`);
 			} else {
 			  logBattle(`You threw a Subzero Bomb and ${currentEnemy.name} was frozen!`);
 			}
-			  updateEnemyInfo();
-			  player.inventory.splice(index, 1);
-			  updateInventoryDisplay();
 			  updateStats();
 			  updateEnemyInfo();
               break;
@@ -6784,11 +6781,11 @@ document.addEventListener("keydown", e => {
               break;
 
 			case "Subzero Bomb":
-			case "Freeze Potion":
+			case "Frost Potion":
 			  let turns = Math.floor(Math.random() * 4) + 3;
 			  currentEnemy.frozen = turns;
 			if (gameDifficulty !== "doom") {
-			  logBattle(`You used a Freeze Potion and ${currentEnemy.name} was frozen!`);
+			  logBattle(`You used a Frost Potion and ${currentEnemy.name} was frozen!`);
 			} else {
 			  logBattle(`You threw a Subzero Bomb and ${currentEnemy.name} was frozen!`);
 			}
