@@ -227,17 +227,18 @@
   <h2>Select Difficulty</h2>
   Normal Mode:
   <br>
-  <button id="normalBtn">Normal</button>
-  <button id="hardBtn">Hard</button>
-  <button id="extremeBtn">Extreme</button>
-  <button id="insaneBtn">Insane</button>
-  <button id="calamityBtn">Calamity</button>
+  <button id="normalBtn" data-tooltip="The 'easiest' difficuly in the game for loser ahh beginners.">Normal</button>
+  <button id="hardBtn" data-tooltip="The base game.">Hard</button>
+  <button id="extremeBtn" data-tooltip="More difficulty, more fun!">Extreme</button>
+  <button id="insaneBtn" data-tooltip="Too much difficulty, not fun. Not for the faint of heart.">Insane</button>
+  <button id="calamityBtn" data-tooltip="Think you're so badass? Go for it.">Calamity</button>
   <br>
   <br>
   Other Modes:
   <br>
-  <button id="bossRushBtn">Boss Rush</button>
-  <button id="doomBtn">
+  <button id="bossRushBtn" data-tooltip="Slay Legend after Legend, Titan after Titan, God after God in this legendary game mode for the strong.">Boss Rush</button>
+  <button id="ultimateBtn" data-tooltip="Peak.">Ultimate Edition</button>
+  <button id="doomBtn" data-tooltip="Play DOOM in the form of Roguelike! Infinity.">
 	<img src="doomtitle.png" alt="DOOM" id="doomModeButton">
   </button>
 </div>
@@ -1347,7 +1348,7 @@
         guide.style.display = "none";
       }
     }
-	  
     </script>
+  <div id="tooltip"></div>
   </body>
 </html>

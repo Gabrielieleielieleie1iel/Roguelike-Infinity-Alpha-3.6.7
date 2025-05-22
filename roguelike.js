@@ -26,6 +26,62 @@
 	  let timerRunning = false;
 	  let elapsedTime = 0;
 	  
+const tooltip = document.getElementById("tooltip") || (() => {
+  const t = document.createElement("div");
+  t.id = "tooltip";
+  document.body.appendChild(t);
+  return t;
+})();
+
+function showTooltip(html, e) {
+  tooltip.innerHTML = html;
+  tooltip.style.left    = `${e.pageX + 12}px`;
+  tooltip.style.top     = `${e.pageY + 12}px`;
+  tooltip.style.display = "block";
+}
+function hideTooltip() {
+  tooltip.style.display = "none";
+}
+function attachTooltip(selector) {
+  document.querySelectorAll(selector).forEach(el => {
+    el.addEventListener("mouseenter", ev => {
+      const html = el.dataset.tooltip;
+      if (html) showTooltip(html, ev);
+    });
+    el.addEventListener("mousemove", ev => {
+      tooltip.style.left = `${ev.pageX + 12}px`;
+      tooltip.style.top  = `${ev.pageY + 12}px`;
+    });
+    el.addEventListener("mouseleave", hideTooltip);
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const diffTips = {
+    normal:    "The 'easiest' difficuly in the game for loser ahh beginners.",
+    hard:      "The base game.",
+    extreme:   "More difficulty, more fun!",
+    insane:    "Too much difficulty, not fun. Not for the faint of heart.",
+    calamity:  "Think you're so badass? Go for it.",
+    bossRush:  "Slay Legend after Legend, Titan after Titan, God after God in this legendary game mode for the strong.",
+    ultimate:  "Peak.",
+    doom:      "Play DOOM in the form of Roguelike! Infinity.",
+  };
+
+  Object.entries(diffTips).forEach(([key, tip]) => {
+    const btn = document.getElementById(key + "Btn");
+    if (btn) {
+      btn.dataset.tooltip = tip;
+    }
+  });
+
+  // finally, attach them
+  attachTooltip(
+    "#difficultyMenu button[data-tooltip], #doomTitleScreen #beginJourneyBtn",
+    el => el.dataset.tooltip
+  );
+});
+	  
 	  function startTimer() {
 		timerStart = Date.now();
 		timerInterval = setInterval(updateTimer, 31);  // ~32fps is enough
@@ -225,6 +281,16 @@ document.addEventListener(
 	  
 	  const TITLE_MUSIC_BPM = 120;
 	  const BEAT_INTERVAL_MS = (60 / TITLE_MUSIC_BPM) * 1000;
+	  const doomMusicOptions = [
+		"hell.mp3",
+		"lengthen.mp3",
+		"unchained.mp3",
+		"ripandtear.mp3",
+		"bfg.mp3",
+		"meathook.mp3"
+	  ];
+	  let lastDoomMusic = null;
+	  
 	  const bgmTracks = {
   "Deep Forests": { audio: new Audio("forest.mp3"), savedTime: 0 },
   "Forest Empire": { audio: new Audio("forest.mp3"), savedTime: 0 },
@@ -471,7 +537,7 @@ casinoMusic.loop = true;
     p.agility = Math.ceil(p.agility * 1.5);
     p.perception = Math.ceil(p.perception * 1.5);
   },
-  "Doomspear":      p => {
+  "Energy Spear":      p => {
     p.attack = p.attack * 2;
     p.perception = Math.ceil(p.perception * 1.5);
     p.agility = p.agility - 10;
@@ -2279,7 +2345,8 @@ let shopItemsList = [
 	category: "consumable",
 	usableInBattle: true,
 	usableOutOfBattle: true,
-	usageScope: "both"
+	usageScope: "both",
+	description: "Restores a portion of a warrior's HP on consumption.",
   },
   {
 	name: "Mana Potion",
@@ -2288,7 +2355,8 @@ let shopItemsList = [
 	category: "consumable",
 	usableInBattle: true,
 	usableOutOfBattle: true,
-	usageScope: "both"
+	usageScope: "both",
+	description: "Recharges a warrior's magical power on consumption.",
   },
   {
     name: "Rage Potion",
@@ -2297,7 +2365,8 @@ let shopItemsList = [
     category: "consumable",
     usableInBattle: true,
     usableOutOfBattle: false,
-    usageScope: "battle"
+    usageScope: "battle",
+	description: "Force-activates a warrior's 'fight' instinct and adrenaline receptors on consumption.",
   },
   {
     name: "Poison Potion",
@@ -2306,7 +2375,8 @@ let shopItemsList = [
     category: "consumable",
     usableInBattle: true,
     usableOutOfBattle: false,
-    usageScope: "battle"
+    usageScope: "battle",
+	description: "Throw at a target to poison them with toxic and acidic chemicals. DO NOT CONSUME.",
   },
   {
   name: "Frost Potion",
@@ -2315,7 +2385,8 @@ let shopItemsList = [
     category: "consumable",
   usableInBattle: true,
   usableOutOfBattle: false,
-  usageScope: "battle"
+  usageScope: "battle",
+	description: "Throw on a target to completely freeze them in their tracks. DO NOT CONSUME.",
   },
   {
   name: "Molotov",
@@ -2324,7 +2395,8 @@ let shopItemsList = [
     category: "consumable",
   usableInBattle: true,
   usableOutOfBattle: false,
-  usageScope: "battle"
+  usageScope: "battle",
+	description: "A simple bottle filled with flammable gas and a flame at the end. Throw at enemies to set them on fire.",
   },
   {
     name: "Weaken Potion",
@@ -2333,7 +2405,8 @@ let shopItemsList = [
     category: "consumable",
     usableInBattle: true,
     usableOutOfBattle: false,
-    usageScope: "battle"
+    usageScope: "battle",
+	description: "Throw on a target to make them slower and weaker. DO NOT CONSUME.",
   },
   {
     name: "Iron Potion",
@@ -2342,7 +2415,8 @@ let shopItemsList = [
     category: "consumable",
     usableInBattle: true,
     usableOutOfBattle: false,
-    usageScope: "battle"
+    usageScope: "battle",
+	description: "Increases a warrior's defense on consumption.",
   },
 
   // Equipment (must be equipped to work)
@@ -2354,7 +2428,8 @@ let shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A piece of cloth with a unique attribute, allowing its wearers to be stealthier, faster, and more perceptive.",
   },
   {
     name: "Ring",
@@ -2363,7 +2438,8 @@ let shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A simple ring.",
   },
   {
     name: "Glasses",
@@ -2372,7 +2448,8 @@ let shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Simple glasses, helps visually-impaired warriors see better.",
   },
   {
     name: "Dice",
@@ -2381,7 +2458,8 @@ let shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "More of a charm, but this dice allows warriors to be a lot luckier than normal.",
   },
   {
     name: "Sharpener",
@@ -2390,7 +2468,8 @@ let shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Allows warriors to sharpen their melee equipment, allowing for more efficient kills.",
   },
 
   // ─ Armors ─
@@ -2401,7 +2480,8 @@ let shopItemsList = [
     category: "armor",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "The generic plated armor for warriors to use in battle.",
   },
   {
     name: "Cloak",
@@ -2410,7 +2490,8 @@ let shopItemsList = [
     category: "armor",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "This piece of clothing has a unique attribute of allowing warriors to be faster, stealthier, and more perceptive.",
   },
   {
     name: "Robe",
@@ -2419,7 +2500,8 @@ let shopItemsList = [
     category: "armor",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A mysterious piece of clothing flowing with a magical aura.",
   },
 
   // ─ Weapons ─
@@ -2430,7 +2512,8 @@ let shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "The starter weapon for a beginner or greater melee-type warrior. Sharp and efficient, it allows you to cut down foes with ease.",
   },
   {
     name: "Gauntlets",
@@ -2439,7 +2522,8 @@ let shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Allows warriors to amplify their punching power even more greatly. With the added metal and weights, these allow you to truly wreak havoc.",
   },
   {
     name: "Shield",
@@ -2448,7 +2532,8 @@ let shopItemsList = [
     category: "both",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "The best offense is a good defense. Defend and attack with the shield's weight and durability.",
   },
   {
     name: "Dagger",
@@ -2457,7 +2542,8 @@ let shopItemsList = [
     category: "both",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A lightweight, efficient weapon that can be dual-wielded. Great for fast kills.",
   },
   {
     name: "Greatsword",
@@ -2466,7 +2552,8 @@ let shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Heavy, but powerful, allowing you to land devastating strikes from all around.",
   },
   {
     name: "Spear",
@@ -2475,7 +2562,8 @@ let shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Heavy, but powerful, allowing you to jab with great force and even throw with great accuracy.",
   },
   {
     name: "Wand",
@@ -2484,7 +2572,8 @@ let shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Simple, efficient, light, mobile, and destructive. A perfect weapon for a beginner or greater mage.",
   },
   {
     name: "Staff",
@@ -2493,7 +2582,8 @@ let shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A heavy weapon that allows warriors to focus their magic into a singular point and blast it all towards a target.",
   },
 ];
 
@@ -2593,7 +2683,8 @@ shopItemsList = [
 	category: "consumable",
 	usableInBattle: true,
 	usableOutOfBattle: true,
-	usageScope: "both"
+	usageScope: "both",
+	description: "Allows the Slayer to regenerate on field without a Heal Station.",
   },
   {
 	name: "Magazine",
@@ -2602,7 +2693,8 @@ shopItemsList = [
 	category: "consumable",
 	usableInBattle: true,
 	usableOutOfBattle: true,
-	usageScope: "both"
+	usageScope: "both",
+	description: "Allows the Slayer to reload his weapons' ammo.",
   },
   {
     name: "Adrenaline",
@@ -2611,7 +2703,8 @@ shopItemsList = [
     category: "consumable",
     usableInBattle: true,
     usableOutOfBattle: false,
-    usageScope: "battle"
+    usageScope: "battle",
+	description: "Force-activates the Slayer's true violent nature, allowing him to brutalize even more demons.",
   },
   {
     name: "Gas Bomb",
@@ -2620,7 +2713,8 @@ shopItemsList = [
     category: "consumable",
     usableInBattle: true,
     usableOutOfBattle: false,
-    usageScope: "battle"
+    usageScope: "battle",
+	description: "Releases toxic gases when thrown, poisoning any enemy nearby.",
   },
   {
   name: "Subzero Bomb",
@@ -2629,7 +2723,8 @@ shopItemsList = [
     category: "consumable",
   usableInBattle: true,
   usableOutOfBattle: false,
-  usageScope: "battle"
+  usageScope: "battle",
+	description: "Releases subzero temperature nitrogen gases when thrown, freezing any enemy that gets in the Slayer's way.",
   },
   {
     name: "Sleeping Gas",
@@ -2638,7 +2733,8 @@ shopItemsList = [
     category: "consumable",
     usableInBattle: true,
     usableOutOfBattle: false,
-    usageScope: "battle"
+    usageScope: "battle",
+	description: "Releases sleeping gas when thrown, weakening and putting enemies affected to sleep.",
   },
   {
     name: "Armor+",
@@ -2647,7 +2743,8 @@ shopItemsList = [
     category: "consumable",
     usableInBattle: true,
     usableOutOfBattle: false,
-    usageScope: "battle"
+    usageScope: "battle",
+	description: "The Slayer's main source of defense.",
   },
 
   // Equipment (must be equipped to work)
@@ -2659,7 +2756,8 @@ shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Boosts the Slayer's speed and agility when active.",
   },
   {
     name: "Brutality Rune",
@@ -2668,7 +2766,8 @@ shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Boosts the Slayer's brutality when active, allowing for sure-kills to any demon that gets in his way.",
   },
   {
     name: "Savagery Rune",
@@ -2677,7 +2776,8 @@ shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Boosts the Slayer's violent creativity when active.",
   },
   {
     name: "Violence Rune",
@@ -2686,7 +2786,8 @@ shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Boosts the Slayer's strength and overall power when active.",
   },
   {
     name: "Armor Rune",
@@ -2695,7 +2796,8 @@ shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Boosts the Slayer's defenses when active.",
   },
   {
     name: "Arsenal Rune",
@@ -2704,7 +2806,8 @@ shopItemsList = [
     category: "accessory",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Boosts the Slayer's weapon proficiency when active.",
   },
 
   // ─ Armors ─
@@ -2715,7 +2818,8 @@ shopItemsList = [
     category: "armor",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Armor.",
   },
   {
     name: "Cloak",
@@ -2724,7 +2828,8 @@ shopItemsList = [
     category: "armor",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "This piece of clothing has a unique attribute of allowing warriors to be faster, stealthier, and more perceptive.",
   },
   {
     name: "Mantle",
@@ -2733,7 +2838,8 @@ shopItemsList = [
     category: "armor",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "An epic looking cape that helps the Slayer's primeval weapon-handling.",
   },
 
   // ─ Weapons ─
@@ -2744,7 +2850,8 @@ shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A violent, awesome way to kill demons.",
   },
   {
     name: "Gauntlets",
@@ -2753,7 +2860,8 @@ shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Why just punch when you can punch even harder?",
   },
   {
     name: "Chainshield",
@@ -2762,7 +2870,8 @@ shopItemsList = [
     category: "both",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "Takes 'defense is the best offense' to a whole new level.",
   },
   {
     name: "Doomblade Arm Upgrade",
@@ -2771,7 +2880,8 @@ shopItemsList = [
     category: "both",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "An attachment to the Slayer's armor and weapons, allowing more versatility in battle.",
   },
   {
     name: "Sentinel Hammer",
@@ -2780,16 +2890,18 @@ shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A heavy, powerful hammer filled with positive-energy, and is kinetic-energy absorbant, given to the Slayer by the Night Sentinels.",
   },
   {
-    name: "Doomspear",
+    name: "Energy Spear",
     cost: 450,
     type: "equipment",
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A positive-energy spear given to the Slayer by the Night Sentinels.",
   },
   {
     name: "Combat Shotgun",
@@ -2798,7 +2910,8 @@ shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A powerful shotgun used by the Slayer to slay demons for thousands of years.",
   },
   {
     name: "Unmayker",
@@ -2807,7 +2920,8 @@ shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "A powerful weapon charged up with demonic energy to use it against the demons.",
   },
   {
     name: "Flame Belch",
@@ -2816,7 +2930,8 @@ shopItemsList = [
     category: "weapon",
     usableInBattle: false,
     usableOutOfBattle: false,
-    usageScope: "passive"
+    usageScope: "passive",
+	description: "An attachment to the Slayer's armor and weapons, allowing him to incinerate anything in his way.",
   },
 ];
    
@@ -2872,14 +2987,8 @@ updateManaDisplay();
       worldName    = "Hell";
       document.body.style.background = "#b30003";      // Hell-red
       const wc = document.getElementById("worldCounter");
-      if (wc) wc.textContent = "Hell 666 - 0";           // start at move 0
-      if (bgmTracks["Hell"]) playWorldMusic("Hell");
-	  if (gameDifficulty === "doom" && bgmTracks["Hell"]) {
-  bgmTracks["Hell"].audio.loop = true;
-  bgmTracks["Hell"].audio.currentTime = 0;
-  bgmTracks["Hell"].audio.play();
-}
-   return;
+      if (wc) wc.textContent = "Hell 666 - 0";
+	  return;
  }
  document.body.classList.remove("doom-mode");
  magicBtn.innerText = "Spell";
@@ -2903,6 +3012,7 @@ document.getElementById("doomBtn").addEventListener("click", () => {
   document.getElementById("difficultyMenu").style.display = "none";
   document.getElementById("abilityMenu").style.display   = "none";
 });
+document.getElementById("ultimateBtn").addEventListener("click", () => selectDifficulty("ultimate"));
 	   
       function initGame() {
 		player.x = 0;
@@ -3134,42 +3244,42 @@ document.getElementById("beginJourneyBtn").addEventListener("click", () => {
   // 2) Create a fresh black overlay and fade in to block the title
   const overlay = createFadeOverlay();
   setTimeout(() => {
-	  overlay.style.opacity = "1", 20;
-	  selectDifficulty("doom");
-    initGame();
-    document.body.classList.add("doom-mode");
-	
-	magicBtn.innerText = "Shoot";
+		overlay.style.opacity = "1", 20;
+		selectDifficulty("doom");
+		initGame();
+		document.body.classList.add("doom-mode");
+		
+		if (currentBGM) {
+			currentBGM.pause();
+		}
 
-  // 4) Hold for 1s, then fade overlay out to show actual gameplay
-  setTimeout(() => {
-	  overlay.style.opacity = "0";
-	  document.getElementById("doomTitleScreen").style.display = "none";
-  }, 2000);
+		const pool = doomMusicOptions.filter(f => f !== lastDoomMusic);
+		const pick = pool[Math.floor(Math.random() * pool.length)];
+		lastDoomMusic = pick;
+
+		currentBGM = new Audio(pick);
+		currentBGM.loop = true;
+		currentBGM.play();
+
+		magicBtn.innerText = "Shoot";
+
+	setTimeout(() => {
+		overlay.style.opacity = "0";
+		document.getElementById("doomTitleScreen").style.display = "none";
+	}, 2000);
   
-  // 5) Remove overlay & hide the title screen once fade finishes
-  setTimeout(() => {
-    overlay.remove();
-  }, 3000);
-});
+	setTimeout(() => {
+		overlay.remove();
+	}, 3000);
+  });
 });
 
 
 // Play the world background music.
 function playWorldMusic(worldName) {
-  if (gameDifficulty === "doom") {
-    const hellTrack = bgmTracks["Hell"];
-    if (!hellTrack) return;
-    // ensure it loops forever
-    hellTrack.audio.loop = true;
-    // if it isn't already playing, start it at the last position
-    if (hellTrack.audio.paused) {
-      // reset to start if it was stopped
-      hellTrack.audio.currentTime = hellTrack.savedTime || 0;
-      hellTrack.audio.play();
-    }
-    return; // skip any normal-music logic
-  }
+	if (gameDifficulty === "doom") {
+		return;
+	}
   // If the same world's music is already playing, do nothing.
   if (currentBGM && currentWorld === worldName) return;
   if (titleMusic) {
@@ -3502,7 +3612,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "DragonBall",
         type:     "misc",
-        category: "dragonball"
+        category: "dragonball",
+		description: "Legends say collecting 7 Dragon Balls grants the owner 1 wish.",
       };
       updateStats();
       updateManaDisplay();
@@ -3521,7 +3632,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Excalibur",
         type:     "equipment",
-        category: "weapon"
+        category: "weapon",
+		description: "The Legendary Sword from myth! True to its name, it truly is a powerful, magical sword.",
       };
       updateStats();
       updateManaDisplay();
@@ -3539,7 +3651,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Dragon's Fang",
         type:     "equipment",
-        category: "weapon"
+        category: "weapon",
+		description: "A dragon's old tooth reforged into a deadly weapon.",
       };
       updateStats();
       updateManaDisplay();
@@ -3557,7 +3670,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Sorceress' Staff",
         type:     "equipment",
-        category: "weapon"
+        category: "weapon",
+		description: "One of the Grand Sorceress' old staves, still filled to the brim with arcane magic.",
       };
       updateStats();
 	  updateManaDisplay();
@@ -3575,7 +3689,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Gun",
         type:     "equipment",
-        category: "weapon"
+        category: "weapon",
+		description: "A .44 magnum.",
       };
       alert("You found a firearm! (Epic)");
     } else {
@@ -3592,7 +3707,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Nike Black Air Force",
         type:     "equipment",
-        category: "accessory"
+        category: "accessory",
+		description: "They say that this unlocks a warrior's true strength.",
       };
       alert("You found a pair of Nike Black Air Force shoes! (LEGENDARY)");
     } else {
@@ -3609,7 +3725,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Grand Knight's Armor",
         type:     "equipment",
-        category: "armor"
+        category: "armor",
+		description: "The Grand Knight's actual armor. Indestructible, impenetrable, built to defend even from the attacks of GOD.",
       };
       alert("You found the Grand Knight's Armor! (LEGENDARY)");
     } else {
@@ -3627,7 +3744,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Previous Hero's Cape",
         type:     "equipment",
-        category: "accessory"
+        category: "accessory",
+		description: "An old ragged cape... with aura.",
       };
       alert("You found a mysterious cape...! (LEGENDARY)");
     } else {
@@ -3645,7 +3763,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "DragonBall",
         type:     "misc",
-        category: "dragonball"
+        category: "dragonball",
+		description: "Legends say collecting 7 Dragon Balls grants the owner 1 wish.",
       };
       updateStats();
       updateManaDisplay();
@@ -3664,7 +3783,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Crucible",
         type:     "equipment",
-        category: "weapon"
+        category: "weapon",
+		description: "A godlike weapon forged in the depths of hell, powered with Argent energy, and enough of it to power an entire planet for nearly a year.",
       };
       updateStats();
       updateManaDisplay();
@@ -3682,7 +3802,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Titan's Fang",
         type:     "equipment",
-        category: "weapon"
+        category: "weapon",
+		description: "A Hell Titan's old tooth, reforged into a powerful weapon.",
       };
       updateStats();
       updateManaDisplay();
@@ -3700,7 +3821,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "BFG10000",
         type:     "equipment",
-        category: "weapon"
+        category: "weapon",
+		description: "An amplifier for the BFG9000, but now reinvented as its own weapon.",
       };
       updateStats();
 	  updateManaDisplay();
@@ -3718,7 +3840,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "BFG9000",
         type:     "equipment",
-        category: "weapon"
+        category: "weapon",
+		description: "The Big Fucking Gun. Requires at least one form of Argent Energy to activate.",
       };
       alert("You found a big fucking gun! (Epic)");
     } else {
@@ -3735,7 +3858,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Delta V-Jump Boots",
         type:     "equipment",
-        category: "accessory"
+        category: "accessory",
+		description: "Powerful boots left for the slayer to allow easy movement, agility, and even flight.",
       };
       alert("You found a pair of Delta V-Jump Boots! (LEGENDARY)");
     } else {
@@ -3752,7 +3876,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Praetor Suit",
         type:     "equipment",
-        category: "armor"
+        category: "armor",
+		description: "An ancient suit of armor, yet is the most technologically-advanced one in all of existence. Built to adapt to any condition, it is indestructible, even to its creator.",
       };
       alert("You found the Praetor Suit! (LEGENDARY)");
     } else {
@@ -3770,7 +3895,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Dark Ages Mantle",
         type:     "equipment",
-        category: "accessory"
+        category: "accessory",
+		description: "An ancient, furry cape filled with demonic aura that allows the Slayer to handle weapons more efficiently.",
       };
       alert("You found an epic looking cape...! (LEGENDARY)");
     } else {
@@ -3788,7 +3914,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Infinity Rune",
         type:     "equipment",
-        category: "accessory"
+        category: "accessory",
+		description: "Allows the Slayer to have unlimited ammo when active.",
       };
       alert("You found a powerful stone-looking object...! (Epic)");
     } else {
@@ -3805,7 +3932,8 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Argent Energy Storage",
         type:     "equipment",
-        category: "accessory"
+        category: "accessory",
+		description: "Allows use of the BFG9000.",
       };
       alert("You found a mysterious case with powerful energy surging inside...! (Epic)");
     } else {
@@ -4006,7 +4134,7 @@ function finalizeRoom(key) {
        *******************/
       function healPlayer() {
         const effMaxHp = Math.floor(getEffectiveMaxHp());
-		if (gameDifficulty === "normal" || gameDifficulty === "hard") {
+		if (gameDifficulty === "normal" || gameDifficulty === "hard" || gameDifficulty === "ultimate") {
 			player.hp = player.hp + Math.floor(effMaxHp * 0.5);
 			if (player.hp > effMaxHp) {
 				player.hp = effMaxHp;
@@ -4243,6 +4371,12 @@ if (gameDifficulty === "normal") {
         currentEnemy.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         currentEnemy.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
+} else if (gameDifficulty === "ultimate") {
+	currentEnemy.hp = currentEnemy.hp + Math.round(50 * floorBonus * (player.level / floorCount));
+    currentEnemy.damageRange = [
+        currentEnemy.damageRange[0] + Math.round(10 * floorBonus * (player.level / floorCount)),
+        currentEnemy.damageRange[1] + Math.round(10 * floorBonus * (player.level / floorCount))
+    ];
 } else {
 	currentEnemy.hp = currentEnemy.hp + Math.round(30 * floorBonus * (player.level / floorCount));
     currentEnemy.damageRange = [
@@ -4477,31 +4611,37 @@ finalizeRoom(key);
   let bossData = getBossForFloor(floorCount);
   
   if (gameDifficulty === "normal") {
-    bossData.hp = bossData.hp + Math.ceil(15 * floorBonus * (player.level / floorCount) * 0.5);
+    bossData.hp = bossData.hp + Math.ceil(25 * floorBonus * (player.level / floorCount) * 0.5);
     bossData.damageRange = [
         Math.ceil(bossData.damageRange[0] + 3 * floorBonus * (player.level / floorCount) * 0.5),
         Math.ceil(bossData.damageRange[1] + 3 * floorBonus * (player.level / floorCount) * 0.5)
     ];
 } else if (gameDifficulty === "hard") {
-    bossData.hp = bossData.hp + Math.ceil(20 * floorBonus * (player.level / floorCount) * 0.75);
+    bossData.hp = bossData.hp + Math.ceil(30 * floorBonus * (player.level / floorCount) * 0.75);
     bossData.damageRange = [
         Math.ceil(bossData.damageRange[0] + 3 * floorBonus * (player.level / floorCount) * 0.75),
         Math.ceil(bossData.damageRange[1] + 3 * floorBonus * (player.level / floorCount) * 0.75)
     ];
 } else if (gameDifficulty === "extreme") {
-    bossData.hp = bossData.hp + Math.round(20 * floorBonus * (player.level / floorCount));
+    bossData.hp = bossData.hp + Math.round(30 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
         bossData.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         bossData.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
     ];
-} else if (gameDifficulty === "insane" ) {
-	bossData.hp = bossData.hp + Math.round(25 * floorBonus * (player.level / floorCount));
+} else if (gameDifficulty === "insane") {
+	bossData.hp = bossData.hp + Math.round(35 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
         bossData.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         bossData.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
+    ];
+} else if (gameDifficulty === "ultimate") {
+	bossData.hp = bossData.hp + Math.round(60 * floorBonus * (player.level / floorCount));
+    bossData.damageRange = [
+        bossData.damageRange[0] + Math.round(10 * floorBonus * (player.level / floorCount)),
+        bossData.damageRange[1] + Math.round(10 * floorBonus * (player.level / floorCount))
     ];
 } else {
-	bossData.hp = bossData.hp + Math.round(30 * floorBonus * (player.level / floorCount));
+	bossData.hp = bossData.hp + Math.round(40 * floorBonus * (player.level / floorCount));
     bossData.damageRange = [
         bossData.damageRange[0] + Math.round(5 * floorBonus * (player.level / floorCount)),
         bossData.damageRange[1] + Math.round(5 * floorBonus * (player.level / floorCount))
@@ -4601,6 +4741,12 @@ if (gameDifficulty === "normal") {
     e.damageRange = [
         e.damageRange[0] + Math.round(4 * floorBonus * (player.level / floorCount)),
         e.damageRange[1] + Math.round(4 * floorBonus * (player.level / floorCount))
+    ];
+} else if (gameDifficulty === "ultimate") {
+	e.hp = e.hp + Math.round(50 * floorBonus * (player.level / floorCount));
+    e.damageRange = [
+        e.damageRange[0] + Math.round(10 * floorBonus * (player.level / floorCount)),
+        e.damageRange[1] + Math.round(10 * floorBonus * (player.level / floorCount))
     ];
 } else {
 	e.hp = e.hp + Math.round(30 * floorBonus * (player.level / floorCount));
@@ -4746,6 +4892,7 @@ function getEnemyByName(enemyName) {
         overlay.remove();
         currentEnemy = null;
         resumeWorldMusicAfterBattle();
+		gameDifficulty = "ultimate";
       };
       // Reject: reload game
       btnNo.onclick = () => location.reload();
@@ -6541,10 +6688,12 @@ document.addEventListener("keydown", e => {
       btn.addEventListener("click", () => {
         useItem(item, index, battleMode);
       });
+	  const cat = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+	  btn.dataset.tooltip = `${cat}-type <br>"${item.description}"`;
       inventoryMenu.appendChild(btn);
     }
   });
-	  
+  attachTooltip("#inventoryMenu button[data-tooltip]");
   
   if (!hasUsableItem) {
     inventoryMenu.innerHTML += '<p>No usable items available.</p>';
@@ -6821,8 +6970,11 @@ document.addEventListener("keydown", e => {
           btn.addEventListener("click", () => {
             buyItem(item);
           });
+		  const cat = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+		  btn.dataset.tooltip = `${cat}-type <br>"${item.description}"`;
           shopItemsDiv.appendChild(btn);
         });
+		attachTooltip("#shopItems button[data-tooltip]");
         shopMenu.style.display = "block";
 		battleTint.style.display = "block";
       }
@@ -6951,6 +7103,8 @@ closeSellBtn.addEventListener("click", () => {
 			player.expToLevel = player.expToLevel + Math.round(Math.pow(5, 1 + (player.level * 0.1)) + (player.exp * 0.33));
 		} else if (gameDifficulty === "normal") {
 			player.expToLevel = player.expToLevel + Math.round(Math.pow(5, 1 + (player.level * 0.1)) + (player.exp * 0.25));
+		} else if (gameDifficulty === "ultimate") {
+			player.expToLevel = player.expToLevel + Math.round(Math.pow(5, 1 + (player.level * 0.1)));
 		} else {
         	player.expToLevel = player.expToLevel + Math.round(Math.pow(5, 1 + (player.level * 0.1)) + (player.exp * 0.1));
 		}
@@ -6973,7 +7127,7 @@ closeSellBtn.addEventListener("click", () => {
         upgradesRemaining += (currentRoomType === ROOM_TYPES.ALTAR ? 3 : 1);
         levelUpMenu.style.display = "block";
 		battleTint.style.display = "block";
-		if (gameDifficulty === "doom") {
+		if (gameDifficulty === "doom" || gameDifficulty === "ultimate") {
 			initiateLevelUp(1);
 		}
       }
@@ -7326,7 +7480,7 @@ document.getElementById("abilityBtn").addEventListener("click", () => {
       concludeCasinoGame(true);
       return;
     }
-	
+
 	if (casinoEnemyTotal >= 21) {
         alert("Dealer had a bust! They lost.");
         concludeCasinoGame();
@@ -7557,6 +7711,8 @@ function updateInventoryDisplay() {
 
     const item = player.inventory[i];
     if (item) {
+	  const cat = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+	  slot.dataset.tooltip = `${cat}-type <br>"${item.description}"`;
       // 1. Show only the first word of the item name
       const firstWord = item.name.split(" ")[0];
       const nameEl = document.createElement("span");
@@ -7607,6 +7763,7 @@ function updateInventoryDisplay() {
       slot.classList.add(cls);
     }
   });
+  attachTooltip("#inventorySlots .inventorySlot[data-tooltip]");
 }
 
 /* Revised applyEquipmentEffects: resets to player.baseStats, then reapplies gear bonuses */
