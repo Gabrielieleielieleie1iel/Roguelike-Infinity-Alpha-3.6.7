@@ -1083,6 +1083,13 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
         moneyReward: [8, 10],
 		reductionMagic: 0.33,
       }, {
+		name: "Hell Knight",
+        hp: 150,
+        damageRange: [13, 18],
+        expReward: [9, 10],
+        moneyReward: [8, 10],
+		reductionMagic: 0.33,
+      }, {
         name: "Mancubus",
         hp: 200,
         damageRange: [10, 15],
@@ -1107,7 +1114,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
         hp: 250,
         damageRange: [12, 15],
         expReward: [10, 12],
-        moneyReward: [5, 10]
+        moneyReward: [5, 10],
       },  {
         name: "Baron",
         hp: 225,
@@ -2187,7 +2194,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
       function getAllowedEnemies() {
 		if (gameDifficulty === "doom") {
 			// Only these in Hell:
-			const hellOnly = ["Demon", "Imp", "Archdem﻿on", "Sinner", "Ghoul", "Skeleton", "Possessed Armor", "Mancubus", "Cacodemon", "Gargoyle", "Cyberdemon", "Baron"];
+			const hellOnly = ["Demon", "Imp", "Archdem﻿on", "Sinner", "Ghoul", "Skeleton", "Possessed Armor", "Mancubus", "Cacodemon", "Gargoyle", "Cyberdemon", "Baron", "Hell Knight"];
 			return enemies.filter(e => hellOnly.includes(e.name));
 		}
         const nextBossFloor = Math.ceil(floorCount / 20) * 20;
@@ -2300,7 +2307,7 @@ document.getElementById("spinAbilityButton").addEventListener("click", function 
             allowed = ["Demon", "Imp", "Archdemon", "Sinner"];
             break;
 		  case "Demon God":
-            allowed = ["Demon", "Imp", "Archdemon", "Sinner", "Mancubus", "Cyberdemon", "Cacodemon", "Gargoyle"];
+            allowed = ["Demon", "Imp", "Archdemon", "Sinner", "Mancubus", "Cyberdemon", "Cacodemon", "Gargoyle", "Baron", "Hell Knight"];
             break;
           case "Hydra":
             allowed = ["Goblin", "Gorgon", "Zombie", "Skeleton", "Golem", "Monster Crow", "Wolf", "Ghoul", "Giant Spider", "Demon Bat"];
@@ -7177,7 +7184,6 @@ closeSellBtn.addEventListener("click", () => {
 				player.maxArmor += 10;
 				player.baseStats.maxArmor += 10;
 			}
-			updateStats();
 		  } else {
             player[stat] += 1;
 			player.baseStats[stat] += 1;
