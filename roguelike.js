@@ -2529,7 +2529,7 @@ let shopItemsList = [
     name: "Shield",
     cost: 400,
     type: "equipment",
-    category: "both",
+    category: "dual-wieldable",
     usableInBattle: false,
     usableOutOfBattle: false,
     usageScope: "passive",
@@ -2539,7 +2539,7 @@ let shopItemsList = [
     name: "Dagger",
     cost: 320,
     type: "equipment",
-    category: "both",
+    category: "dual-wieldable",
     usableInBattle: false,
     usableOutOfBattle: false,
     usageScope: "passive",
@@ -2867,7 +2867,7 @@ shopItemsList = [
     name: "Chainshield",
     cost: 500,
     type: "equipment",
-    category: "both",
+    category: "dual-wieldable",
     usableInBattle: false,
     usableOutOfBattle: false,
     usageScope: "passive",
@@ -2877,7 +2877,7 @@ shopItemsList = [
     name: "Doomblade Arm Upgrade",
     cost: 420,
     type: "equipment",
-    category: "both",
+    category: "dual-wieldable",
     usableInBattle: false,
     usableOutOfBattle: false,
     usageScope: "passive",
@@ -3228,7 +3228,25 @@ document.getElementById("doomBtn").addEventListener("click", () => {
   }, 1000);
 });
 
-// Begin Journey: fade audio out in 1s along with black fade, then boot the game
+function playNextDoomTrack() {
+  const pool = doomMusicOptions.filter(f => f !== lastDoomMusic);
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  lastDoomMusic = pick;
+
+  if (currentBGM) {
+    currentBGM.pause();
+    currentBGM.removeEventListener("ended", onDoomTrackEnded);
+  }
+  currentBGM = new Audio(pick);
+  currentBGM.loop = false;
+  currentBGM.addEventListener("ended", onDoomTrackEnded);
+  currentBGM.play();
+}
+
+function onDoomTrackEnded() {
+  playNextDoomTrack();
+}
+
 document.getElementById("beginJourneyBtn").addEventListener("click", () => {
   // 1) Fade the gate audio out over 1s
   if (gateAudio) {
@@ -3251,15 +3269,9 @@ document.getElementById("beginJourneyBtn").addEventListener("click", () => {
 		
 		if (currentBGM) {
 			currentBGM.pause();
+			currentBGM.removeEventListener("ended", onDoomTrackEnded);
 		}
-
-		const pool = doomMusicOptions.filter(f => f !== lastDoomMusic);
-		const pick = pool[Math.floor(Math.random() * pool.length)];
-		lastDoomMusic = pick;
-
-		currentBGM = new Audio(pick);
-		currentBGM.loop = true;
-		currentBGM.play();
+		playNextDoomTrack();
 
 		magicBtn.innerText = "Shoot";
 
@@ -3651,7 +3663,7 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Dragon's Fang",
         type:     "equipment",
-        category: "weapon",
+        category: "dual-wieldable",
 		description: "A dragon's old tooth reforged into a deadly weapon.",
       };
       updateStats();
@@ -3802,7 +3814,7 @@ if (gameDifficulty !== "doom") {
       player.inventory[freeIdx] = {
         name:     "Titan's Fang",
         type:     "equipment",
-        category: "weapon",
+        category: "dual-wieldable",
 		description: "A Hell Titan's old tooth, reforged into a powerful weapon.",
       };
       updateStats();
@@ -7449,7 +7461,6 @@ document.getElementById("abilityBtn").addEventListener("click", () => {
   casinoMusic.currentTime = 0;
   resumeWorldMusicAfterBattle();
 }
-
 	  
       placeBetBtn.addEventListener("click", () => {
         const bet = parseInt(betInput.value);
@@ -7752,7 +7763,7 @@ function updateInventoryDisplay() {
 	if (cls === "accessory") {
 		cls = "accessory";
      	}
-        if (cls === "both") {
+        if (cls === "dual-wieldable") {
 		cls = "weapon";
      	}
       } else if (item.type === "misc" || item.category === "dragonball") {
@@ -7837,7 +7848,7 @@ function showEquipmentInventory(category) {
     if (category === "armor") {
       if (item.category !== "armor") return;
     } else {
-      if (item.category !== category && item.category !== "both") return;
+      if (item.category !== category && item.category !== "dual-wieldable") return;
     }
 
     any = true;
