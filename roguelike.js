@@ -161,7 +161,28 @@ window.addEventListener("DOMContentLoaded", () => {
 	  const contentCrime = document.getElementById("contentCrime");
 	  
 	  let hasHistoryUnlocked = false;
-	  let hasCrimeUnlocked   = false;
+	  let hasCrimeUnlocked = false;
+	  let hasAmmoUnlocked = false;
+	  let hasGunUnlocked = false;
+	  let hasDragonBallUnlocked = false;
+	  let hasExcaliburUnlocked = false;
+	  let hasGrandUnlocked = false;
+	  let hasPreviousUnlocked = false;
+	  let hasStaffUnlocked = false;
+	  let hasDragonUnlocked = false;
+	  let hasNikeUnlocked = false;
+	  let hasCrucibleUnlocked = false;
+	  let hasPraetorUnlocked = false;
+	  let hasBFG10000Unlocked = false;
+	  let hasBFG9000Unlocked = false;
+	  let hasArgentUnlocked = false;
+	  let hasInfinityUnlocked = false;
+	  let hasTitanUnlocked = false;
+	  let hasJumpBootsUnlocked = false;
+	  let hasMantleUnlocked = false;
+	  let hasMechArmsUnlocked = false;
+	  let hasMechArmorUnlocked = false;
+	  let hasReactorUnlocked = false;
 	  
 libraryButton.addEventListener("click", () => {
   tabHistory.style.display = hasHistoryUnlocked ? "inline-block" : "none";
@@ -502,6 +523,25 @@ casinoMusic.loop = true;
       p.attack *= 10;
     }
   },
+  "Mech Arms": p => {
+    if (p.equipment.accessory && p.equipment.accessory.name === "Nuclear Reactor" && p.equipment.armor && p.equipment.armor.name === "Mech Armor") {
+      p.attack *= 5;
+	  p.defense *= 2;
+    }
+  },
+  "Mech Armor": p => {
+    if (p.equipment.accessory && p.equipment.accessory.name === "Nuclear Reactor" && p.equipment.weapon && p.equipment.weapon.name === "Mech Arms") {
+	  p.maxArmor *= 3;
+      p.defense *= 2;
+    }
+  },
+  "Nuclear Reactor": p => {
+    if (p.equipment.weapon && p.equipment.weapon.name === "Mech Arms" && p.equipment.armor && p.equipment.armor.name === "Mech Armor") {
+      p.maxMana *= 3;
+	  p.defense *= 2;
+    }
+  },
+  
   "Excalibur": p => {
     // triple attack
     p.attack *= 3;
@@ -3625,7 +3665,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < mythicalChance) {
+  if (!hasDragonBallUnlocked && Math.random() < mythicalChance) {
+	hasDragonBallUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3645,7 +3686,68 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasMechArmsUnlocked && Math.random() < mythicalChance) {
+	hasMechArmsUnlocked = true;
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Mech Arms",
+        type:     "equipment",
+        category: "weapon",
+		description: "Ancient technology from the post-modern era built as titans to fight against the gods. These are the limbs of the titans of war.",
+      };
+      updateStats();
+      updateManaDisplay();
+	  updateInventoryDisplay();
+      alert("You found an enormous pair of heavy, metallic limbs... (???)");
+    } else {
+      alert("Inventory full...");
+    }
+    return;
+  }
+  
+  if (!hasMechArmorUnlocked && Math.random() < mythicalChance) {
+	hasMechArmorUnlocked = true;
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Mech Armor",
+        type:     "equipment",
+        category: "armor",
+		description: "Ancient technology from the post-modern era built as titans to fight against the gods. These are the plates that protect the titans of war.",
+      };
+      updateStats();
+      updateManaDisplay();
+	  updateInventoryDisplay();
+      alert("You found  huge, metallic plating... armor maybe? (???)");
+    } else {
+      alert("Inventory full...");
+    }
+    return;
+  }
+  
+  if (!hasReactorUnlockedUnlocked && Math.random() < mythicalChance) {
+	hasReactorUnlockedUnlocked = true;
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Nuclear Reactor",
+        type:     "equipment",
+        category: "accessory",
+		description: "Ancient technology from the post-modern era built as titans to fight against the gods. This is the energy source to power up the titans of war.",
+      };
+      updateStats();
+      updateManaDisplay();
+	  updateInventoryDisplay();
+      alert("You found a generator of a powerful source of energy... (???)");
+    } else {
+      alert("Inventory full...");
+    }
+    return;
+  }
+  
+  if (!hasExcaliburUnlocked && Math.random() < legendaryChance) {
+	hasExcaliburUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3664,7 +3766,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasDragonUnlocked && Math.random() < legendaryChance) {
+	hasDragonUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3683,7 +3786,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasStaffUnlocked && Math.random() < legendaryChance) {
+	hasStaffUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3702,7 +3806,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < epicChanceOne) {
+  if (!hasGunUnlocked && Math.random() < epicChanceOne) {
+	hasGunUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3720,7 +3825,27 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasAmmoUnlocked && Math.random() < epicChanceTwo) {
+	hasAmmoUnlocked = true;
+    const freeIdx = player.inventory.findIndex(slot => slot === null);
+    if (freeIdx !== -1) {
+      player.inventory[freeIdx] = {
+        name:     "Ammo Box",
+        type:     "equipment",
+        category: "accessory",
+		description: "Allows you to reload the Gun.",
+      };
+      alert("You found a mysterious box with strange metallic objects inside...! (Epic)");
+    } else {
+      alert("Inventory full...");
+    }
+    updateStats();
+	updateInventoryDisplay();
+    return;
+  }
+  
+  if (!hasNikeUnlocked && Math.random() < legendaryChance) {
+	hasNikeUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3738,7 +3863,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasGrandUnlocked && Math.random() < legendaryChance) {
+	hasGrandUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3757,7 +3883,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasPreviousUnlocked && Math.random() < legendaryChance) {
+	hasPreviousUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3776,7 +3903,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
 } else {
-	if (Math.random() < mythicalChance) {
+	if (!hasDragonBallUnlocked && Math.random() < mythicalChance) {
+	hasDragonBallUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3796,14 +3924,15 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasCrucibleUnlocked && Math.random() < legendaryChance) {
+	hasCrucibleUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
         name:     "Crucible",
         type:     "equipment",
         category: "weapon",
-		description: "A godlike weapon forged in the depths of hell, powered with Argent energy, and enough of it to power an entire planet for nearly a year.",
+		description: "A godlike weapon forged in the depths of hell, powered with Argent energy, enough of it to power an entire planet for nearly a year.",
       };
       updateStats();
       updateManaDisplay();
@@ -3815,7 +3944,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasTitanUnlocked && Math.random() < legendaryChance) {
+	hasTitanUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3834,7 +3964,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasBFG10000Unlocked && Math.random() < legendaryChance) {
+	hasBFG10000Unlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3853,7 +3984,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < epicChanceOne) {
+  if (!hasBFG9000Unlocked && Math.random() < epicChanceOne) {
+	hasBFG9000Unlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3871,7 +4003,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasJumpBootsUnlocked && Math.random() < legendaryChance) {
+	hasJumpBootsUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3889,7 +4022,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasPraetorUnlocked && Math.random() < legendaryChance) {
+	hasPraetorUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3908,7 +4042,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < legendaryChance) {
+  if (!hasMantleUnlocked && Math.random() < legendaryChance) {
+	hasMantleUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3927,7 +4062,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
   
-  if (Math.random() < epicChanceOne) {
+  if (!hasInfinityUnlocked && Math.random() < epicChanceOne) {
+	hasInfinityUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -3945,7 +4081,8 @@ if (gameDifficulty !== "doom") {
     return;
   }
 
-  if (Math.random() < epicChanceTwo) {
+  if (!hasArgentUnlocked && Math.random() < epicChanceTwo) {
+	hasArgentUnlocked = true;
     const freeIdx = player.inventory.findIndex(slot => slot === null);
     if (freeIdx !== -1) {
       player.inventory[freeIdx] = {
@@ -4877,7 +5014,7 @@ function getEnemyByName(enemyName) {
       overlay.removeEventListener('transitionend', onFade);
       // Set background to ending image
       Object.assign(overlay.style, {
-        background: "black url('ending.png') center/contain no-repeat",
+        background: black,
         opacity: 1, transition: ''
       });
       // Create text container
